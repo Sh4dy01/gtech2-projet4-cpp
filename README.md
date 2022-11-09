@@ -16,8 +16,8 @@
 class bottle{
     private:
         int max_capacity;
+        int min_capacity;
         int actual_quantity;
-        int quantity_min;
         int reminder;  
     public:
         void Refill();
