@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers de ressources\Fonts">
+      <UniqueIdentifier>{02f54cb4-6641-46a7-b44b-7e3e9a8f2809}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">
@@ -31,5 +34,16 @@
     <ClInclude Include="bib.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Libs\Fonts\Comfortaa-Bold.ttf">
+      <Filter>Fichiers de ressources\Fonts</Filter>
+    </Font>
+    <Font Include="..\Libs\Fonts\Comfortaa-Light.ttf">
+      <Filter>Fichiers de ressources\Fonts</Filter>
+    </Font>
+    <Font Include="..\Libs\Fonts\Comfortaa-Regular.ttf">
+      <Filter>Fichiers de ressources\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

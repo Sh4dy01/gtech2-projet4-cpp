@@ -49,6 +49,9 @@ int main(int argc, char* args[])
 	while (IsAppRuning) {
 		while (SDL_PollEvent(&e)) { 
 			if (e.type == SDL_QUIT) IsAppRuning = false;
+
+
+
 		} 
 	}
 

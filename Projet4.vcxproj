@@ -141,6 +141,11 @@
   <ItemGroup>
     <ClInclude Include="bib.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Libs\Fonts\Comfortaa-Bold.ttf" />
+    <Font Include="..\Libs\Fonts\Comfortaa-Light.ttf" />
+    <Font Include="..\Libs\Fonts\Comfortaa-Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
