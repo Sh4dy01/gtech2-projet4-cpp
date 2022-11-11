@@ -1,2 +1,0 @@
-﻿  main.cpp
-C:\Users\hmaestracci\Desktop\Projet 4\Projet\main.cpp(3,10): fatal  error C1083: Impossible d'ouvrir le fichier include : 'SDL_ttf.h' : No such file or directory
