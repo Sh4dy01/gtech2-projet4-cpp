@@ -14,9 +14,8 @@ public:
 
 	Widget();
 
-	virtual void render( SDL_Renderer* r );
-
-	void handleEvent( const SDL_Event& e );
+		/// Is the mouse cursor positioned over this widget?
+	bool isMouseHovering() const;
 
 		/// Get the position of this widget in pixels relative to the window.
 	int getPositionX() const { return posX; }
@@ -32,15 +31,30 @@ public:
 
 
 
-private:
+		/// Render this widget using a given SDL renderer.
+		/// Each widget type implements its own rendering method.
+	virtual void render(SDL_Renderer* r) = 0;
+
+	virtual void onMouseHover() { }
+	virtual void onMouseUnhover() { }
+	virtual void onMouseClick() { }
+
+
+
+protected:
 
 		/// Position & dimensions of this widget, in pixels.
 		/// The position is relative to the window, (0; 0) being the top-left corner.
+
+		/// default = (0; 0)
 	int posX;
 	int posY;
+
+		/// default = (100; 100)
 	int width;
 	int height;
 
 		/// The background color of this widget.
+		/// default = 0xFFFFFF (white)
 	Color color;
 };

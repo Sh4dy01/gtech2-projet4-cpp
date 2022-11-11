@@ -2,9 +2,18 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+#include <iostream>
+
+#include "View/View.h"
+#include "View/Widget.h"
+#include "View/Button.h"
+
+
 SDL_Window * window = NULL;
 SDL_Renderer * renderer = NULL;
 TTF_Font * font = NULL;
+
+bool IsAppRuning = true;
 
 void InitSDL() {
 	const int SCREEN_WIDTH = 640;
@@ -39,21 +48,51 @@ void InitSDL() {
 
 }
 
+
+
+void onBtnExit()
+{
+	IsAppRuning = false;
+}
+
 int main(int argc, char* args[])
 {
 	InitSDL();
 
+	// View test.
+	View* view = new View();
+	view->setBackgroundColor(240, 240, 240);
+	{
+		Button* button = new Button();
+		button->setPosition( 10, 20 );
+		button->setSize( 80, 20 );
+		button->setOnClickCallback(onBtnExit);
+		view->addWidget(button);
+
+		Button* button0 = new Button();
+		button0->setPosition(10, 50);
+		button0->setSize(80, 20);
+		button0->setOnClickCallback([]() {
+			std::cout << "I have been pressed!" << std::endl;
+		});
+		view->addWidget(button0);
+	}
+
 	SDL_Event e;
-	bool IsAppRuning = true;
 
 	while (IsAppRuning) {
-		while (SDL_PollEvent(&e)) { 
-			if (e.type == SDL_QUIT) IsAppRuning = false;
 
+		view->render(renderer );
 
-
-		} 
+		while (SDL_PollEvent(&e)) {
+			if (e.type == SDL_QUIT)
+				IsAppRuning = false;
+			else
+				view->handleEvent(e);
+		}
 	}
+
+	delete view;
 
 	return 0;
 }

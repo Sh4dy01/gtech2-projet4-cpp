@@ -11,6 +11,19 @@ Widget::Widget()
 
 }
 
+bool Widget::isMouseHovering() const
+{
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+
+	if (x >= this->posX && x <= this->posX + this->width) {
+		if (y >= this->posY && y <= this->posY + this->height) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Widget::setPosition( int x, int y )
 {
 	this->posX = x;
@@ -26,27 +39,4 @@ void Widget::setSize( int w, int h )
 void Widget::setColor( unsigned char r, unsigned char g, unsigned char b )
 {
 	this->color = Color( r, g, b );
-}
-
-void Widget::render( SDL_Renderer* r )
-{
-	SDL_Rect rect = { this->posX, this->posY, this->width, this->height };
-
-	SDL_SetRenderDrawColor( r, color.getR(), color.getG(), color.getB(), 0xFF );
-	SDL_RenderFillRect( r, &rect );
-}
-
-void Widget::handleEvent( const SDL_Event& e )
-{
-	if ( e.type == SDL_MOUSEBUTTONDOWN ) {
-
-		int x, y;
-		SDL_GetMouseState( &x, &y );
-
-		if ( x >= this->posX && x <= this->posX + this->width ) {
-			if ( y >= this->posY && y <= this->posY + this->height ) {
-
-			}
-		}
-	}
 }
