@@ -7,6 +7,8 @@
 #include "View/View.h"
 #include "View/Widget.h"
 #include "View/Button.h"
+#include "View/Text.h"
+
 
 
 SDL_Window * window = NULL;
@@ -31,7 +33,7 @@ void InitSDL() {
 	}
 
 	//Create renderer
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == NULL) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	}
@@ -40,7 +42,8 @@ void InitSDL() {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	};
 
-	font = TTF_OpenFont("ARIAL.TTF", 32);
+	//font = TTF_OpenFont("ARIAL.TTF", 32);
+	font = TTF_OpenFont("Libs/Fonts/Comfortaa-Regular.ttf", 12);
 	if (font == NULL)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
@@ -62,20 +65,27 @@ int main(int argc, char* args[])
 	// View test.
 	View* view = new View();
 	view->setBackgroundColor(240, 240, 240);
+	view->setFont(font);
 	{
-		Button* button = new Button();
-		button->setPosition( 10, 20 );
+		Button* button = new Button("Exit");
+		button->setPosition( 10, 30 );
 		button->setSize( 80, 20 );
 		button->setOnClickCallback(onBtnExit);
 		view->addWidget(button);
 
-		Button* button0 = new Button();
-		button0->setPosition(10, 50);
+		Button* button0 = new Button("Press Me!");
+		button0->setPosition(10, 60);
 		button0->setSize(80, 20);
 		button0->setOnClickCallback([]() {
 			std::cout << "I have been pressed!" << std::endl;
 		});
 		view->addWidget(button0);
+
+		Text* title = new Text();
+		title->setPosition(10, 10);
+		title->setColor(0, 127, 127);
+		title->setText("Bib.io");
+		view->addWidget(title);
 	}
 
 	SDL_Event e;

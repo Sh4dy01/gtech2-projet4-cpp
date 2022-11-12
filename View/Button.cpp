@@ -1,13 +1,24 @@
 #include "Button.h"
 
+#include "View.h"
+
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 
 
 Button::Button(const char* label)
 	: label( label ), onClickCallback( 0 )
+	, labelTexture( 0 )
 {
+	
+}
 
+Button::~Button()
+{
+	if (this->labelTexture) {
+		SDL_DestroyTexture(this->labelTexture);
+	}
 }
 
 void Button::render( SDL_Renderer* r )
@@ -32,7 +43,20 @@ void Button::render( SDL_Renderer* r )
 	SDL_SetRenderDrawColor(r, color.getR(), color.getG(), color.getB(), 0xFF);
 	SDL_RenderFillRect(r, &rect);
 
-	// TODO : render text.
+	// Render text.
+	if (this->label.size() > 0) {
+
+		if (!this->labelTexture) {
+			SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), this->label.c_str(), { 0, 0, 0, 255 });
+			this->labelTexture = SDL_CreateTextureFromSurface(r, temp);
+			SDL_FreeSurface(temp);
+		}
+
+		rect.y += 3;
+		rect.x += 2;
+		SDL_QueryTexture(this->labelTexture, NULL, NULL, &rect.w, &rect.h);
+		SDL_RenderCopy(r, this->labelTexture, 0, &rect);
+	}
 }
 
 void Button::onMouseHover()

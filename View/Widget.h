@@ -10,6 +10,8 @@ typedef union SDL_Event;
 
 class Widget
 {
+	friend class View;
+
 public:
 
 	Widget();
@@ -42,6 +44,9 @@ public:
 
 
 protected:
+
+		/// The view owning this widget.
+	View* view;
 
 		/// Position & dimensions of this widget, in pixels.
 		/// The position is relative to the window, (0; 0) being the top-left corner.

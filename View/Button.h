@@ -4,13 +4,18 @@
 
 #include <string>
 
+struct SDL_Texture;
+
 
 
 class Button : public Widget
 {
+	friend class View;
+
 public:
 
-	Button( const char* label = "");
+	Button( const char* label = "" );
+	~Button();
 
 	virtual void render(SDL_Renderer* r) override;
 
@@ -25,6 +30,7 @@ public:
 private:
 
 	std::string label;
+	SDL_Texture* labelTexture;
 
 	void (*onClickCallback)();
 };

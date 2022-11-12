@@ -9,6 +9,9 @@ class Widget;
 struct SDL_Renderer;
 typedef union SDL_Event;
 
+struct _TTF_Font;
+typedef _TTF_Font TTF_Font;
+
 
 
 class View
@@ -34,6 +37,9 @@ public:
 		/// If the cursor is not hovering any widget, this returns null.
 	Widget* getHoveredWidget() const;
 
+	TTF_Font* getFont() const { return font; }
+	void setFont(TTF_Font* f) { font = f; }
+
 
 
 private:
@@ -42,4 +48,6 @@ private:
 	Widget* hoveredWidget;
 
 	Color backgroundColor;
+
+	TTF_Font* font;
 };

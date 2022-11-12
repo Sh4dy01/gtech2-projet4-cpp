@@ -7,7 +7,7 @@
 
 
 View::View()
-	: hoveredWidget( 0 )
+	: hoveredWidget( 0 ), font( 0 )
 {
 
 }
@@ -37,6 +37,7 @@ void View::render( SDL_Renderer* r )
 void View::addWidget( Widget* w )
 {
 	widgets.push_back( w );
+	w->view = this;
 }
 
 void View::setBackgroundColor(unsigned char r, unsigned char g, unsigned char b)
