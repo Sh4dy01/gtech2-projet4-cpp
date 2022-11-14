@@ -13,7 +13,10 @@
 
 SDL_Window * window = NULL;
 SDL_Renderer * renderer = NULL;
-TTF_Font * font = NULL;
+
+TTF_Font * regFont = NULL;
+TTF_Font * boldFont = NULL;
+TTF_Font * lightFont = NULL;
 
 bool IsAppRuning = true;
 
@@ -42,9 +45,19 @@ void InitSDL() {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	};
 
-	//font = TTF_OpenFont("ARIAL.TTF", 32);
-	font = TTF_OpenFont("Libs/Fonts/Comfortaa-Regular.ttf", 12);
-	if (font == NULL)
+	//Create fonts
+	regFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Regular.ttf", 32);
+	if (regFont == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+	}
+	boldFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 32);
+	if (boldFont == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+	}
+	lightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 32);
+	if (lightFont == NULL)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	}
@@ -65,7 +78,7 @@ int main(int argc, char* args[])
 	// View test.
 	View* view = new View(window, renderer);
 	view->setBackgroundColor(240, 240, 240);
-	view->setFont(font);
+	view->setFont(regFont);
 	{
 		Button* button = new Button("Exit");
 		button->setPosition( 10, 30 );
@@ -91,7 +104,6 @@ int main(int argc, char* args[])
 	}
 
 	SDL_Event e;
-
 	while (IsAppRuning) {
 
 		view->render();
@@ -103,6 +115,15 @@ int main(int argc, char* args[])
 				view->handleEvent(e);
 		}
 	}
+
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+
+	TTF_CloseFont(regFont);
+	TTF_CloseFont(boldFont);
+	TTF_CloseFont(lightFont);
+
+	SDL_Quit();
 
 	delete view;
 
