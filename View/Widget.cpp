@@ -15,8 +15,9 @@ Widget::Widget()
 
 bool Widget::isMouseHovering() const
 {
+	// Take scaling into account!
 	int x, y;
-	SDL_GetMouseState(&x, &y);
+	view->getMousePos(&x, &y);
 
 	if (x >= this->posX && x <= this->posX + this->width) {
 		if (y >= this->posY && y <= this->posY + this->height) {

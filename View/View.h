@@ -38,6 +38,8 @@ public:
 		/// If the cursor is not hovering any widget, this returns null.
 	Widget* getHoveredWidget() const;
 
+	void getMousePos(int* x, int* y) const;
+
 	int getWidth() const;
 	int getHeight() const;
 
