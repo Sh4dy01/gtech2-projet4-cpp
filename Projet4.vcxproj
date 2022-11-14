@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libs\SDL2-2.24.2\include;$(SolutionDir)Libs\SDL2_ttf-2.20.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\SDL2-2.24.2\lib\x64;$(SolutionDir)Libs\SDL2_ttf-2.20.1\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\SDL2_image-2.6.2\include;$(SolutionDir)Libs\SDL2-2.24.2\include;$(SolutionDir)Libs\SDL2_ttf-2.20.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\SDL2-2.24.2\lib\x64;$(SolutionDir)Libs\SDL2_image-2.6.2\lib\x64;$(SolutionDir)Libs\SDL2_ttf-2.20.1\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,8 +113,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libs\SDL2-2.24.2\lib\x64;$(SolutionDir)Libs\SDL2_ttf-2.20.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs\SDL2_image-2.6.2\lib\x64;$(SolutionDir)Libs\SDL2-2.24.2\lib\x64;$(SolutionDir)Libs\SDL2_ttf-2.20.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +146,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="View\Button.cpp" />
     <ClCompile Include="View\Color.cpp" />
+    <ClCompile Include="View\Image.cpp" />
     <ClCompile Include="View\Text.cpp" />
     <ClCompile Include="View\View.cpp" />
     <ClCompile Include="View\Widget.cpp" />
@@ -157,8 +158,10 @@
     <ClInclude Include="App\View\SettingsView.h" />
     <ClInclude Include="App\View\ShoppingListView.h" />
     <ClInclude Include="bib.h" />
+    <ClInclude Include="Libs\SDL2_image-2.6.2\include\SDL_image.h" />
     <ClInclude Include="View\Button.h" />
     <ClInclude Include="View\Color.h" />
+    <ClInclude Include="View\Image.h" />
     <ClInclude Include="View\Text.h" />
     <ClInclude Include="View\View.h" />
     <ClInclude Include="View\Widget.h" />

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 // Default size of window.
 #define WINDOW_WIDTH  480
 #define WINDOW_HEIGHT 900
@@ -13,6 +15,7 @@ class View;
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Surface;
 
 typedef struct _TTF_Font TTF_Font;
 

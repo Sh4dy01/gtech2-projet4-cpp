@@ -5,6 +5,7 @@
 #include "View/Text.h"
 
 #include <iostream>
+#include <SDL_image.h>
 
 
 

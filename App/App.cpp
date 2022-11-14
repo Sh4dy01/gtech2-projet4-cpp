@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 
 SDL_Window* App::window = 0;
 SDL_Renderer* App::renderer = 0;
@@ -66,6 +67,12 @@ bool App::initialize()
 	if (lightFont == NULL)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+	}
+
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", IMG_GetError());
 	}
 
 	// Create views.
