@@ -16,7 +16,7 @@ SettingsView::SettingsView()
 	Button* button1 = new Button("Menu");
 	{
 		button1->setPosition(10, 400);
-		button1->setSize(180, 0);
+		button1->setSize(180, 50);
 		button1->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewMainMenu());
 			});

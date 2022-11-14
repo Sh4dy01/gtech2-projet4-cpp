@@ -43,21 +43,30 @@ MainMenuView::MainMenuView()
 		this->addWidget(title);
 		title->setHorizontallyCentered();
 	}
-
-	Button* button2 = new Button("Liste de course");
+	Button* button3= new Button("New meal");
 	{
-		button2->setPosition(40, 700);
-		button2->setSize(400, 0);
+		button3->setPosition(50, 640);
+		button3->setSize(380, 50);
+		button3->setOnClickCallback([]() {
+			App::setCurrentView(App::getViewMeal());
+			});
+		this->addWidget(button3);
+	}
+
+	Button* button2 = new Button("Shopping list");
+	{
+		button2->setPosition(50, 700);
+		button2->setSize(380, 50);
 		button2->setOnClickCallback([]() {
-			App::setCurrentView(App::getViewSettings());
+			App::setCurrentView(App::getViewShoppingList());
 			});
 		this->addWidget(button2);
 	}
 
 	Button* button1 = new Button("Settings");
 	{
-		button1->setPosition(40, 760);
-		button1->setSize(400, 0);
+		button1->setPosition(50, 760);
+		button1->setSize(380, 50);
 		button1->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewSettings());
 		});
