@@ -1,6 +1,7 @@
 #pragma once
 
 #include "View/View.h"
+#include "View/Forms.h"
 
 
 class MainMenuView : public View
@@ -8,7 +9,9 @@ class MainMenuView : public View
 public:
 
 	MainMenuView();
-	
+
 private:
-	SDL_Surface* bibiPNG;
+
+	Rect* bibiActualIndicator;
+	Rect* bibiMinLimitIndicattor;
 };

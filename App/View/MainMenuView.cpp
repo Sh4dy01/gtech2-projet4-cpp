@@ -3,17 +3,71 @@
 
 #include "View/Button.h"
 #include "View/Text.h"
+#include "View/Image.h"
+#include "View/Forms.h"
+
 
 #include <iostream>
 #include <SDL_image.h>
 
+static int BIBI_INDICATOR_START = 123;
 
+static int INDICATOR_OFFSET_X = 11;
+static int INDICATOR_OFFSET_Y = 120;
+static int INDICATOR_FULL_OFFSET = 234;
+
+static int MIN_INDICATOR_OFFSET_X = 12;
+static int MIN_INDICATOR_FULL = 352;
+
+static float MIN_INDICATOR_Y_STEP = (MIN_INDICATOR_FULL - (float)BIBI_INDICATOR_START) / 100;
+static float MIN_INDICATOR_WIDTH_RATIO = 0.866;
 
 MainMenuView::MainMenuView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
 {
+	int currentQuantity = 50;
+
 	this->setBackgroundColor(240, 240, 240);
 	this->setFont(App::getSDLDefaultFont());
+
+	bibiActualIndicator = new Rect();
+	{
+		bibiActualIndicator->setColor(0, 239, 220);
+		this->addWidget(bibiActualIndicator);
+	}
+
+	bibiMinLimitIndicattor = new Rect();
+	{
+		bibiMinLimitIndicattor->setColor(255, 0, 0);
+		this->addWidget(bibiMinLimitIndicattor);
+	}
+
+	Image* bibiPNG = new Image("Assets/Biberon.png");
+	{
+		bibiPNG->setPosition(0, 0);
+		this->addWidget(bibiPNG);
+		bibiPNG->setHorizontallyCentered();
+		bibiPNG->setVerticallyCentered(-50);
+	}
+
+	// OFFSETs
+	{
+		bibiActualIndicator->setPosition(
+			bibiPNG->getPositionX() + INDICATOR_OFFSET_X,
+			bibiPNG->getPositionY() + MIN_INDICATOR_FULL
+		);
+		bibiActualIndicator->setSize(
+			bibiPNG->getWidth() - INDICATOR_OFFSET_X * 2,
+			-MIN_INDICATOR_Y_STEP * currentQuantity
+		);
+
+		bibiMinLimitIndicattor->setSize(bibiPNG->getWidth() * MIN_INDICATOR_WIDTH_RATIO, 3);
+		bibiMinLimitIndicattor->setPosition(
+			bibiPNG->getPositionX() + MIN_INDICATOR_OFFSET_X,
+			bibiPNG->getPositionY() + MIN_INDICATOR_FULL - (bibiMinLimitIndicattor->getHeight()/2) - MIN_INDICATOR_Y_STEP * currentQuantity
+		);
+	}
+	
 
 	Button* button = new Button("Exit");
 	{
