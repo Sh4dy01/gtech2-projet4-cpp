@@ -34,7 +34,7 @@ bool App::initialize()
 	}
 
 	//Create window
-	window = SDL_CreateWindow("Bib.io", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	window = SDL_CreateWindow("Bib.io", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 	if (window == NULL) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		return false;
@@ -83,6 +83,11 @@ bool App::initialize()
 
 void App::render()
 {
+	// Adjust rendering space to stretch to window.
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	SDL_RenderSetScale(renderer, w / (float) RENDER_WIDTH, h / (float) RENDER_HEIGHT);
+
 	currentView->render();
 }
 
