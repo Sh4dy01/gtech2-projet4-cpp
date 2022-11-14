@@ -43,12 +43,14 @@ void Button::render( SDL_Renderer* r )
 	SDL_SetRenderDrawColor(r, color.getR(), color.getG(), color.getB(), 0xFF);
 	SDL_RenderFillRect(r, &rect);
 
-	// Render text.
+	// Render text at center.
 	if (this->label.size() > 0) {
 
-		rect.y += 3;
-		rect.x += 2;
 		SDL_QueryTexture(this->labelTexture, NULL, NULL, &rect.w, &rect.h);
+
+		rect.x = (this->width  - rect.w) / 2 + this->posX;
+		rect.y = (this->height - rect.h) / 2 + this->posY;
+		
 		SDL_RenderCopy(r, this->labelTexture, 0, &rect);
 	}
 }
@@ -59,10 +61,6 @@ void Button::onAddToView(View* v)
 	SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), this->label.c_str(), { 0, 0, 0, 255 });
 	this->labelTexture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), temp);
 	SDL_FreeSurface(temp);
-
-	// Update button height to match font size.
-	SDL_QueryTexture(this->labelTexture, NULL, NULL, 0, &this->height);
-	this->height += 4;
 }
 
 void Button::onMouseHover()

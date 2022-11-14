@@ -17,7 +17,7 @@ MainMenuView::MainMenuView()
 	Button* button = new Button("Exit");
 	{
 		button->setPosition(20, 60);
-		button->setSize(80, 0);
+		button->setSize(80, 40);
 		button->setOnClickCallback([]() {
 			App::setShouldClose();
 		});
@@ -28,7 +28,7 @@ MainMenuView::MainMenuView()
 	Button* button0 = new Button("Press Me!");
 	{
 		button0->setPosition(10, 120);
-		button0->setSize(180, 0);
+		button0->setSize(180, 40);
 		button0->setOnClickCallback([]() {
 			std::cout << "I have been pressed!" << std::endl;
 		});
