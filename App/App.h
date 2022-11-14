@@ -1,7 +1,12 @@
 #pragma once
 
-#define SCREEN_WIDTH  480
-#define SCREEN_HEIGHT 900
+// Default size of window.
+#define WINDOW_WIDTH  480
+#define WINDOW_HEIGHT 900
+
+// Size of render target.
+#define RENDER_WIDTH  480
+#define RENDER_HEIGHT 900
 
 // Forward declarations.
 class View;
