@@ -39,7 +39,10 @@ public:
 	static inline SDL_Renderer* getSDLRenderer() { return renderer; }
 	static inline TTF_Font*     getSDLDefaultFont() { return regFont; }
 
-
+	static inline View* getViewMainMenu() { return viewMainMenu; }
+	static inline View* getViewMeal() { return viewMeal; }
+	static inline View* getViewShoppingList() { return viewShoppingList; }
+	static inline View* getViewSettings() { return viewSettings; }
 
 private:
 

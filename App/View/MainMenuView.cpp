@@ -43,4 +43,24 @@ MainMenuView::MainMenuView()
 		this->addWidget(title);
 		title->setHorizontallyCentered();
 	}
+
+	Button* button2 = new Button("Liste de course");
+	{
+		button2->setPosition(40, 700);
+		button2->setSize(400, 0);
+		button2->setOnClickCallback([]() {
+			App::setCurrentView(App::getViewSettings());
+			});
+		this->addWidget(button2);
+	}
+
+	Button* button1 = new Button("Settings");
+	{
+		button1->setPosition(40, 760);
+		button1->setSize(400, 0);
+		button1->setOnClickCallback([]() {
+			App::setCurrentView(App::getViewSettings());
+		});
+		this->addWidget(button1);
+	}
 }
