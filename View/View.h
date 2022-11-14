@@ -6,6 +6,7 @@
 
 class Widget;
 
+struct SDL_Window;
 struct SDL_Renderer;
 typedef union SDL_Event;
 
@@ -18,11 +19,11 @@ class View
 {
 public:
 
-	View();
+	View( SDL_Window* window, SDL_Renderer* re );
 	~View();
 
 		/// Renders all the widgets in this view.
-	void render( SDL_Renderer* r );
+	void render();
 
 		/// Add a widget to this view.
 		/// Once added to a view, a widget's ownership is transfered to it, and the view
@@ -37,8 +38,13 @@ public:
 		/// If the cursor is not hovering any widget, this returns null.
 	Widget* getHoveredWidget() const;
 
+	int getWidth() const;
+	int getHeight() const;
+
 	TTF_Font* getFont() const { return font; }
 	void setFont(TTF_Font* f) { font = f; }
+
+	SDL_Renderer* getSDLRenderer() const { return renderer;  }
 
 
 
@@ -48,6 +54,9 @@ private:
 	Widget* hoveredWidget;
 
 	Color backgroundColor;
+
+	SDL_Window* window;
+	SDL_Renderer* renderer;
 
 	TTF_Font* font;
 };

@@ -1,5 +1,7 @@
 #include "Widget.h"
 
+#include "View.h"
+
 #include <SDL.h>
 
 
@@ -39,4 +41,13 @@ void Widget::setSize( int w, int h )
 void Widget::setColor( unsigned char r, unsigned char g, unsigned char b )
 {
 	this->color = Color( r, g, b );
+}
+
+void Widget::setHorizontallyCentered()
+{
+	if (!this->view) {
+		return;
+	}
+
+	this->posX = (view->getWidth() - this->width) / 2;
 }

@@ -15,9 +15,15 @@ public:
 	Text();
 	~Text();
 
+	void setText(const char* text);
+
 	virtual void render(SDL_Renderer*) override;
 
-	void setText(const char* text);
+	virtual void onAddToView(View* v) override;
+
+private:
+
+	void regenerateSDLTexture();
 
 
 

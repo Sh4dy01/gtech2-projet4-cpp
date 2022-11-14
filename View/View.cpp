@@ -6,8 +6,8 @@
 
 
 
-View::View()
-	: hoveredWidget( 0 ), font( 0 )
+View::View(SDL_Window* window, SDL_Renderer* renderer)
+	: hoveredWidget( 0 ), font( 0 ), window(window), renderer(renderer)
 {
 
 }
@@ -19,25 +19,26 @@ View::~View()
 	}
 }
 
-void View::render( SDL_Renderer* r )
+void View::render()
 {
 	// Clear screen.
-	SDL_SetRenderDrawColor( r, backgroundColor.getR(), backgroundColor.getG(), backgroundColor.getB(), 0xFF);
-	SDL_RenderClear( r );
+	SDL_SetRenderDrawColor(renderer, backgroundColor.getR(), backgroundColor.getG(), backgroundColor.getB(), 0xFF);
+	SDL_RenderClear(renderer);
 
 	// Render widgets.
 	for ( Widget* w : widgets ) {
-		w->render( r );
+		w->render(renderer);
 	}
 
 	// Present.
-	SDL_RenderPresent( r );
+	SDL_RenderPresent(renderer);
 }
 
 void View::addWidget( Widget* w )
 {
 	widgets.push_back( w );
 	w->view = this;
+	w->onAddToView(this);
 }
 
 void View::setBackgroundColor(unsigned char r, unsigned char g, unsigned char b)
@@ -88,4 +89,18 @@ Widget* View::getHoveredWidget() const
 		}
 	}
 	return 0;
+}
+
+int View::getWidth() const
+{
+	int w;
+	SDL_GetWindowSize(window, &w, 0);
+	return w;
+}
+
+int View::getHeight() const
+{
+	int h;
+	SDL_GetWindowSize(window, 0, &h);
+	return h;
 }

@@ -63,7 +63,7 @@ int main(int argc, char* args[])
 	InitSDL();
 
 	// View test.
-	View* view = new View();
+	View* view = new View(window, renderer);
 	view->setBackgroundColor(240, 240, 240);
 	view->setFont(font);
 	{
@@ -72,6 +72,7 @@ int main(int argc, char* args[])
 		button->setSize( 80, 20 );
 		button->setOnClickCallback(onBtnExit);
 		view->addWidget(button);
+		button->setHorizontallyCentered();
 
 		Button* button0 = new Button("Press Me!");
 		button0->setPosition(10, 60);
@@ -86,13 +87,14 @@ int main(int argc, char* args[])
 		title->setColor(0, 127, 127);
 		title->setText("Bib.io");
 		view->addWidget(title);
+		title->setHorizontallyCentered();
 	}
 
 	SDL_Event e;
 
 	while (IsAppRuning) {
 
-		view->render(renderer );
+		view->render();
 
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT)

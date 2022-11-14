@@ -49,9 +49,6 @@
     <ClInclude Include="bib.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="View\Button.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -78,10 +75,5 @@
     <Font Include="..\Libs\Fonts\Comfortaa-Regular.ttf">
       <Filter>Fichiers de ressources\Fonts</Filter>
     </Font>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc">
-      <Filter>Fichiers de ressources</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>
