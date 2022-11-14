@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libs\SDL2-2.24.2\include;$(SolutionDir)Libs\SDL2_ttf-2.20.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Libs\SDL2-2.24.2\include;$(SolutionDir)Libs\SDL2_ttf-2.20.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +137,11 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="App\App.cpp" />
+    <ClCompile Include="App\View\MainMenuView.cpp" />
+    <ClCompile Include="App\View\MealView.cpp" />
+    <ClCompile Include="App\View\SettingsView.cpp" />
+    <ClCompile Include="App\View\ShoppingListView.cpp" />
     <ClCompile Include="bib.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="View\Button.cpp" />
@@ -146,6 +151,11 @@
     <ClCompile Include="View\Widget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App\App.h" />
+    <ClInclude Include="App\View\MainMenuView.h" />
+    <ClInclude Include="App\View\MealView.h" />
+    <ClInclude Include="App\View\SettingsView.h" />
+    <ClInclude Include="App\View\ShoppingListView.h" />
     <ClInclude Include="bib.h" />
     <ClInclude Include="View\Button.h" />
     <ClInclude Include="View\Color.h" />
