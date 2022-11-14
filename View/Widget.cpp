@@ -1,5 +1,4 @@
 #include "Widget.h"
-
 #include "View.h"
 
 #include <SDL.h>
@@ -51,4 +50,31 @@ void Widget::setHorizontallyCentered()
 	}
 
 	this->posX = (view->getWidth() - this->width) / 2;
+}
+
+void Widget::setHorizontallyCentered(int offset)
+{
+	if (!this->view) {
+		return;
+	}
+
+	this->posX = (view->getWidth() - this->width) / 2 + offset;
+}
+
+void Widget::setVerticallyCentered()
+{
+	if (!this->view) {
+		return;
+	}
+
+	this->posY = (view->getHeight() - this->height) / 2;
+}
+
+void Widget::setVerticallyCentered(int offset)
+{
+	if (!this->view) {
+		return;
+	}
+
+	this->posY = (view->getHeight() - this->height) / 2 + offset;
 }

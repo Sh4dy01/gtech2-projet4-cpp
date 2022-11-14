@@ -37,6 +37,9 @@ public:
 		/// The final position will depend on the size of the view and the size of this widget.
 		///	The calling widget must be owned by a view BEFORE calling this method.
 	void setHorizontallyCentered();
+	void setHorizontallyCentered(int offset);
+	void setVerticallyCentered();
+	void setVerticallyCentered(int offset);
 
 
 
