@@ -2,8 +2,6 @@
 
 #include "Widget.h"
 
-#include <string>
-
 struct SDL_Texture;
 struct SDL_Surface;
 
@@ -14,11 +12,11 @@ class Image : public Widget
 
 public:
 
-	Image(std::string path);
+	Image(const char* path);
 	~Image();
 
 	virtual void render(SDL_Renderer* r) override;
-	SDL_Surface* loadSurface(std::string path);
+	SDL_Surface* loadSurface(const char* path);
 
 	virtual void onAddToView(View* v) override;
 
@@ -32,7 +30,7 @@ public:
 
 private:
 
-	std::string label;
+	const char* path;
 	SDL_Texture* labelTexture;
 
 	void (*onClickCallback)();

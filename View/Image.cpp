@@ -6,9 +6,10 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+#include <iostream>
 
-Image::Image(std::string label)
-	: label(label), onClickCallback(0)
+Image::Image(const char* path)
+	: path(path), onClickCallback(0)
 	, labelTexture(0)
 {
 
@@ -23,26 +24,37 @@ Image::~Image()
 
 void Image::render(SDL_Renderer* r)
 {
-	
+	SDL_Rect rect = { this->posX, this->posY, this->width, this->height };
+	SDL_RenderCopy(r, this->labelTexture, NULL, &rect);
 }
 
 void Image::onAddToView(View* v)
 {
 	// Generate label texture.
-	SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), this->label.c_str(), { 0, 0, 0, 255 });
+	SDL_Surface* temp = IMG_Load(path);
+	if (temp == NULL) {
+		std::cout << "Error loading image: " << IMG_GetError();
+		App::setShouldClose();
+	}
+
+	if (this->width == 100 || this->height == 100)
+	{
+		this->width = temp->w;
+		this->height = temp->h;
+	}
 	this->labelTexture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), temp);
 	SDL_FreeSurface(temp);
 }
 
-SDL_Surface* Image::loadSurface(std::string path) {
+SDL_Surface* Image::loadSurface(const char* path) {
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
 
 	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	SDL_Surface* loadedSurface = IMG_Load(path);
 	if (loadedSurface == NULL)
 	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
 	}
 	else
 	{
@@ -50,7 +62,7 @@ SDL_Surface* Image::loadSurface(std::string path) {
 		optimizedSurface = SDL_ConvertSurface(loadedSurface, SDL_GetWindowSurface(App::getSDLWindow())->format, 0);
 		if (optimizedSurface == NULL)
 		{
-			printf("Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			printf("Unable to optimize image %s! SDL Error: %s\n", path, SDL_GetError());
 		}
 
 		//Get rid of old loaded surface
