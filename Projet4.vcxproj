@@ -139,9 +139,19 @@
   <ItemGroup>
     <ClCompile Include="bib.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="View\Button.cpp" />
+    <ClCompile Include="View\Color.cpp" />
+    <ClCompile Include="View\Text.cpp" />
+    <ClCompile Include="View\View.cpp" />
+    <ClCompile Include="View\Widget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bib.h" />
+    <ClInclude Include="View\Button.h" />
+    <ClInclude Include="View\Color.h" />
+    <ClInclude Include="View\Text.h" />
+    <ClInclude Include="View\View.h" />
+    <ClInclude Include="View\Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="..\Libs\Fonts\Comfortaa-Bold.ttf" />
