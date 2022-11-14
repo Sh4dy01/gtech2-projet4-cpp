@@ -46,17 +46,23 @@ void Button::render( SDL_Renderer* r )
 	// Render text.
 	if (this->label.size() > 0) {
 
-		if (!this->labelTexture) {
-			SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), this->label.c_str(), { 0, 0, 0, 255 });
-			this->labelTexture = SDL_CreateTextureFromSurface(r, temp);
-			SDL_FreeSurface(temp);
-		}
-
 		rect.y += 3;
 		rect.x += 2;
 		SDL_QueryTexture(this->labelTexture, NULL, NULL, &rect.w, &rect.h);
 		SDL_RenderCopy(r, this->labelTexture, 0, &rect);
 	}
+}
+
+void Button::onAddToView(View* v)
+{
+	// Generate label texture.
+	SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), this->label.c_str(), { 0, 0, 0, 255 });
+	this->labelTexture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), temp);
+	SDL_FreeSurface(temp);
+
+	// Update button height to match font size.
+	SDL_QueryTexture(this->labelTexture, NULL, NULL, 0, &this->height);
+	this->height += 4;
 }
 
 void Button::onMouseHover()

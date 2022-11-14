@@ -75,21 +75,23 @@ int main(int argc, char* args[])
 {
 	InitSDL();
 
+	Button* button;
+
 	// View test.
 	View* view = new View(window, renderer);
 	view->setBackgroundColor(240, 240, 240);
 	view->setFont(regFont);
 	{
-		Button* button = new Button("Exit");
-		button->setPosition( 10, 30 );
-		button->setSize( 80, 20 );
+		button = new Button("Exit");
+		button->setPosition( 20, 60 );
+		button->setSize( 80, 0 );
 		button->setOnClickCallback(onBtnExit);
 		view->addWidget(button);
 		button->setHorizontallyCentered();
 
 		Button* button0 = new Button("Press Me!");
-		button0->setPosition(10, 60);
-		button0->setSize(80, 20);
+		button0->setPosition(10, 120);
+		button0->setSize(180, 0);
 		button0->setOnClickCallback([]() {
 			std::cout << "I have been pressed!" << std::endl;
 		});
@@ -106,6 +108,7 @@ int main(int argc, char* args[])
 	SDL_Event e;
 	while (IsAppRuning) {
 
+		button->setHorizontallyCentered();
 		view->render();
 
 		while (SDL_PollEvent(&e)) {

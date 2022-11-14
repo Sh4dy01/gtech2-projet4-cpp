@@ -19,6 +19,8 @@ public:
 
 	virtual void render(SDL_Renderer* r) override;
 
+	virtual void onAddToView(View* v) override;
+
 	virtual void onMouseHover() override;
 	virtual void onMouseUnhover() override;
 	virtual void onMouseClick() override;
