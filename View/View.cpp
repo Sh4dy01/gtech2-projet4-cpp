@@ -91,6 +91,19 @@ Widget* View::getHoveredWidget() const
 	return 0;
 }
 
+void View::getMousePos(int* x, int* y) const
+{
+	int ww, wh;
+	SDL_GetWindowSize(window, &ww, &wh);
+
+	SDL_GetMouseState(x, y);
+	*x *= 480;
+	*y *= 900;
+
+	*x /= ww;
+	*y /= wh;
+}
+
 int View::getWidth() const
 {
 	int w;
