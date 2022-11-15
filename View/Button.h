@@ -5,6 +5,7 @@
 #include <string>
 
 struct SDL_Texture;
+typedef struct _TTF_Font TTF_Font;
 
 
 
@@ -16,6 +17,9 @@ public:
 
 	Button( const char* label = "" );
 	~Button();
+
+		/// Set an optional font to override the global font of the widget's owning view.
+	void setFont(TTF_Font* font);
 
 	virtual void render(SDL_Renderer* r) override;
 
@@ -33,6 +37,8 @@ private:
 
 	std::string label;
 	SDL_Texture* labelTexture;
+
+	TTF_Font* font;
 
 	void (*onClickCallback)();
 };

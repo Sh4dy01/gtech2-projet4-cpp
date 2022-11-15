@@ -9,7 +9,7 @@
 
 Button::Button(const char* label)
 	: label( label ), onClickCallback( 0 )
-	, labelTexture( 0 )
+	, labelTexture( 0 ), font( 0 )
 {
 	
 }
@@ -19,6 +19,11 @@ Button::~Button()
 	if (this->labelTexture) {
 		SDL_DestroyTexture(this->labelTexture);
 	}
+}
+
+void Button::setFont(TTF_Font* font)
+{
+	this->font = font;
 }
 
 void Button::render( SDL_Renderer* r )
@@ -57,8 +62,13 @@ void Button::render( SDL_Renderer* r )
 
 void Button::onAddToView(View* v)
 {
+	TTF_Font* usedFont = this->font;
+	if (!usedFont) {
+		usedFont = this->view->getFont();
+	}
+
 	// Generate label texture.
-	SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), this->label.c_str(), { 0, 0, 0, 255 });
+	SDL_Surface* temp = TTF_RenderText_Blended(usedFont, this->label.c_str(), { 0, 0, 0, 255 });
 	this->labelTexture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), temp);
 	SDL_FreeSurface(temp);
 }
@@ -70,12 +80,11 @@ void Button::onMouseHover()
 
 void Button::onMouseUnhover()
 {
-	this->setColor(255, 255, 255);
+
 }
 
 void Button::onMouseClick()
 {
-	this->setColor(220, 220, 220);
 
 	if (this->onClickCallback)
 		this->onClickCallback();

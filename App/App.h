@@ -10,6 +10,10 @@
 #define RENDER_WIDTH  480
 #define RENDER_HEIGHT 900
 
+// Size of buttons.
+#define BUTTON_WIDTH 400
+#define BUTTON_HEIGHT 50
+
 // Forward declarations.
 class View;
 class Bib;

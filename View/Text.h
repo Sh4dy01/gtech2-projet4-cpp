@@ -5,6 +5,7 @@
 #include <string>
 
 struct SDL_Texture;
+typedef struct _TTF_Font TTF_Font;
 
 
 
@@ -15,7 +16,11 @@ public:
 	Text();
 	~Text();
 
+		/// Set the text to be displayed by this widget.
 	void setText(const char* text);
+
+		/// Set an optional font to override the global font of the widget's owning view.
+	void setFont(TTF_Font* font);
 
 	virtual void render(SDL_Renderer*) override;
 
@@ -31,4 +36,6 @@ private:
 
 	std::string text;
 	SDL_Texture* texture;
+
+	TTF_Font* font;
 };
