@@ -38,6 +38,9 @@ public:
 		/// If the cursor is not hovering any widget, this returns null.
 	Widget* getHoveredWidget() const;
 
+		/// Get the mouse cursor's position relative to render space.
+		/// This method takes into account the window resizing and scaling.
+		/// Use this instead of SDL_GetMouseState().
 	void getMousePos(int* x, int* y) const;
 
 	int getWidth() const;
@@ -46,7 +49,7 @@ public:
 	TTF_Font* getFont() const { return font; }
 	void setFont(TTF_Font* f) { font = f; }
 
-	SDL_Renderer* getSDLRenderer() const { return renderer;  }
+	SDL_Renderer* getSDLRenderer() const { return renderer; }
 
 
 

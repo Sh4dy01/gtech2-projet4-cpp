@@ -76,6 +76,8 @@ MainMenuView::MainMenuView()
 		);
 	}
 
+
+
 	Text* title = new Text();
 	{
 		title->setPosition(10, 75);

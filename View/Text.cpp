@@ -8,7 +8,7 @@
 
 
 Text::Text()
-	: texture(0)
+	: texture(0), font(0)
 {
 	
 }
@@ -23,6 +23,12 @@ Text::~Text()
 void Text::setText(const char* text)
 {
 	this->text = text;
+	this->regenerateSDLTexture();
+}
+
+void Text::setFont(TTF_Font* font)
+{
+	this->font = font;
 	this->regenerateSDLTexture();
 }
 
@@ -60,8 +66,15 @@ void Text::regenerateSDLTexture()
 
 	// If text is not empty.
 	if (!text.empty()) {
+
+		TTF_Font* usedFont = this->font;
+		if (!usedFont) {
+			// use global font if no override has been specified.
+			usedFont = this->view->getFont();
+		}
+
 		SDL_Color color = { this->color.getR(), this->color.getG(), this->color.getB(), 0xFF };
-		SDL_Surface* temp = TTF_RenderText_Blended(this->view->getFont(), text.c_str(), color);
+		SDL_Surface* temp = TTF_RenderText_Blended(usedFont, text.c_str(), color);
 
 		texture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), temp);
 
