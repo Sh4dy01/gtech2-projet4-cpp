@@ -49,6 +49,7 @@ public:
 	static inline TTF_Font*     getSDLDefaultFont() { return regFont; }
 	static inline TTF_Font*     GetTitleFont() { return titleFont; }
 	static inline TTF_Font*     getSmallFont() { return smallFont; }
+	static inline TTF_Font*     getLightFont() { return lightFont; }
 
 	static inline View* getViewMainMenu() { return viewMainMenu; }
 	static inline View* getViewMeal() { return viewMeal; }

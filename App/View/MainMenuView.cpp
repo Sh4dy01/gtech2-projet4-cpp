@@ -51,6 +51,16 @@ MainMenuView::MainMenuView()
 		date->setFont(App::GetTitleFont());
 	}
 
+	Text* timer = new Text();
+	{
+		int hour, minutes, seconds;
+		timer->setPosition(WINDOW_WIDTH-50, rectTitle->getPositionY() + 60);
+		timer->setColor(0, 0, 0);
+		this->addWidget(timer);
+		timer->setText(std::to_string(bib->GetReminder()).c_str());
+		timer->setFont(App::getLightFont());
+	}
+
 	Rect* bibiActualIndicator = new Rect();
 	{
 		bibiActualIndicator->setColor(246, 239, 220);
