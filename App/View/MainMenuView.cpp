@@ -27,12 +27,20 @@ MainMenuView::MainMenuView()
 {
 	int currentQuantity = 50;
 
-	this->setBackgroundColor(240, 240, 240);
+	this->setBackgroundColor(82, 89, 92);
 	this->setFont(App::getSDLDefaultFont());
+
+	Rect* rectTitle = new Rect();
+	{
+		rectTitle->setPosition(0,70);
+		rectTitle->setSize(WINDOW_WIDTH,110);
+		rectTitle->setColor(245, 195, 194);
+		this->addWidget(rectTitle);
+	}
 
 	bibiActualIndicator = new Rect();
 	{
-		bibiActualIndicator->setColor(0, 239, 220);
+		bibiActualIndicator->setColor(246, 239, 220);
 		this->addWidget(bibiActualIndicator);
 	}
 
@@ -67,64 +75,48 @@ MainMenuView::MainMenuView()
 			bibiPNG->getPositionY() + MIN_INDICATOR_FULL - (bibiMinLimitIndicattor->getHeight()/2) - MIN_INDICATOR_Y_STEP * currentQuantity
 		);
 	}
-	
-
-	Button* button = new Button("Exit");
-	{
-		button->setPosition(20, 60);
-		button->setSize(80, 40);
-		button->setOnClickCallback([]() {
-			App::setShouldClose();
-		});
-		this->addWidget(button);
-		button->setHorizontallyCentered();
-	}
-
-	Button* button0 = new Button("Press Me!");
-	{
-		button0->setPosition(10, 120);
-		button0->setSize(180, 40);
-		button0->setOnClickCallback([]() {
-			std::cout << "I have been pressed!" << std::endl;
-		});
-		this->addWidget(button0);
-	}
 
 	Text* title = new Text();
 	{
-		title->setPosition(10, 10);
-		title->setColor(0, 127, 127);
+		title->setPosition(10, 75);
 		title->setText("Bib.io");
+		title->setColor(0, 0, 0);
 		this->addWidget(title);
 		title->setHorizontallyCentered();
 	}
 	Button* button3= new Button("New meal");
 	{
-		button3->setPosition(50, 640);
-		button3->setSize(380, 50);
+		button3->setPosition(0, 640);
+		button3->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		button3->setColor(245, 240, 187);
 		button3->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewMeal());
 			});
 		this->addWidget(button3);
+		button3->setHorizontallyCentered();
 	}
 
 	Button* button2 = new Button("Shopping list");
 	{
-		button2->setPosition(50, 700);
-		button2->setSize(380, 50);
+		button2->setPosition(0, 700);
+		button2->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		button2->setColor(181, 222, 255);
 		button2->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewShoppingList());
 			});
 		this->addWidget(button2);
+		button2->setHorizontallyCentered();
 	}
 
 	Button* button1 = new Button("Settings");
 	{
-		button1->setPosition(50, 760);
-		button1->setSize(380, 50);
+		button1->setPosition(0, 760);
+		button1->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		button1->setColor(220, 220, 220);
 		button1->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewSettings());
 		});
 		this->addWidget(button1);
+		button1->setHorizontallyCentered();
 	}
 }
