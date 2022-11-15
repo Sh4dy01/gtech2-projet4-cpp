@@ -20,6 +20,10 @@ Text::~Text()
 	}
 }
 
+void Text::setIsUnderline() {
+	this->isUnderline = true;
+}
+
 void Text::setText(const char* text)
 {
 	this->text = text;
@@ -43,6 +47,10 @@ void Text::render(SDL_Renderer* renderer)
 		SDL_QueryTexture(texture, 0, 0, &dest.w, &dest.h);
 
 		SDL_RenderCopy(renderer, texture, 0, &dest);
+	}
+	if (isUnderline) {
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderDrawLine(renderer, posX,posY+height,posX+width,posY+height);
 	}
 }
 

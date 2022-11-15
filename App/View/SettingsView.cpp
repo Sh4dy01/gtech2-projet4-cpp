@@ -4,6 +4,7 @@
 #include "View/Button.h"
 #include "View/Text.h"
 #include "View/Forms.h"
+#include <SDL_ttf.h>
 
 
 SettingsView::SettingsView()
@@ -47,9 +48,10 @@ SettingsView::SettingsView()
 
 			Text* textVolume = new Text();
 			{
-				textVolume->setPosition(0, 245);
+				textVolume->setPosition(0, 250);
 				textVolume->setText("Feeder volume (ml):");
 				textVolume->setColor(0, 0, 0);
+				textVolume->setFont(App::getSmallFont());
 				this->addWidget(textVolume);
 				textVolume->setHorizontallyCentered();
 			}
@@ -59,6 +61,7 @@ SettingsView::SettingsView()
 				dataBtn0->setPosition(0, 290);
 				dataBtn0->setSize(300, 30);
 				dataBtn0->setColor(245, 240, 187);
+				dataBtn0->setFont(App::getSmallFont());
 				dataBtn0->setOnClickCallback([]() {
 					});
 				this->addWidget(dataBtn0);
@@ -78,9 +81,10 @@ SettingsView::SettingsView()
 
 			Text* textQtyMin = new Text();
 			{
-				textQtyMin->setPosition(0, 375);
+				textQtyMin->setPosition(0, 380);
 				textQtyMin->setText("Minimum amount to eat (ml):");
 				textQtyMin->setColor(0, 0, 0);
+				textQtyMin->setFont(App::getSmallFont());
 				this->addWidget(textQtyMin);
 				textQtyMin->setHorizontallyCentered();
 			}
@@ -90,6 +94,7 @@ SettingsView::SettingsView()
 				dataBtn1->setPosition(0, 420);
 				dataBtn1->setSize(300, 30);
 				dataBtn1->setColor(245, 240, 187);
+				dataBtn1->setFont(App::getSmallFont());
 				dataBtn1->setOnClickCallback([]() {
 					});
 				this->addWidget(dataBtn1);
@@ -109,9 +114,10 @@ SettingsView::SettingsView()
 
 			Text* textQtyMax = new Text();
 			{
-				textQtyMax->setPosition(0, 505);
-				textQtyMax->setText("Minimum amount to eat (ml):");
+				textQtyMax->setPosition(0, 510);
+				textQtyMax->setText("Maximum amount to eat (ml):");
 				textQtyMax->setColor(0, 0, 0);
+				textQtyMax->setFont(App::getSmallFont());
 				this->addWidget(textQtyMax);
 				textQtyMax->setHorizontallyCentered();
 			}
@@ -121,6 +127,7 @@ SettingsView::SettingsView()
 				dataBtn2->setPosition(0, 550);
 				dataBtn2->setSize(300, 30);
 				dataBtn2->setColor(245, 240, 187);
+				dataBtn2->setFont(App::getSmallFont());
 				dataBtn2->setOnClickCallback([]() {
 					});
 				this->addWidget(dataBtn2);

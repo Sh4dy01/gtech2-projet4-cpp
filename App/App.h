@@ -45,6 +45,7 @@ public:
 	static inline SDL_Window*   getSDLWindow() { return window; }
 	static inline SDL_Renderer* getSDLRenderer() { return renderer; }
 	static inline TTF_Font*     getSDLDefaultFont() { return regFont; }
+	static inline TTF_Font*     getSmallFont() { return smallFont; }
 
 	static inline View* getViewMainMenu() { return viewMainMenu; }
 	static inline View* getViewMeal() { return viewMeal; }
@@ -60,6 +61,7 @@ private:
 	static TTF_Font* regFont;
 	static TTF_Font* boldFont;
 	static TTF_Font* lightFont;
+	static TTF_Font* smallFont;
 
 
 		/// Views.
@@ -72,4 +74,5 @@ private:
 
 		/// Running flag.
 	static bool running;
+
 };

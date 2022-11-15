@@ -14,6 +14,7 @@ SDL_Renderer* App::renderer = 0;
 TTF_Font* App::regFont = 0;
 TTF_Font* App::boldFont = 0;
 TTF_Font* App::lightFont = 0;
+TTF_Font* App::smallFont = 0;
 
 View* App::currentView = 0;
 
@@ -68,6 +69,11 @@ bool App::initialize()
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	}
+	smallFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 22);
+	if (boldFont == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+	}
 
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
@@ -112,6 +118,7 @@ void App::quit()
 	TTF_CloseFont(regFont);
 	TTF_CloseFont(boldFont);
 	TTF_CloseFont(lightFont);
+	TTF_CloseFont(smallFont);
 
 	TTF_Quit();
 

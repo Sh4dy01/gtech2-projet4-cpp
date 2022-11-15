@@ -16,6 +16,8 @@ public:
 	Text();
 	~Text();
 
+	void setIsUnderline();
+
 		/// Set the text to be displayed by this widget.
 	void setText(const char* text);
 
@@ -33,6 +35,8 @@ private:
 
 
 private:
+
+	bool isUnderline = false;
 
 	std::string text;
 	SDL_Texture* texture;
