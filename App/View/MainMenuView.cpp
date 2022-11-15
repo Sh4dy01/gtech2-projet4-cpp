@@ -39,13 +39,25 @@ MainMenuView::MainMenuView()
 		this->addWidget(rectTitle);
 	}
 
-	bibiActualIndicator = new Rect();
+	Text* date = new Text();
+	{
+		char buffer[30];
+		App::GetCurrentTime(buffer);
+
+		date->setPosition(10, rectTitle->getPositionY()+60);
+		date->setColor(0, 0, 0);
+		this->addWidget(date);
+		date->setText(buffer);
+		date->setFont(App::GetTitleFont());
+	}
+
+	Rect* bibiActualIndicator = new Rect();
 	{
 		bibiActualIndicator->setColor(246, 239, 220);
 		this->addWidget(bibiActualIndicator);
 	}
 
-	bibiMinLimitIndicator = new Rect();
+	Rect* bibiMinLimitIndicator = new Rect();
 	{
 		bibiMinLimitIndicator->setColor(255, 0, 0);
 		this->addWidget(bibiMinLimitIndicator);
@@ -82,11 +94,12 @@ MainMenuView::MainMenuView()
 	Text* title = new Text();
 	{
 		title->setPosition(10, 75);
-		title->setText("Bib.io");
 		title->setColor(0, 0, 0);
 		this->addWidget(title);
+		title->setText("Bib.io");
 		title->setHorizontallyCentered();
 	}
+
 	Button* button3= new Button("New meal");
 	{
 		button3->setPosition(0, 640);

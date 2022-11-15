@@ -10,6 +10,11 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
+#include <iostream>
+#include <iomanip>
+#include <ctime>
+#include <sstream>
+
 Bib* App::bib = 0;
 
 SDL_Window* App::window = 0;
@@ -17,6 +22,7 @@ SDL_Renderer* App::renderer = 0;
 TTF_Font* App::regFont = 0;
 TTF_Font* App::boldFont = 0;
 TTF_Font* App::lightFont = 0;
+TTF_Font* App::titleFont = 0;
 
 View* App::currentView = 0;
 
@@ -66,7 +72,13 @@ bool App::initialize()
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	}
-	lightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 32);
+	lightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 24);
+	if (lightFont == NULL)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+	}
+
+	titleFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 24);
 	if (lightFont == NULL)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
@@ -101,6 +113,19 @@ void App::render()
 	SDL_RenderSetScale(renderer, w / (float) RENDER_WIDTH, h / (float) RENDER_HEIGHT);
 
 	currentView->render();
+}
+
+void App::GetCurrentTime(char* out) {
+
+	time_t rawtime;
+	struct tm* timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	strftime(out, 30, "%D - %R", timeinfo);
+
+	std::cout << out << std::endl;
 }
 
 void App::quit()

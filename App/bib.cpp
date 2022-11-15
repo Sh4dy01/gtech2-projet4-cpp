@@ -2,8 +2,8 @@
 
 Bib::Bib() {
 	maxBib = 330;
-	actualQty = 100;
-	minFeed = 50;
+	actualQty = maxBib;
+	minFeed = 55;
 	takeTime = reminder = 0;
 	feedArray.clear();
 }
@@ -16,7 +16,7 @@ void Bib::BibReduction(int qtyToReduce) {
 	this->actualQty -= qtyToReduce;
 }
 
-void Bib::ApplySettings(int maxFeed, int minFeed) {
+void Bib::ApplySettings(int maxBib, int minFeed) {
 	this->maxBib = maxBib;
 	this->minFeed = minFeed;
 }

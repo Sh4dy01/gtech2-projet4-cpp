@@ -6,7 +6,7 @@
 
 
 Widget::Widget()
-	: posX( 0 ), posY( 0 ), width( 100 ), height( 100 )
+	: posX( 0 ), posY( 0 ), width( 100 ), height( 100 ), view(0)
 	, color( 0xFF, 0xFF, 0xFF )
 {
 
