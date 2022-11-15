@@ -68,10 +68,9 @@ MainMenuView::MainMenuView()
 		);
 	}
 	
-
 	Button* button = new Button("Exit");
 	{
-		button->setPosition(20, 60);
+		button->setPosition(20, 300);
 		button->setSize(80, 40);
 		button->setOnClickCallback([]() {
 			App::setShouldClose();
