@@ -1,5 +1,6 @@
 #include "App/App.h"
 #include "MainMenuView.h"
+#include "../bib.h"
 
 #include "View/Button.h"
 #include "View/Text.h"
@@ -16,16 +17,16 @@ static int INDICATOR_OFFSET_X = 11;
 static int INDICATOR_OFFSET_Y = 120;
 static int INDICATOR_FULL_OFFSET = 234;
 
-static int MIN_INDICATOR_OFFSET_X = 12;
-static int MIN_INDICATOR_FULL = 352;
-
-static float MIN_INDICATOR_Y_STEP = (MIN_INDICATOR_FULL - (float)BIBI_INDICATOR_START) / 100;
-static float MIN_INDICATOR_WIDTH_RATIO = 0.866;
+static int LIMIT_INDICATOR_OFFSET_X = 12;
+static int LIMIT_INDICATOR_FULL = 352;
+static float LIMIT_INDICATOR_Y_STEP = (LIMIT_INDICATOR_FULL - (float)BIBI_INDICATOR_START) / 100;
+static float LIMIT_INDICATOR_WIDTH_RATIO = 0.866;
 
 MainMenuView::MainMenuView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
 {
-	int currentQuantity = 50;
+	Bib* bib = App::GetBibi();
+	int currentQuantity = ((float)bib->GetBibQty() / bib->GetMaxBib()) * 100;
 
 	this->setBackgroundColor(240, 240, 240);
 	this->setFont(App::getSDLDefaultFont());
@@ -36,10 +37,10 @@ MainMenuView::MainMenuView()
 		this->addWidget(bibiActualIndicator);
 	}
 
-	bibiMinLimitIndicattor = new Rect();
+	bibiMinLimitIndicator = new Rect();
 	{
-		bibiMinLimitIndicattor->setColor(255, 0, 0);
-		this->addWidget(bibiMinLimitIndicattor);
+		bibiMinLimitIndicator->setColor(255, 0, 0);
+		this->addWidget(bibiMinLimitIndicator);
 	}
 
 	Image* bibiPNG = new Image("Assets/Biberon.png");
@@ -54,17 +55,17 @@ MainMenuView::MainMenuView()
 	{
 		bibiActualIndicator->setPosition(
 			bibiPNG->getPositionX() + INDICATOR_OFFSET_X,
-			bibiPNG->getPositionY() + MIN_INDICATOR_FULL
+			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL
 		);
 		bibiActualIndicator->setSize(
 			bibiPNG->getWidth() - INDICATOR_OFFSET_X * 2,
-			-MIN_INDICATOR_Y_STEP * currentQuantity
+			-LIMIT_INDICATOR_Y_STEP * currentQuantity
 		);
 
-		bibiMinLimitIndicattor->setSize(bibiPNG->getWidth() * MIN_INDICATOR_WIDTH_RATIO, 3);
-		bibiMinLimitIndicattor->setPosition(
-			bibiPNG->getPositionX() + MIN_INDICATOR_OFFSET_X,
-			bibiPNG->getPositionY() + MIN_INDICATOR_FULL - (bibiMinLimitIndicattor->getHeight()/2) - MIN_INDICATOR_Y_STEP * currentQuantity
+		bibiMinLimitIndicator->setSize(bibiPNG->getWidth() * LIMIT_INDICATOR_WIDTH_RATIO, 3);
+		bibiMinLimitIndicator->setPosition(
+			bibiPNG->getPositionX() + LIMIT_INDICATOR_OFFSET_X,
+			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL - (bibiMinLimitIndicator->getHeight() / (float)2) - LIMIT_INDICATOR_Y_STEP * (((float)bib->GetMinFeed() / bib->GetMaxBib()) * 100)
 		);
 	}
 	

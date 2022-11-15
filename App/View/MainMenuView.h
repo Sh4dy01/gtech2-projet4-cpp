@@ -13,5 +13,5 @@ public:
 private:
 
 	Rect* bibiActualIndicator;
-	Rect* bibiMinLimitIndicattor;
+	Rect* bibiMinLimitIndicator;
 };

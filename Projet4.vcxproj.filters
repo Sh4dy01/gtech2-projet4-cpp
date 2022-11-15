@@ -26,7 +26,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="bib.cpp">
+    <ClCompile Include="App\bib.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="View\Button.cpp">
@@ -67,7 +67,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bib.h">
+    <ClInclude Include="App\bib.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="View\Button.h">
@@ -109,16 +109,5 @@
     <ClInclude Include="View\Forms.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\Libs\Fonts\Comfortaa-Bold.ttf">
-      <Filter>Fichiers de ressources\Fonts</Filter>
-    </Font>
-    <Font Include="..\Libs\Fonts\Comfortaa-Light.ttf">
-      <Filter>Fichiers de ressources\Fonts</Filter>
-    </Font>
-    <Font Include="..\Libs\Fonts\Comfortaa-Regular.ttf">
-      <Filter>Fichiers de ressources\Fonts</Filter>
-    </Font>
   </ItemGroup>
 </Project>

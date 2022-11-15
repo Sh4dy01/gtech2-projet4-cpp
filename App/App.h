@@ -12,6 +12,7 @@
 
 // Forward declarations.
 class View;
+class Bib;
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -47,6 +48,8 @@ public:
 	static inline View* getViewShoppingList() { return viewShoppingList; }
 	static inline View* getViewSettings() { return viewSettings; }
 
+	static inline Bib* GetBibi() { return bib; }
+
 private:
 
 		/// SDL stuff.
@@ -68,4 +71,7 @@ private:
 
 		/// Running flag.
 	static bool running;
+
+	//BIBI
+	static Bib* bib;
 };

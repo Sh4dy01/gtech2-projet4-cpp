@@ -1,4 +1,5 @@
 #include "App/App.h"
+#include "bib.h"
 
 #include "App/View/MainMenuView.h"
 #include "App/View/MealView.h"
@@ -8,6 +9,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+
+Bib* App::bib = 0;
 
 SDL_Window* App::window = 0;
 SDL_Renderer* App::renderer = 0;
@@ -74,6 +77,8 @@ bool App::initialize()
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", IMG_GetError());
 	}
+
+	bib = new Bib();
 
 	// Create views.
 	viewMainMenu     = new MainMenuView();
