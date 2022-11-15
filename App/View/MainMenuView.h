@@ -10,8 +10,4 @@ public:
 
 	MainMenuView();
 
-private:
-
-	Rect* bibiActualIndicator;
-	Rect* bibiMinLimitIndicattor;
 };

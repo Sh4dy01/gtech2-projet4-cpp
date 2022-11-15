@@ -16,6 +16,7 @@
 
 // Forward declarations.
 class View;
+class Bib;
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -31,6 +32,7 @@ public:
 
 	static bool initialize();
 	static void render();
+	static void GetCurrentTime(char* out);
 	static void quit();
 
 	static inline View* getCurrentView() { return currentView; }
@@ -45,12 +47,15 @@ public:
 	static inline SDL_Window*   getSDLWindow() { return window; }
 	static inline SDL_Renderer* getSDLRenderer() { return renderer; }
 	static inline TTF_Font*     getSDLDefaultFont() { return regFont; }
+	static inline TTF_Font*     GetTitleFont() { return titleFont; }
 	static inline TTF_Font*     getSmallFont() { return smallFont; }
 
 	static inline View* getViewMainMenu() { return viewMainMenu; }
 	static inline View* getViewMeal() { return viewMeal; }
 	static inline View* getViewShoppingList() { return viewShoppingList; }
 	static inline View* getViewSettings() { return viewSettings; }
+
+	static inline Bib* GetBibi() { return bib; }
 
 private:
 
@@ -61,6 +66,7 @@ private:
 	static TTF_Font* regFont;
 	static TTF_Font* boldFont;
 	static TTF_Font* lightFont;
+	static TTF_Font* titleFont;
 	static TTF_Font* smallFont;
 
 
@@ -75,4 +81,6 @@ private:
 		/// Running flag.
 	static bool running;
 
+	//BIBI
+	static Bib* bib;
 };

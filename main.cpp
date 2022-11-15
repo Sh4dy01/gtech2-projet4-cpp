@@ -1,10 +1,10 @@
-#include "bib.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 
 #include <iostream>
 
 #include "App/App.h"
+#include "App/bib.h"
 
 #include "View/View.h"
 #include "View/Widget.h"
