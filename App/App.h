@@ -32,6 +32,8 @@ public:
 
 	static bool initialize();
 	static void render();
+	static void Update();
+	static void HandleTimers();
 	static void GetCurrentTime(char* out);
 	static void quit();
 
@@ -49,7 +51,9 @@ public:
 	static inline TTF_Font*     getSDLDefaultFont() { return regFont; }
 	static inline TTF_Font*     GetTitleFont() { return titleFont; }
 	static inline TTF_Font*     getSmallFont() { return smallFont; }
+	static inline TTF_Font*     getSmallLightFont() { return smallLightFont; }
 	static inline TTF_Font*     getLightFont() { return lightFont; }
+	static inline TTF_Font*     getBoldFont() { return boldFont; }
 
 	static inline View* getViewMainMenu() { return viewMainMenu; }
 	static inline View* getViewMeal() { return viewMeal; }
@@ -60,6 +64,11 @@ public:
 
 private:
 
+	static float frameTime;
+	static int prevTime;
+	static int currentTime;
+	static float deltaTime;
+
 		/// SDL stuff.
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
@@ -69,7 +78,7 @@ private:
 	static TTF_Font* lightFont;
 	static TTF_Font* titleFont;
 	static TTF_Font* smallFont;
-
+	static TTF_Font* smallLightFont;
 
 		/// Views.
 	static View* currentView;

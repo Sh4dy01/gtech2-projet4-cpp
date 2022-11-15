@@ -39,7 +39,7 @@ MainMenuView::MainMenuView()
 		this->addWidget(rectTitle);
 	}
 
-	Text* date = new Text();
+	date = new Text();
 	{
 		char buffer[30];
 		App::GetCurrentTime(buffer);
@@ -51,14 +51,27 @@ MainMenuView::MainMenuView()
 		date->setFont(App::GetTitleFont());
 	}
 
-	Text* timer = new Text();
+	timer = new Text();
 	{
-		int hour, minutes, seconds;
-		timer->setPosition(WINDOW_WIDTH-50, rectTitle->getPositionY() + 60);
+		int seconds = bib->GetReminder();
+		int minutes = seconds / 60;
+		int hours = minutes / 60;
+		std::string timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes%60)) + ":" + std::to_string(int(seconds%60));
+
 		timer->setColor(0, 0, 0);
 		this->addWidget(timer);
-		timer->setText(std::to_string(bib->GetReminder()).c_str());
-		timer->setFont(App::getLightFont());
+		timer->setText(timerText.c_str());
+		timer->setFont(App::getBoldFont());
+		timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 53, rectTitle->getPositionY() + 50);
+	}
+
+	Text* nextMealText = new Text();
+	{
+		nextMealText->setColor(0, 0, 0);
+		this->addWidget(nextMealText);
+		nextMealText->setText("before next meal");
+		nextMealText->setFont(App::getSmallLightFont());
+		nextMealText->setPosition(WINDOW_WIDTH - nextMealText->getWidth() - 20, timer->getPositionY() + timer->getHeight());
 	}
 
 	Rect* bibiActualIndicator = new Rect();
@@ -146,4 +159,17 @@ MainMenuView::MainMenuView()
 			button1->setHorizontallyCentered();
 		}
 	}
+}
+
+void MainMenuView::update() {
+	char buffer[30];
+	App::GetCurrentTime(buffer);
+
+	date->setText(buffer);
+
+	int seconds = App::GetBibi()->GetReminder();
+	int minutes = seconds / 60;
+	int hours = minutes / 60;
+	std::string timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes % 60)) + ":" + std::to_string(int(seconds % 60));
+	timer->setText(timerText.c_str());
 }

@@ -4,8 +4,16 @@ Bib::Bib() {
 	maxBib = 330;
 	actualQty = maxBib;
 	minFeed = 55;
-	takeTime = reminder = 0;
-	feedArray.clear();
+	takeTime = 0;
+	reminder = 6000; // in seconds
+
+	Feed startFeed{};
+	startFeed.feedQty = 20;
+	startFeed.IsRegurgitated = false;
+	startFeed.takenTime = NULL;
+	startFeed.reminder = 1000;
+
+	feedArray.push_back(startFeed);
 }
 
 void Bib::Refill() {
