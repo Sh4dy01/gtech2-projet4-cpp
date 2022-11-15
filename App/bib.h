@@ -15,20 +15,17 @@ public:
 
     void Refill();
     void BibReduction(int);
-    void ApplySettings(int, int, int);
+    void ApplySettings(int, int);
     void AddFeed(Feed);
 
     inline int GetBibQty() { return actualQty; }
     inline int GetMaxBib() { return maxBib; }
-    inline int GetMaxFeed() { return maxFeed; }
     inline int GetMinFeed() { return minFeed; }
     inline int GetReminder() { return reminder; }
 
 private:
-    int actualQty, maxBib;
-    int maxFeed, minFeed;
+    int actualQty, maxBib, minFeed;
+    int reminder, takeTime;
 
-    int reminder;
-    int takeTime;
     std::vector<Feed> feedArray;
 };
