@@ -8,7 +8,7 @@
 #include "View/Shapes.h"
 
 #include <SDL_ttf.h>
-
+#include <iostream>
 
 SettingsView::SettingsView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
@@ -62,7 +62,7 @@ SettingsView::SettingsView()
 				textVolume->setHorizontallyCentered();
 			}
 
-			InputText* maxBibInput = new InputText(3);
+			maxBibInput = new InputText(3);
 			{
 				maxBibInput->setSize(40, 25);
 				maxBibInput->setPosition(0, textVolume->getPositionY()+maxBibInput->getHeight()+10);
@@ -104,7 +104,7 @@ SettingsView::SettingsView()
 				textQtyMin->setHorizontallyCentered();
 			}
 
-			InputText* actualQtyInput = new InputText(3);
+			actualQtyInput = new InputText(3);
 			{
 				actualQtyInput->setSize(40, 25);
 				actualQtyInput->setPosition(0, textQtyMin->getPositionY() + textQtyMin->getHeight() + 10);
@@ -146,7 +146,7 @@ SettingsView::SettingsView()
 				textMinMeal->setHorizontallyCentered();
 			}
 
-			InputText* minFeedVolInput = new InputText(3);
+			minFeedVolInput = new InputText(3);
 			{
 				minFeedVolInput->setSize(40, 25);
 				minFeedVolInput->setPosition(0, textMinMeal->getPositionY() + textMinMeal->getHeight() + 10);
@@ -179,52 +179,4 @@ SettingsView::SettingsView()
 		this->addWidget(returnBtn);
 		returnBtn->setHorizontallyCentered();
 	}
-}
-
-bool SettingsView::IsInputsNumeric() {
-	/*const char* qtyInput = quantityInput->getText();
-	const char* remInput = reminderInput->getText();
-
-	if (strlen(qtyInput) > 0) {
-		for (int i = 0; i < strlen(qtyInput); i++)
-		{
-			if (!isdigit(qtyInput[i])) {
-				quantityInput->setText("");
-				std::cout << "Non numerical char: " << qtyInput[i] << std::endl;
-
-				return false;
-			}
-		}
-	}
-	else {
-		return false;
-	}
-
-	if (strlen(remInput) > 0) {
-		for (int i = 0; i < strlen(remInput); i++)
-		{
-			if (!isdigit(remInput[i])) {
-				reminderInput->setText("");
-				std::cout << "Non numerical char: " << remInput[i] << std::endl;
-
-				return false;
-			}
-		}
-	}
-	else {
-		return false;
-	}
-
-	if (std::stoi(remInput) > 0)
-	{
-		return true;
-	}
-	else {
-		reminderInput->setText("");
-		std::cout << "Isn't superior to 0: " << remInput << std::endl;
-
-		return false;
-	}*/
-
-	return true;
 }

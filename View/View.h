@@ -6,6 +6,7 @@
 #include <vector>
 
 class Widget;
+class InputText;
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -26,6 +27,8 @@ public:
 		/// Renders all the widgets in this view.
 	void render();
 	virtual void update();
+	bool IsInputsNumeric(InputText*[]);
+	bool IsInputsMoreThanZero(InputText*[]);
 
 		/// Add a widget to this view.
 		/// Once added to a view, a widget's ownership is transfered to it, and the view

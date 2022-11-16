@@ -192,17 +192,20 @@ MealView::MealView()
 	{
 		Button* applyBtn = new Button("Apply");
 		{
+			/*inputs[0] = quantityInput;
+			inputs[1] = quantityInput;*/
+
 			applyBtn->setPosition(0, 640);
 			applyBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			applyBtn->setColor(245, 240, 187);
-			applyBtn->setOnClickCallback([]() {
-				if (((MealView*)App::getViewMeal())->IsInputsNumeric()) 
+			/*applyBtn->setOnClickCallback([]() {
+				if (((MealView*)App::getViewMeal())->IsInputsNumeric(inputs))
 				{
 					((MealView*)App::getViewMeal())->CreateMeal();
 					((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
 					App::setCurrentView(App::getViewMainMenu());
 				}
-				});
+				});*/
 			this->addWidget(applyBtn);
 			applyBtn->setHorizontallyCentered();
 		}
@@ -218,52 +221,6 @@ MealView::MealView()
 			this->addWidget(returnBtn);
 			returnBtn->setHorizontallyCentered();
 		}
-	}
-}
-
-bool MealView::IsInputsNumeric() {
-	const char* qtyInput = quantityInput->getText();
-	const char* remInput = reminderInput->getText();
-
-	if (strlen(qtyInput) > 0) {
-		for (int i = 0; i < strlen(qtyInput); i++)
-		{
-			if (!isdigit(qtyInput[i])) {
-				quantityInput->setText("");
-				std::cout << "Non numerical char: " << qtyInput[i] << std::endl;
-
-				return false;
-			}
-		}
-	}
-	else {
-		return false;
-	}
-	
-	if (strlen(remInput) > 0) {
-		for (int i = 0; i < strlen(remInput); i++)
-		{
-			if (!isdigit(remInput[i])) {
-				reminderInput->setText("");
-				std::cout << "Non numerical char: " << remInput[i] << std::endl;
-
-				return false;
-			}
-		}
-	}
-	else {
-		return false;
-	}
-
-	if (std::stoi(remInput) > 0)
-	{
-		return true;
-	}
-	else {
-		reminderInput->setText("");
-		std::cout << "Isn't superior to 0: " << remInput << std::endl;
-
-		return false;
 	}
 }
 

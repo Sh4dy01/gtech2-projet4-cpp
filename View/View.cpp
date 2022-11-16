@@ -3,6 +3,7 @@
 #include "Widget.h"
 
 #include <SDL.h>
+#include <iostream>
 
 
 
@@ -38,6 +39,50 @@ void View::render()
 
 void View::update()
 {
+}
+
+bool View::IsInputsNumeric(InputText* inputs[])
+{
+	for (int i = 0; i < sizeof(inputs); i++)
+	{
+		const char* text = inputs[i]->getText();
+
+		if (strlen(text) > 0) {
+			for (int i = 0; i < strlen(text); i++)
+			{
+				if (!isdigit(text[i])) {
+					inputs[i]->setText("");
+					std::cout << "Non numerical char: " << text[i] << std::endl;
+
+					return false;
+				}
+			}
+		}
+		else {
+			std::cout << "Input n°" << i << " is empty" << std::endl;
+
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool View::IsInputsMoreThanZero(InputText* inputs[])
+{
+	for (int i = 0; i < sizeof(inputs); i++) {
+		const char* text = inputs[i]->getText();
+
+		if (std::stoi(text) < 0)
+		{
+			inputs[i]->setText("");
+			std::cout << "Isn't superior to 0: " << text << std::endl;
+
+			return false;
+		}
+	}
+		
+	return true;
 }
 
 void View::addWidget( Widget* w )

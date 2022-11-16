@@ -15,11 +15,10 @@ public:
 	void ResetInputs();
 	void CreateMeal();
 
-	bool IsInputsNumeric();
-
 	const char* GetQuantityFromInput() const { return quantityInput->getText(); }
 	const char* GetReminderFromInput() const { return reminderInput->getText(); }
 	Text* getDateWidget() const { return date; }
+	//InputText* getInputsWidget() { return inputs; }
 
 	void SetFullDate(time_t fullDate) { this->fullDate = fullDate; };
 
@@ -30,5 +29,6 @@ private:
 	time_t fullDate;
 	InputText* quantityInput;
 	InputText* reminderInput;
+	//InputText inputs[2];
 
 };
