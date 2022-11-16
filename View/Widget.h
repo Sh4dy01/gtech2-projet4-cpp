@@ -44,6 +44,9 @@ public:
 	void setVerticallyCentered();
 	void setVerticallyCentered(int offset);
 
+		/// Set this widget to be focused.
+	void setFocused();
+
 
 
 		/// Render this widget using a given SDL renderer.
@@ -55,6 +58,8 @@ public:
 	virtual void onMouseHover() { }
 	virtual void onMouseUnhover() { }
 	virtual void onMouseClick() { }
+
+	virtual void onTextInput(char c) { }
 
 
 

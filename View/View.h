@@ -35,6 +35,9 @@ public:
 
 	void handleEvent( const SDL_Event& e );
 
+	Widget* getFocusedWidget() const { return focusedWidget; }
+	void    setFocusedWidget(Widget* w) { focusedWidget = w; }
+
 		/// Returns a pointer to the widget hovered by the mouse cursor.
 		/// If the cursor is not hovering any widget, this returns null.
 	Widget* getHoveredWidget() const;
@@ -57,6 +60,7 @@ public:
 private:
 
 	std::vector<Widget*> widgets;
+	Widget* focusedWidget;
 	Widget* hoveredWidget;
 
 	Color backgroundColor;

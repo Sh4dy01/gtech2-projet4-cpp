@@ -16,6 +16,7 @@ public:
 	Text();
 	~Text();
 
+	std::string inline GetText() { return text; };
 	void setIsUnderline();
 
 		/// Set the text to be displayed by this widget.

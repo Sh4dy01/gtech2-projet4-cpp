@@ -7,7 +7,7 @@
 
 
 View::View(SDL_Window* window, SDL_Renderer* renderer)
-	: hoveredWidget( 0 ), font( 0 ), window(window), renderer(renderer)
+	: hoveredWidget( 0 ), focusedWidget( 0 ), font( 0 ), window(window), renderer(renderer)
 {
 
 }
@@ -63,6 +63,14 @@ void View::handleEvent( const SDL_Event& e )
 			if (w) {
 				w->onMouseClick();
 			}
+			else {
+				// Always unfocus when clicking inside the window.
+				this->focusedWidget = 0;
+
+				if (SDL_IsTextInputActive()) {
+					SDL_StopTextInput();
+				}
+			}
 		}
 		break;
 
@@ -82,6 +90,23 @@ void View::handleEvent( const SDL_Event& e )
 				if (this->hoveredWidget) {
 					this->hoveredWidget->onMouseHover();
 				}
+			}
+		}
+		break;
+
+		// Text input.
+	case SDL_KEYDOWN:
+		{
+			if (e.key.keysym.sym == SDLK_BACKSPACE) {
+				this->focusedWidget->onTextInput('\b');
+			}
+		}
+		break;
+
+	case SDL_TEXTINPUT:
+		{
+			if (this->focusedWidget) {
+				this->focusedWidget->onTextInput(e.text.text[0]);
 			}
 		}
 		break;

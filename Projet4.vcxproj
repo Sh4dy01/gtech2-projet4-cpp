@@ -148,6 +148,7 @@
     <ClCompile Include="View\Color.cpp" />
     <ClCompile Include="View\Forms.cpp" />
     <ClCompile Include="View\Image.cpp" />
+    <ClCompile Include="View\InputText.cpp" />
     <ClCompile Include="View\Text.cpp" />
     <ClCompile Include="View\View.cpp" />
     <ClCompile Include="View\Widget.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="View\Color.h" />
     <ClInclude Include="View\Forms.h" />
     <ClInclude Include="View\Image.h" />
+    <ClInclude Include="View\InputText.h" />
     <ClInclude Include="View\Text.h" />
     <ClInclude Include="View\View.h" />
     <ClInclude Include="View\Widget.h" />

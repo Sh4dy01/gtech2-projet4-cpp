@@ -88,3 +88,11 @@ void Widget::setVerticallyCentered(int offset)
 
 	this->posY = (view->getHeight() - this->height) / 2 + offset;
 }
+
+void Widget::setFocused()
+{
+	// Check if this widget is owned first!
+	if (this->view) {
+		this->view->setFocusedWidget(this);
+	}
+}

@@ -1,5 +1,6 @@
 #include "App/App.h"
 #include "MainMenuView.h"
+#include "MealView.h"
 #include "../bib.h"
 
 #include "View/Button.h"
@@ -11,22 +12,25 @@
 #include <iostream>
 #include <SDL_image.h>
 
-static int BIBI_INDICATOR_START = 123;
+const int BIBI_INDICATOR_START = 123;
+const int BIBI_WIDTH = 176;
 
-static int INDICATOR_OFFSET_X = 11;
-static int INDICATOR_OFFSET_Y = 120;
-static int INDICATOR_FULL_OFFSET = 234;
+const int INDICATOR_OFFSET_X = 11;
+const int INDICATOR_OFFSET_Y = 120;
+const int INDICATOR_FULL_OFFSET = 234;
 
-static int LIMIT_INDICATOR_OFFSET_X = 12;
-static int LIMIT_INDICATOR_FULL = 352;
-static float LIMIT_INDICATOR_Y_STEP = (LIMIT_INDICATOR_FULL - (float)BIBI_INDICATOR_START) / 100;
-static float LIMIT_INDICATOR_WIDTH_RATIO = 0.866;
+const int LIMIT_INDICATOR_OFFSET_X = 12;
+const int LIMIT_INDICATOR_FULL = 352;
+const float LIMIT_INDICATOR_Y_STEP = (LIMIT_INDICATOR_FULL - (float)BIBI_INDICATOR_START) / 100;
+const float LIMIT_INDICATOR_WIDTH_RATIO = 0.866;
+
+static char buffer[30];
 
 MainMenuView::MainMenuView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
 {
 	Bib* bib = App::GetBibi();
-	int currentQuantity = ((float)bib->GetBibQty() / bib->GetMaxBib()) * 100;
+	currentQty = ((float)bib->GetBibQty() / bib->GetMaxBib()) * 100;
 
 	this->setBackgroundColor(82, 89, 92);
 	this->setFont(App::getSDLDefaultFont());
@@ -41,7 +45,6 @@ MainMenuView::MainMenuView()
 
 	date = new Text();
 	{
-		char buffer[30];
 		App::GetCurrentTime(buffer);
 
 		date->setPosition(10, rectTitle->getPositionY()+60);
@@ -74,7 +77,7 @@ MainMenuView::MainMenuView()
 		nextMealText->setPosition(WINDOW_WIDTH - nextMealText->getWidth() - 20, timer->getPositionY() + timer->getHeight());
 	}
 
-	Rect* bibiActualIndicator = new Rect();
+	bibiActualIndicator = new Rect();
 	{
 		bibiActualIndicator->setColor(246, 239, 220);
 		this->addWidget(bibiActualIndicator);
@@ -108,10 +111,7 @@ MainMenuView::MainMenuView()
 			bibiPNG->getPositionX() + INDICATOR_OFFSET_X,
 			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL
 		);
-		bibiActualIndicator->setSize(
-			bibiPNG->getWidth() - INDICATOR_OFFSET_X * 2,
-			-LIMIT_INDICATOR_Y_STEP * currentQuantity
-		);
+		UpdateBibVisual();
 
 		bibiMinLimitIndicator->setSize(bibiPNG->getWidth() * LIMIT_INDICATOR_WIDTH_RATIO, 3);
 		bibiMinLimitIndicator->setPosition(
@@ -137,6 +137,8 @@ MainMenuView::MainMenuView()
 			button3->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			button3->setColor(245, 240, 187);
 			button3->setOnClickCallback([]() {
+				((MealView*) App::getViewMeal())->getDateWidget()->setText(buffer);
+				((MealView*)App::getViewMeal())->ResetInputs();
 				App::setCurrentView(App::getViewMeal());
 				});
 			this->addWidget(button3);
@@ -169,15 +171,26 @@ MainMenuView::MainMenuView()
 	}
 }
 
-void MainMenuView::update() {
-	char buffer[30];
-	App::GetCurrentTime(buffer);
+void MainMenuView::UpdateBibVisual() {
+	currentQty = ((float)App::GetBibi()->GetBibQty() / App::GetBibi()->GetMaxBib()) * 100;
 
+	bibiActualIndicator->setSize(
+		BIBI_WIDTH - INDICATOR_OFFSET_X * 2,
+		-LIMIT_INDICATOR_Y_STEP * currentQty
+	);
+}
+
+void MainMenuView::update() {
+	App::GetCurrentTime(buffer);
 	date->setText(buffer);
 
+	App::GetBibi()->ReminderReduction();
 	int seconds = App::GetBibi()->GetReminder();
 	int minutes = seconds / 60;
 	int hours = minutes / 60;
-	std::string timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes % 60)) + ":" + std::to_string(int(seconds % 60));
+	std::string timerText = 
+		std::to_string(int(hours)) + ":" + 
+		std::to_string(int(minutes % 60)) + ":" + 
+		std::to_string(int(seconds % 60));
 	timer->setText(timerText.c_str());
 }
