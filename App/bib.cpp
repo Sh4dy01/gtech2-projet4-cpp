@@ -4,7 +4,7 @@
 
 Bib::Bib() {
 	maxBib = 330;
-	actualQty = maxBib;
+	actualQty = 120;
 	minFeed = 55;
 }
 

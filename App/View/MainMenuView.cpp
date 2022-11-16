@@ -95,12 +95,42 @@ MainMenuView::MainMenuView()
 		this->addWidget(bibiMinLimitIndicator);
 	}
 
+	bibActLine = new Rect();
+	{
+		bibActLine->setColor(0, 255, 0);
+		this->addWidget(bibActLine);
+	}
+
+	Text* bibiMinText = new Text();
+	{
+		bibiMinText->setColor(255, 0, 0);
+		bibiMinText->setText(std::to_string(bib->GetMinFeed()).c_str());
+		bibiMinText->setFont(App::getLightFont());
+		this->addWidget(bibiMinText);
+	}
+
 	Image* bibiPNG = new Image("Assets/Biberon.png");
 	{
 		bibiPNG->setPosition(0, 0);
 		this->addWidget(bibiPNG);
 		bibiPNG->setHorizontallyCentered();
 		bibiPNG->setVerticallyCentered(-50);
+	}
+
+	Text* bibiMaxText = new Text();
+	{
+		bibiMaxText->setColor(0, 0, 255);
+		bibiMaxText->setText(std::to_string(bib->GetMaxBib()).c_str());
+		bibiMaxText->setFont(App::getLightFont());
+		this->addWidget(bibiMaxText);
+	}
+
+	bibiActText = new Text();
+	{
+		bibiActText->setColor(0, 255, 0);
+		bibiActText->setText(std::to_string(bib->GetBibQty()).c_str());
+		bibiActText->setFont(App::getLightFont());
+		this->addWidget(bibiActText);
 	}
 
 	Button* tempPlus = new Button("+");
@@ -123,10 +153,34 @@ MainMenuView::MainMenuView()
 		);
 		UpdateBibVisual();
 
-		bibiMinLimitIndicator->setSize(bibiPNG->getWidth() * LIMIT_INDICATOR_WIDTH_RATIO, 3);
+		bibiMinLimitIndicator->setSize(bibiPNG->getWidth(), 3);
 		bibiMinLimitIndicator->setPosition(
-			bibiPNG->getPositionX() + LIMIT_INDICATOR_OFFSET_X,
+			bibiPNG->getPositionX() - LIMIT_INDICATOR_OFFSET_X,
 			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL - (bibiMinLimitIndicator->getHeight() / (float)2) - LIMIT_INDICATOR_Y_STEP * (((float)bib->GetMinFeed() / bib->GetMaxBib()) * 100)
+		);
+
+		bibiMaxText->setPosition(
+			bibiPNG->getPositionX() + bibiPNG->getWidth()/(float)2 + bibiMaxText->getWidth(),
+			bibiPNG->getPositionY() + 15
+		);
+
+		bibiActText->setPosition(
+			bibiActualIndicator->getPositionX() - bibiActText->getWidth() - 20,
+			bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
+		);
+
+		bibActLine->setPosition(
+			bibiActText->getPositionX() + bibiActText->getWidth(),
+			bibiActText->getPositionY() + bibiActText->getHeight()/(float)2-2
+		);
+		bibActLine->setSize(
+			bibiMinLimitIndicator->getWidth(),
+			3
+		);
+
+		bibiMinText->setPosition(
+			bibiActText->getPositionX(),
+			bibiMinLimitIndicator->getPositionY() - bibiMinText->getHeight()/(float)2
 		);
 	}
 
@@ -186,11 +240,24 @@ MainMenuView::MainMenuView()
 }
 
 void MainMenuView::UpdateBibVisual() {
-	currentQty = ((float)App::GetBibi()->GetBibQty() / App::GetBibi()->GetMaxBib()) * 100;
+	int bibiActualQty = App::GetBibi()->GetBibQty();
+
+	currentQty = ((float)bibiActualQty / App::GetBibi()->GetMaxBib()) * 100;
 
 	bibiActualIndicator->setSize(
 		BIBI_WIDTH - INDICATOR_OFFSET_X * 2,
 		-LIMIT_INDICATOR_Y_STEP * currentQty
+	);
+
+	bibiActText->setText(std::to_string(bibiActualQty).c_str());
+	bibiActText->setPosition(
+		bibiActualIndicator->getPositionX() - bibiActText->getWidth() - 20,
+		bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
+	);
+
+	bibActLine->setPosition(
+		bibiActText->getPositionX() + bibiActText->getWidth(),
+		bibiActText->getPositionY() + bibiActText->getHeight() / (float)2 - 2
 	);
 }
 

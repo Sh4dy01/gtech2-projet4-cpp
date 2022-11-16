@@ -18,6 +18,8 @@ private:
 
 	int currentQty;
 	Rect* bibiActualIndicator;
+	Rect* bibActLine;
+	Text* bibiActText;
 	Text* date;
 	Text* timer;
 };
