@@ -6,7 +6,7 @@
 #include "View/Button.h"
 #include "View/Text.h"
 #include "View/Image.h"
-#include "View/Forms.h"
+#include "View/Shapes.h"
 
 
 #include <iostream>
@@ -184,7 +184,7 @@ void MainMenuView::UpdateBibVisual() {
 	);
 }
 
-void MainMenuView::update() {
+void MainMenuView::update()  {
 	App::GetCurrentTime(buffer);
 	date->setText(buffer);
 

@@ -146,7 +146,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="View\Button.cpp" />
     <ClCompile Include="View\Color.cpp" />
-    <ClCompile Include="View\Forms.cpp" />
+    <ClCompile Include="View\Shapes.cpp" />
     <ClCompile Include="View\Image.cpp" />
     <ClCompile Include="View\InputText.cpp" />
     <ClCompile Include="View\Text.cpp" />
@@ -163,7 +163,7 @@
     <ClInclude Include="Libs\SDL2_image-2.6.2\include\SDL_image.h" />
     <ClInclude Include="View\Button.h" />
     <ClInclude Include="View\Color.h" />
-    <ClInclude Include="View\Forms.h" />
+    <ClInclude Include="View\Shapes.h" />
     <ClInclude Include="View\Image.h" />
     <ClInclude Include="View\InputText.h" />
     <ClInclude Include="View\Text.h" />
