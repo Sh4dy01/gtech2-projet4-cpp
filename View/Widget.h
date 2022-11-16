@@ -33,6 +33,9 @@ public:
 	void setSize( int w, int h );
 	void setColor( unsigned char r, unsigned char g, unsigned char b );
 
+	bool isVisible();
+	void setVisible();
+
 		/// Moves the calling widget to be horizontally centered relative to its parent view.
 		/// The final position will depend on the size of the view and the size of this widget.
 		///	The calling widget must be owned by a view BEFORE calling this method.
@@ -74,4 +77,7 @@ protected:
 		/// The background color of this widget.
 		/// default = 0xFFFFFF (white)
 	Color color;
+
+		/// set the visibility of the widget
+	bool visible;
 };

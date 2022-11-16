@@ -7,9 +7,19 @@
 
 Widget::Widget()
 	: posX( 0 ), posY( 0 ), width( 100 ), height( 100 ), view(0)
-	, color( 0xFF, 0xFF, 0xFF )
+	, color( 0xFF, 0xFF, 0xFF ), visible( true )
 {
 
+}
+
+bool Widget::isVisible()
+{
+	return visible;
+}
+
+void Widget::setVisible()
+{
+	visible = !visible;
 }
 
 bool Widget::isMouseHovering() const
@@ -18,7 +28,7 @@ bool Widget::isMouseHovering() const
 	int x, y;
 	view->getMousePos(&x, &y);
 
-	if (x >= this->posX && x <= this->posX + this->width) {
+	if ((x >= this->posX && x <= this->posX + this->width) && visible) {
 		if (y >= this->posY && y <= this->posY + this->height) {
 			return true;
 		}
