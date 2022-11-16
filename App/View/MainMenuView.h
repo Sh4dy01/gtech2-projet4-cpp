@@ -17,9 +17,13 @@ public:
 private:
 
 	int currentQty;
+
 	Rect* bibiActualIndicator;
+	Rect* bibiMinLimitIndicator;
 	Rect* bibActLine;
 	Text* bibiActText;
+	Text* bibiMinText;
+
 	Text* date;
 	Text* timer;
 };

@@ -89,21 +89,21 @@ MainMenuView::MainMenuView()
 		this->addWidget(bibiActualIndicator);
 	}
 
-	Rect* bibiMinLimitIndicator = new Rect();
+	bibiMinLimitIndicator = new Rect();
 	{
-		bibiMinLimitIndicator->setColor(255, 0, 0);
+		bibiMinLimitIndicator->setColor(255, 175, 175);
 		this->addWidget(bibiMinLimitIndicator);
 	}
 
 	bibActLine = new Rect();
 	{
-		bibActLine->setColor(0, 255, 0);
+		bibActLine->setColor(150, 255, 150);
 		this->addWidget(bibActLine);
 	}
 
-	Text* bibiMinText = new Text();
+	bibiMinText = new Text();
 	{
-		bibiMinText->setColor(255, 0, 0);
+		bibiMinText->setColor(255, 175, 175);
 		bibiMinText->setText(std::to_string(bib->GetMinFeed()).c_str());
 		bibiMinText->setFont(App::getLightFont());
 		this->addWidget(bibiMinText);
@@ -119,7 +119,7 @@ MainMenuView::MainMenuView()
 
 	Text* bibiMaxText = new Text();
 	{
-		bibiMaxText->setColor(0, 0, 255);
+		bibiMaxText->setColor(181, 222, 255);
 		bibiMaxText->setText(std::to_string(bib->GetMaxBib()).c_str());
 		bibiMaxText->setFont(App::getLightFont());
 		this->addWidget(bibiMaxText);
@@ -127,19 +127,20 @@ MainMenuView::MainMenuView()
 
 	bibiActText = new Text();
 	{
-		bibiActText->setColor(0, 255, 0);
+		bibiActText->setColor(150, 255, 150);
 		bibiActText->setText(std::to_string(bib->GetBibQty()).c_str());
 		bibiActText->setFont(App::getLightFont());
 		this->addWidget(bibiActText);
 	}
 
-	Button* tempPlus = new Button("+");
+	Button* fillButton = new Button("Fill");
 	{
-		tempPlus->setPosition(bibiPNG->getPositionX()+180, bibiPNG->getPositionY()+140);
-		tempPlus->setSize(28, 28);
-		tempPlus->setColor(240, 240, 240);
-		this->addWidget(tempPlus);
-		tempPlus->setOnClickCallback([]() {
+		fillButton->setPosition(bibiPNG->getPositionX() + bibiPNG->getWidth() + 4, bibiPNG->getPositionY() + 80);
+		fillButton->setSize(28, 28);
+		fillButton->setFont(App::getSmallLightFont());
+		fillButton->setColor(181, 222, 255);
+		this->addWidget(fillButton);
+		fillButton->setOnClickCallback([]() {
 			((Bib*)App::GetBibi())->Refill();
 			((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
 		});
@@ -151,7 +152,6 @@ MainMenuView::MainMenuView()
 			bibiPNG->getPositionX() + INDICATOR_OFFSET_X,
 			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL
 		);
-		UpdateBibVisual();
 
 		bibiMinLimitIndicator->setSize(bibiPNG->getWidth(), 3);
 		bibiMinLimitIndicator->setPosition(
@@ -160,28 +160,16 @@ MainMenuView::MainMenuView()
 		);
 
 		bibiMaxText->setPosition(
-			bibiPNG->getPositionX() + bibiPNG->getWidth()/(float)2 + bibiMaxText->getWidth(),
-			bibiPNG->getPositionY() + 15
+			bibiPNG->getPositionX() + bibiPNG->getWidth(),
+			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL - (bibiMaxText->getHeight() / (float)2) - LIMIT_INDICATOR_Y_STEP * 100
 		);
 
-		bibiActText->setPosition(
-			bibiActualIndicator->getPositionX() - bibiActText->getWidth() - 20,
-			bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
-		);
-
-		bibActLine->setPosition(
-			bibiActText->getPositionX() + bibiActText->getWidth(),
-			bibiActText->getPositionY() + bibiActText->getHeight()/(float)2-2
-		);
 		bibActLine->setSize(
-			bibiMinLimitIndicator->getWidth(),
+			bibiMinLimitIndicator->getWidth() + bibiMinText->getWidth(),
 			3
 		);
 
-		bibiMinText->setPosition(
-			bibiActText->getPositionX(),
-			bibiMinLimitIndicator->getPositionY() - bibiMinText->getHeight()/(float)2
-		);
+		UpdateBibVisual();
 	}
 
 	Text* title = new Text();
@@ -255,9 +243,19 @@ void MainMenuView::UpdateBibVisual() {
 		bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
 	);
 
+	bibiMinText->setPosition(
+		bibiActText->getPositionX(),
+		bibiMinLimitIndicator->getPositionY() - bibiMinText->getHeight() / (float)2
+	);
+
 	bibActLine->setPosition(
-		bibiActText->getPositionX() + bibiActText->getWidth(),
+		bibiActText->getPositionX() + bibiActText->getWidth() - bibiMinText->getWidth(),
 		bibiActText->getPositionY() + bibiActText->getHeight() / (float)2 - 2
+	);
+
+	bibiActText->setPosition(
+		bibiActualIndicator->getPositionX() - bibiActText->getWidth()*2.7,
+		bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
 	);
 }
 
