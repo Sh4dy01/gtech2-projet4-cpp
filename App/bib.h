@@ -6,9 +6,11 @@
 
 struct Meal {
     int feedQty;
+    time_t fullDate;
     std::string takenTime;
     bool IsRegurgitated;
     int reminder;
+    int reminderReducted;
 };
 
 class Bib {
@@ -34,7 +36,7 @@ public:
     inline int GetBibQty() { return actualQty; }
     inline int GetMaxBib() { return maxBib; }
     inline int GetMinFeed() { return minFeed; }
-    inline int GetReminder() { return mealArray.back().reminder; }
+    inline int GetReminder() { return mealArray.back().reminderReducted; }
 
 private:
     int actualQty, maxBib, minFeed;
