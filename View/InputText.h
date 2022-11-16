@@ -23,6 +23,8 @@ public:
 		/// This replaces all existing text!
 	void setText( const char* text );
 
+	void setPlaceholder(const char* text);
+
 		/// Set a font to override the owning view's global font.
 	void setFont(TTF_Font* f);
 
@@ -41,6 +43,7 @@ private:
 private:
 
 	std::string text;
+	std::string placeholder;
 
 	int maxNumChars;
 
