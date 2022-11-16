@@ -6,21 +6,69 @@
 #include "View/Forms.h"
 #include "View/Image.h"
 
+#include <iostream>
+#include <string>
+#include<sstream> 
+using namespace std;
+
+int ShoppingListView::getCountListElement(int i)
+{
+	return countList[i];
+}
+
+void ShoppingListView::setCountList(int i, int value)
+{
+	countList[i] = value;
+}
+
 void ShoppingListView::setList(const char* tab)
 {
 	lengthList += 1;
 	list[lengthList] = tab;
 }
 
-void ShoppingListView::setIsModify()
+
+void ShoppingListView::initWidgetLists()
 {
-	isModify = !isModify;
+	for (int i = 0; i < 15; i++) {
+		widgetVisibleList[i] = 0;
+	}
+
+	for (int i = 0; i < 5; i++) {
+		countList[i] = 0;
+	}
+}
+
+void ShoppingListView::addWigdetList(Widget* w)
+{
+	widgetVisibleList[lengthWidgetVisibleList] = w;
+	lengthWidgetVisibleList += 1;
+}
+
+void ShoppingListView::addUpdateWidgetList(Widget* w, int i)
+{
+	updateWidgetList[i][lengthUpdateWidgetList] = w;
+	lengthUpdateWidgetList += 1;
 }
 
 ShoppingListView::ShoppingListView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
 {
-	this->isModify = false;
+	/// temp var
+	this->initWidgetLists();
+
+	this->list[0] = "lait";
+	this->list[1] = "poudre";
+	this->list[2] = "couches";
+	this->countList[0] = 5;
+	this->countList[1] = 3;
+	this->countList[2] = 1;
+	this->lengthList = 3;
+	this->lenghtCountList = 3;
+	this->lengthUpdateWidgetList = 0;
+	this->lengthWidgetVisibleList = 0;
+
+
 	this->setBackgroundColor(82, 89, 92);
 	this->setFont(App::getSDLDefaultFont());
 
@@ -80,16 +128,27 @@ ShoppingListView::ShoppingListView()
 			{
 				tempBanner->setPosition(350, contentOutset);
 				tempBanner->setSize(40, 60);
-				tempBanner->setColor(255, 255, 255);
+
+				if      (countList[i] >= 5)	 tempBanner->setColor(167, 233, 175);
+				else if (countList[i] <= 2)	 tempBanner->setColor(245, 195, 194);
+				else                         tempBanner->setColor(252, 251, 181);
+
+				this->addUpdateWidgetList(tempBanner,1);
 				this->addWidget(tempBanner);
 			}
 
 			Text* tempQty = new Text();
 			{
+				stringstream ss;
+				ss << countList[i];
+				string test;
+				ss >> test;
+
 				tempQty->setPosition(363, contentOutset+15);
 				tempQty->setFont(App::getSmallFont());
-				tempQty->setText("5");
+				tempQty->setText(test.c_str());
 				tempQty->setColor(0, 0, 0);
+				this->addUpdateWidgetList(tempQty, 0);
 				this->addWidget(tempQty);
 			}
 
@@ -98,35 +157,43 @@ ShoppingListView::ShoppingListView()
 			{
 				tempText->setPosition(95, contentOutset + 15);
 				tempText->setFont(App::getSmallFont());
-				tempText->setText("test");
+				tempText->setText(list[i]);
 				tempText->setColor(0, 0, 0);
 				this->addWidget(tempText);
 			}
 
-			if (isModify)
+			Button* tempPlus = new Button("+");
 			{
-				Button* tempPlus = new Button("+");
-				{
-					tempPlus->setPosition(42, contentOutset);
-					tempPlus->setSize(28, 28);
-					tempPlus->setColor(240, 240, 240);
-					this->addWidget(tempPlus);
-				}
-				Button* tempMinus = new Button("-");
-				{
-					tempMinus->setPosition(42, contentOutset + 32);
-					tempMinus->setSize(28, 28);
-					tempMinus->setColor(240, 240, 240);
-					this->addWidget(tempMinus);
-				}
-
-				Image* tempPNG = new Image("Assets/Trash.png");
-				{
-					tempPNG->setPosition(400, contentOutset + 10);
-					tempPNG->setSize(30, 30);
-					this->addWidget(tempPNG);
-				}
+				tempPlus->setPosition(42, contentOutset);
+				tempPlus->setSize(28, 28);
+				tempPlus->setColor(240, 240, 240);
+				tempPlus->setVisible();
+				tempPlus->setOnClickCallback([]() {
+					});
+				this->addWigdetList(tempPlus);
+				this->addWidget(tempPlus);
 			}
+			Button* tempMinus = new Button("-");
+			{
+				tempMinus->setPosition(42, contentOutset + 32);
+				tempMinus->setSize(28, 28);
+				tempMinus->setColor(240, 240, 240);
+				tempMinus->setVisible();
+				tempPlus->setOnClickCallback([]() {
+					});
+				this->addWigdetList(tempMinus);
+				this->addWidget(tempMinus);
+			}
+
+			Image* tempPNG = new Image("Assets/Trash.png");
+			{
+				tempPNG->setPosition(400, contentOutset + 10);
+				tempPNG->setSize(30, 30);
+				tempPNG->setVisible();
+				this->addWigdetList(tempPNG);
+				this->addWidget(tempPNG);
+			}
+			
 
 
 			contentOutset += 75;
@@ -154,7 +221,7 @@ ShoppingListView::ShoppingListView()
 			modifyBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			modifyBtn->setColor(181, 222, 255);
 			modifyBtn->setOnClickCallback([]() {
-				((ShoppingListView*)App::getViewShoppingList())->setIsModify();
+				((ShoppingListView*)App::getViewShoppingList())->activeModify();
 				});
 			this->addWidget(modifyBtn);
 			modifyBtn->setHorizontallyCentered();
@@ -173,5 +240,13 @@ ShoppingListView::ShoppingListView()
 		}
 	}
 };
+
+void ShoppingListView::activeModify() {
+	for (int i = 0; i < lengthWidgetVisibleList; i++) {
+		widgetVisibleList[i]->setVisible();
+	}
+}
+
+
 
 

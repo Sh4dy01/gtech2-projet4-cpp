@@ -94,6 +94,14 @@ MainMenuView::MainMenuView()
 		bibiPNG->setVerticallyCentered(-50);
 	}
 
+	Button* tempPlus = new Button("+");
+	{
+		tempPlus->setPosition(bibiPNG->getPositionX()+180, bibiPNG->getPositionY()+140);
+		tempPlus->setSize(28, 28);
+		tempPlus->setColor(240, 240, 240);
+		this->addWidget(tempPlus);
+	}
+
 	// OFFSETs
 	{
 		bibiActualIndicator->setPosition(
