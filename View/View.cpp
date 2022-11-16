@@ -34,6 +34,11 @@ void View::render()
 	SDL_RenderPresent(renderer);
 }
 
+void View::update()
+{
+
+}
+
 void View::addWidget( Widget* w )
 {
 	widgets.push_back( w );

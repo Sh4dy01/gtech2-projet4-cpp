@@ -24,6 +24,7 @@ public:
 
 		/// Renders all the widgets in this view.
 	void render();
+	virtual void update();
 
 		/// Add a widget to this view.
 		/// Once added to a view, a widget's ownership is transfered to it, and the view

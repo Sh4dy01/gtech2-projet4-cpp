@@ -15,13 +15,16 @@
 
 int main(int argc, char* args[])
 {
+	//SDL_TimerID updateDate = SDL_AddTimer(1000, );
+
 	App::initialize();
 
 	SDL_Event e;
 	while (App::isRunning()) {
 
 		App::render();
-
+		App::Update();
+		
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT) {
 				App::setShouldClose();
@@ -30,6 +33,8 @@ int main(int argc, char* args[])
 				App::getCurrentView()->handleEvent(e);
 			}
 		}
+
+		App::HandleTimers();
 	}
 
 	App::quit();

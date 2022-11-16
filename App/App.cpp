@@ -15,6 +15,12 @@
 #include <ctime>
 #include <sstream>
 
+
+int App::currentTime = 0;
+float App::frameTime = 0;
+int App::prevTime = 0;
+float App::deltaTime = 0;
+
 Bib* App::bib = 0;
 
 SDL_Window* App::window = 0;
@@ -24,6 +30,7 @@ TTF_Font* App::boldFont = 0;
 TTF_Font* App::lightFont = 0;
 TTF_Font* App::titleFont = 0;
 TTF_Font* App::smallFont = 0;
+TTF_Font* App::smallLightFont = 0;
 
 View* App::currentView = 0;
 
@@ -39,7 +46,7 @@ bool App::running = false;
 bool App::initialize()
 {
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		return false;
 	}
@@ -63,31 +70,37 @@ bool App::initialize()
 	};
 
 	//Create fonts
-	regFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Regular.ttf", 32);
-	if (regFont == NULL)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
-	}
-	boldFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 32);
-	if (boldFont == NULL)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
-	}
-	lightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 24);
-	if (lightFont == NULL)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
-	}
-
-	titleFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 24);
-	if (lightFont == NULL)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
-	}
-	smallFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 22);
-	if (boldFont == NULL)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		regFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Regular.ttf", 32);
+		if (regFont == NULL)
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		}
+		boldFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 32);
+		if (boldFont == NULL)
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		}
+		lightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 24);
+		if (lightFont == NULL)
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		}
+		titleFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 24);
+		if (titleFont == NULL)
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		}
+		smallFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 22);
+		if (smallFont == NULL)
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		}
+		smallLightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 16);
+		if (smallLightFont == NULL)
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
+		}
 	}
 
 	int imgFlags = IMG_INIT_PNG;
@@ -121,6 +134,24 @@ void App::render()
 	currentView->render();
 }
 
+void App::Update()
+{
+	prevTime = currentTime;
+	currentTime = SDL_GetTicks();
+	deltaTime = (currentTime - prevTime) / 1000.0f;
+}
+
+void App::HandleTimers()
+{
+	frameTime += deltaTime;
+
+	if (frameTime >= 1.0f)
+	{
+		frameTime = 0;
+		App::getCurrentView()->update();
+	}
+}
+
 void App::GetCurrentTime(char* out) {
 
 	time_t rawtime;
@@ -129,7 +160,7 @@ void App::GetCurrentTime(char* out) {
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 
-	strftime(out, 30, "%D - %R", timeinfo);
+	strftime(out, 30, "%D - %T", timeinfo);
 
 	std::cout << out << std::endl;
 }
