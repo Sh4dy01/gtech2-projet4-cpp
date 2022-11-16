@@ -17,14 +17,17 @@ public:
 
 	bool IsInputsNumeric();
 
-	Text* getDateWidget() const { return date; }
 	const char* GetQuantityFromInput() const { return quantityInput->getText(); }
 	const char* GetReminderFromInput() const { return reminderInput->getText(); }
+	Text* getDateWidget() const { return date; }
+
+	void SetFullDate(time_t fullDate) { this->fullDate = fullDate; };
 
 
 private:
 
 	Text* date;
+	time_t fullDate;
 	InputText* quantityInput;
 	InputText* reminderInput;
 

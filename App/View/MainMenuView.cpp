@@ -137,9 +137,13 @@ MainMenuView::MainMenuView()
 			button3->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			button3->setColor(245, 240, 187);
 			button3->setOnClickCallback([]() {
-				((MealView*) App::getViewMeal())->getDateWidget()->setText(buffer);
-				((MealView*)App::getViewMeal())->ResetInputs();
-				App::setCurrentView(App::getViewMeal());
+				if (App::GetBibi()->GetBibQty() > App::GetBibi()->GetMinFeed())
+				{
+					((MealView*)App::getViewMeal())->SetFullDate(App::GetCurrentTime(buffer));
+					((MealView*)App::getViewMeal())->getDateWidget()->setText(buffer);
+					((MealView*)App::getViewMeal())->ResetInputs();
+					App::setCurrentView(App::getViewMeal());
+				}
 				});
 			this->addWidget(button3);
 			button3->setHorizontallyCentered();

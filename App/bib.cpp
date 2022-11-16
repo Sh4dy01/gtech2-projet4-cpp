@@ -10,6 +10,7 @@ Bib::Bib() {
 	startFeed.IsRegurgitated = false;
 	startFeed.takenTime = "";
 	startFeed.reminder = 10;
+	startFeed.reminderReducted = startFeed.reminder;
 
 	mealArray.push_back(startFeed);
 }
@@ -24,10 +25,13 @@ void Bib::BibReduction(int qtyToReduce) {
 
 void Bib::ReminderReduction() {
 	int reminder = mealArray.back().reminder;
+	int fullTimeInSeconds = mealArray.back().fullDate;
+	int reminderReducted = reminder + fullTimeInSeconds;
 
-	if (reminder > 0) reminder--;
-
-	mealArray.back().reminder = reminder;
+	if (reminderReducted > fullTimeInSeconds) {
+		reminderReducted--;
+		mealArray.back().reminderReducted = reminderReducted;
+	}
 }
 
 void Bib::ApplySettings(int maxBib, int minFeed) {

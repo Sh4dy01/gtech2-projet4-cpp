@@ -258,8 +258,10 @@ void MealView::CreateMeal() {
 	Meal meal;
 	meal.feedQty = App::GetBibi()->GetBibQty() - std::stoi(GetQuantityFromInput());
 	meal.reminder = std::stoi(GetReminderFromInput())*60; //Convert into seconds
+	meal.reminderReducted = meal.reminder;
 	meal.IsRegurgitated = false;
 	meal.takenTime = date->GetText();
+	meal.fullDate = fullDate;
 
 	std::cout << "Before: " << App::GetBibi()->GetBibQty() << std::endl;
 	App::GetBibi()->BibReduction(meal.feedQty);

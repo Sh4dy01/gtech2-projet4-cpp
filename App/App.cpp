@@ -153,7 +153,7 @@ void App::HandleTimers()
 	}
 }
 
-void App::GetCurrentTime(char* out) {
+time_t App::GetCurrentTime(char* out) {
 
 	time_t rawtime;
 	struct tm* timeinfo;
@@ -164,6 +164,8 @@ void App::GetCurrentTime(char* out) {
 	strftime(out, 30, "%D - %T", timeinfo);
 
 	std::cout << out << std::endl;
+
+	return rawtime;
 }
 
 void App::quit()

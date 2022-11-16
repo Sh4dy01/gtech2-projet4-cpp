@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ctime>
 #include <string>
 
 // Default size of window.
@@ -34,9 +35,9 @@ public:
 	static void render();
 	static void Update();
 	static void HandleTimers();
-	static void GetCurrentTime(char* out);
 	static void quit();
 
+	static time_t GetCurrentTime(char* out);
 	static inline View* getCurrentView() { return currentView; }
 	static inline void setCurrentView(View* v) { currentView = v; }
 
