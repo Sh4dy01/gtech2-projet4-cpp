@@ -85,7 +85,6 @@ void Button::onMouseUnhover()
 
 void Button::onMouseClick()
 {
-
 	if (this->onClickCallback)
-		this->onClickCallback();
+		this->onClickCallback(this->callbackUserData);
 }
