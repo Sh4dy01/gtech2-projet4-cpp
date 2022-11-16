@@ -5,13 +5,13 @@ Bib::Bib() {
 	actualQty = maxBib;
 	minFeed = 55;
 
-	Feed startFeed{};
+	Meal startFeed{};
 	startFeed.feedQty = 20;
 	startFeed.IsRegurgitated = false;
-	startFeed.takenTime = NULL;
+	startFeed.takenTime = "";
 	startFeed.reminder = 10;
 
-	feedArray.push_back(startFeed);
+	mealArray.push_back(startFeed);
 }
 
 void Bib::Refill() {
@@ -23,11 +23,11 @@ void Bib::BibReduction(int qtyToReduce) {
 }
 
 void Bib::ReminderReduction() {
-	int reminder = feedArray.back().reminder;
+	int reminder = mealArray.back().reminder;
 
 	if (reminder > 0) reminder--;
 
-	feedArray.back().reminder = reminder;
+	mealArray.back().reminder = reminder;
 }
 
 void Bib::ApplySettings(int maxBib, int minFeed) {
@@ -35,6 +35,6 @@ void Bib::ApplySettings(int maxBib, int minFeed) {
 	this->minFeed = minFeed;
 }
 
-void Bib::AddFeed(Feed feed) {
-	feedArray.push_back(feed);
+void Bib::AddMeal(Meal meal) {
+	mealArray.push_back(meal);
 }

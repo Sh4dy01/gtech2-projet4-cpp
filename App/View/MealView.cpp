@@ -1,9 +1,14 @@
-#include "App/App.h"
 #include "MealView.h"
+#include "MainMenuView.h"
+
+#include "App/App.h"
+#include "App/bib.h"
 
 #include "View/Button.h"
+#include "View/InputText.h"
 #include "View/Text.h"
 #include "View/Forms.h"
+
 #include <iostream>
 
 
@@ -63,23 +68,31 @@ MealView::MealView()
 			Text* textFreeQty = new Text();
 			{
 				textFreeQty->setPosition(0, 220);
-				textFreeQty->setText("Remaining amount of feeder:");
+				textFreeQty->setText("Remaining amount in feeder:");
 				textFreeQty->setColor(0, 0, 0);
 				textFreeQty->setFont(App::getSmallFont());
 				this->addWidget(textFreeQty);
 				textFreeQty->setHorizontallyCentered();
 			}
 
-			Button* dataBtn0 = new Button("Insert data");
+			quantityInput = new InputText(3);
 			{
-				dataBtn0->setPosition(0, 250);
-				dataBtn0->setSize(300, 30);
-				dataBtn0->setColor(255, 255, 255);
-				dataBtn0->setFont(App::getSmallFont());
-				dataBtn0->setOnClickCallback([]() {
-					});
-				this->addWidget(dataBtn0);
-				dataBtn0->setHorizontallyCentered();
+				quantityInput->setPosition(0, textFreeQty->getPositionY()+30);
+				quantityInput->setSize(40, 25);
+				quantityInput->setColor(255, 255, 255);
+				quantityInput->setPlaceholder("000");
+				quantityInput->setFont(App::getSmallFont());
+				this->addWidget(quantityInput);
+				quantityInput->setHorizontallyCentered();
+			}
+
+			Text* clText = new Text();
+			{
+				clText->setPosition(quantityInput->getPositionX() + quantityInput->getWidth()+5, quantityInput->getPositionY() + quantityInput->getHeight()/4);
+				clText->setText("in cl");
+				clText->setColor(0, 0, 0);
+				clText->setFont(App::getSmallLightFont());
+				this->addWidget(clText);
 			}
 		}
 
@@ -95,16 +108,24 @@ MealView::MealView()
 				textReminder->setHorizontallyCentered();
 			}
 
-			Button* dataBtn1 = new Button("Insert data");
+			reminderInput = new InputText(3);
 			{
-				dataBtn1->setPosition(0, 340);
-				dataBtn1->setSize(300, 30);
-				dataBtn1->setColor(255, 255, 255);
-				dataBtn1->setFont(App::getSmallFont());
-				dataBtn1->setOnClickCallback([]() {
-					});
-				this->addWidget(dataBtn1);
-				dataBtn1->setHorizontallyCentered();
+				reminderInput->setPosition(0, textReminder->getPositionY()+30);
+				reminderInput->setSize(40, 25);
+				reminderInput->setColor(255, 255, 255);
+				reminderInput->setPlaceholder("000");
+				reminderInput->setFont(App::getSmallFont());
+				this->addWidget(reminderInput);
+				reminderInput->setHorizontallyCentered();
+			}
+
+			Text* minText = new Text();
+			{
+				minText->setPosition(reminderInput->getPositionX() + reminderInput->getWidth() + 5, reminderInput->getPositionY() + reminderInput->getHeight() / 4);
+				minText->setText("in minutes");
+				minText->setColor(0, 0, 0);
+				minText->setFont(App::getSmallLightFont());
+				this->addWidget(minText);
 			}
 		}
 
@@ -113,21 +134,20 @@ MealView::MealView()
 			Text* textRegu = new Text();
 			{
 				textRegu->setPosition(0, 400);
-				textRegu->setText("regurgitated ?");
+				textRegu->setText("Regurgitated ?");
 				textRegu->setColor(0, 0, 0);
 				textRegu->setFont(App::getSmallFont());
 				this->addWidget(textRegu);
 				textRegu->setHorizontallyCentered();
 			}
 
-			Button* dataBtn2 = new Button("Insert data");
+			InputText* dataBtn2 = new InputText();
 			{
 				dataBtn2->setPosition(0, 430);
+				dataBtn2->setPlaceholder("Insert data");
 				dataBtn2->setSize(300, 30);
 				dataBtn2->setColor(255, 255, 255);
 				dataBtn2->setFont(App::getSmallFont());
-				dataBtn2->setOnClickCallback([]() {
-					});
 				this->addWidget(dataBtn2);
 				dataBtn2->setHorizontallyCentered();
 			}
@@ -174,6 +194,12 @@ MealView::MealView()
 			applyBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			applyBtn->setColor(245, 240, 187);
 			applyBtn->setOnClickCallback([]() {
+				if (((MealView*)App::getViewMeal())->IsInputsNumeric()) 
+				{
+					((MealView*)App::getViewMeal())->CreateMeal();
+					((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
+					App::setCurrentView(App::getViewMainMenu());
+				}
 				});
 			this->addWidget(applyBtn);
 			applyBtn->setHorizontallyCentered();
@@ -193,7 +219,56 @@ MealView::MealView()
 	}
 }
 
-void MealView::update() {
-	//date->setText(dateText);
+bool MealView::IsInputsNumeric() {
+	const char* qtyInput = quantityInput->getText();
+	const char* remInput = reminderInput->getText();
+
+	if (strlen(qtyInput) > 0) {
+		for (int i = 0; i < strlen(qtyInput); i++)
+		{
+			if (!isdigit(qtyInput[i])) {
+				quantityInput->setText("");
+
+				return false;
+			}
+		}
+	}
+	else {
+		return false;
+	}
+	
+	if (strlen(qtyInput) > 0) {
+		for (int i = 0; i < strlen(remInput); i++)
+		{
+			if (!isdigit(remInput[i])) {
+				reminderInput->setText("");
+
+				return false;
+			}
+		}
+	}
+	else {
+		return false;
+	}
+
+	return true;
+}
+
+void MealView::CreateMeal() {	
+	Meal meal;
+	meal.feedQty = App::GetBibi()->GetBibQty() - std::stoi(GetQuantityFromInput());
+	meal.reminder = std::stoi(GetReminderFromInput())*60; //Convert into seconds
+	meal.IsRegurgitated = false;
+	meal.takenTime = date->GetText();
+
+	std::cout << "Before: " << App::GetBibi()->GetBibQty() << std::endl;
+	App::GetBibi()->BibReduction(meal.feedQty);
+	std::cout << "After: " << App::GetBibi()->GetBibQty() << std::endl;
+	App::GetBibi()->AddMeal(meal);
+}
+
+void MealView::ResetInputs() {
+	quantityInput->setText("");
+	reminderInput->setText("");
 }
 
