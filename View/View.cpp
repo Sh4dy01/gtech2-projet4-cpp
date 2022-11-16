@@ -27,7 +27,9 @@ void View::render()
 
 	// Render widgets.
 	for ( Widget* w : widgets ) {
-		w->render(renderer);
+		if(w->isVisible()){
+			w->render(renderer);
+		}
 	}
 
 	// Present.

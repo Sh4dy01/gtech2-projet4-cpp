@@ -29,7 +29,8 @@ public:
 	virtual void onMouseUnhover() override;
 	virtual void onMouseClick() override;
 
-	void setOnClickCallback(void (*c)()) { onClickCallback = c; }
+	void setOnClickCallback(void (*c)()) { onClickCallback = (void (*)(int)) c; callbackUserData = 0; }
+	void setOnClickCallback(void (*c)(int), int userdata) { onClickCallback = c; callbackUserData = userdata; }
 
 
 
@@ -40,5 +41,6 @@ private:
 
 	TTF_Font* font;
 
-	void (*onClickCallback)();
+	void (*onClickCallback)(int);
+	int callbackUserData;
 };
