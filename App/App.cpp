@@ -145,6 +145,7 @@ void App::HandleTimers()
 {
 	frameTime += deltaTime;
 
+	//Update the necessary objects in the current view every second
 	if (frameTime >= 1.0f)
 	{
 		frameTime = 0;

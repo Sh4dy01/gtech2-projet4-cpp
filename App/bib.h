@@ -16,7 +16,17 @@ public:
 
     void Refill();
     void BibReduction(int);
+
+    /// <summary>
+    /// Reduce the reminder every second
+    /// </summary>
     void ReminderReduction();
+
+    /// <summary>
+    /// Apply all the settings to the bib
+    /// </summary>
+    /// <param name=""></param>
+    /// <param name=""></param>
     void ApplySettings(int, int);
     void AddFeed(Feed);
 
