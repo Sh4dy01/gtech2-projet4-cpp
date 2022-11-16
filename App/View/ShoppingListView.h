@@ -15,6 +15,7 @@ public:
 	void initWidgetLists();
 	void addWigdetList(Widget* w);
 	void addUpdateWidgetList(Widget* w, int i);
+	void pop(int i, int* tab);
 
 	int getCountListElement(int i);
 	void setCountList(int i, int value);

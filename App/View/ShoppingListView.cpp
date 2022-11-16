@@ -247,6 +247,18 @@ void ShoppingListView::activeModify() {
 	}
 }
 
+void ShoppingListView::pop(int i, int* tab)
+{
+	int tempTab[5];
+	for (int y = 0; y < 5; y++) tempTab[y] = tab[y];
 
+	for (int y = 0; y < 5; y++) tab[y] = 0;
+
+	for (int y = 0; y < 4; y++) {
+		if     (y < i) tab[y] = tempTab[y];
+		else   tab[y] = tempTab[y + 1];
+
+	}
+}
 
 
