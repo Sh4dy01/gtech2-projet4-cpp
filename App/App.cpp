@@ -153,6 +153,17 @@ void App::HandleTimers()
 	}
 }
 
+time_t App::GetCurrentTime() {
+
+	time_t rawtime;
+	struct tm* timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	return rawtime;
+}
+
 time_t App::GetCurrentTime(char* out) {
 
 	time_t rawtime;

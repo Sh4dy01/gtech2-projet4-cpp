@@ -56,10 +56,16 @@ MainMenuView::MainMenuView()
 
 	timer = new Text();
 	{
-		int seconds = bib->GetReminder();
-		int minutes = seconds / 60;
-		int hours = minutes / 60;
-		std::string timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes%60)) + ":" + std::to_string(int(seconds%60));
+		std::string timerText = "No Timer";
+
+		if (bib->GetReminder())
+		{
+			int seconds = bib->GetReminder();
+			int minutes = seconds / 60;
+			int hours = minutes / 60;
+			timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes % 60)) + ":" + std::to_string(int(seconds % 60));
+		}
+		
 
 		timer->setColor(0, 0, 0);
 		this->addWidget(timer);
@@ -103,6 +109,10 @@ MainMenuView::MainMenuView()
 		tempPlus->setSize(28, 28);
 		tempPlus->setColor(240, 240, 240);
 		this->addWidget(tempPlus);
+		tempPlus->setOnClickCallback([]() {
+			((Bib*)App::GetBibi())->Refill();
+			((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
+		});
 	}
 
 	// OFFSETs
@@ -144,7 +154,7 @@ MainMenuView::MainMenuView()
 					((MealView*)App::getViewMeal())->ResetInputs();
 					App::setCurrentView(App::getViewMeal());
 				}
-				});
+			});
 			this->addWidget(button3);
 			button3->setHorizontallyCentered();
 		}
@@ -156,7 +166,7 @@ MainMenuView::MainMenuView()
 			button2->setColor(181, 222, 255);
 			button2->setOnClickCallback([]() {
 				App::setCurrentView(App::getViewShoppingList());
-				});
+			});
 			this->addWidget(button2);
 			button2->setHorizontallyCentered();
 		}
@@ -168,7 +178,7 @@ MainMenuView::MainMenuView()
 			button1->setColor(220, 220, 220);
 			button1->setOnClickCallback([]() {
 				App::setCurrentView(App::getViewSettings());
-				});
+			});
 			this->addWidget(button1);
 			button1->setHorizontallyCentered();
 		}
@@ -188,13 +198,19 @@ void MainMenuView::update()  {
 	App::GetCurrentTime(buffer);
 	date->setText(buffer);
 
-	App::GetBibi()->ReminderReduction();
-	int seconds = App::GetBibi()->GetReminder();
-	int minutes = seconds / 60;
-	int hours = minutes / 60;
-	std::string timerText = 
-		std::to_string(int(hours)) + ":" + 
-		std::to_string(int(minutes % 60)) + ":" + 
-		std::to_string(int(seconds % 60));
-	timer->setText(timerText.c_str());
+	// Timer part
+	if (App::GetBibi()->GetReminder())
+	{
+		App::GetBibi()->ReminderReduction();
+
+		int seconds = App::GetBibi()->GetReminder();
+		int minutes = seconds / 60;
+		int hours = minutes / 60;
+		std::string timerText =
+			std::to_string(int(hours)) + ":" +
+			std::to_string(int(minutes % 60)) + ":" +
+			std::to_string(int(seconds % 60));
+		timer->setText(timerText.c_str());
+
+	}
 }

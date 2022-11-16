@@ -68,7 +68,8 @@ MealView::MealView()
 			Text* textFreeQty = new Text();
 			{
 				textFreeQty->setPosition(0, 220);
-				textFreeQty->setText("Remaining amount in feeder:");
+				textFreeQty->setText("Remaining amount in feeder");
+				textFreeQty->setIsUnderline();
 				textFreeQty->setColor(0, 0, 0);
 				textFreeQty->setFont(App::getSmallFont());
 				this->addWidget(textFreeQty);
@@ -101,7 +102,8 @@ MealView::MealView()
 			Text* textReminder = new Text();
 			{
 				textReminder->setPosition(0, 310);
-				textReminder->setText("Next meal reminder:");
+				textReminder->setText("Next meal reminder");
+				textReminder->setIsUnderline();
 				textReminder->setColor(0, 0, 0);
 				textReminder->setFont(App::getSmallFont());
 				this->addWidget(textReminder);
@@ -228,6 +230,7 @@ bool MealView::IsInputsNumeric() {
 		{
 			if (!isdigit(qtyInput[i])) {
 				quantityInput->setText("");
+				std::cout << "Non numerical char: " << qtyInput[i] << std::endl;
 
 				return false;
 			}
@@ -237,11 +240,12 @@ bool MealView::IsInputsNumeric() {
 		return false;
 	}
 	
-	if (strlen(qtyInput) > 0) {
+	if (strlen(remInput) > 0) {
 		for (int i = 0; i < strlen(remInput); i++)
 		{
 			if (!isdigit(remInput[i])) {
 				reminderInput->setText("");
+				std::cout << "Non numerical char: " << remInput[i] << std::endl;
 
 				return false;
 			}
@@ -251,14 +255,23 @@ bool MealView::IsInputsNumeric() {
 		return false;
 	}
 
-	return true;
+	if (std::stoi(remInput) > 0)
+	{
+		return true;
+	}
+	else {
+		reminderInput->setText("");
+		std::cout << "Isn't superior to 0: " << remInput << std::endl;
+
+		return false;
+	}
 }
 
 void MealView::CreateMeal() {	
 	Meal meal;
 	meal.feedQty = App::GetBibi()->GetBibQty() - std::stoi(GetQuantityFromInput());
-	meal.reminder = std::stoi(GetReminderFromInput())*60; //Convert into seconds
-	meal.reminderReducted = meal.reminder;
+	meal.reminderTotal = std::stoi(GetReminderFromInput())*60; //Convert into seconds
+	meal.actualReminder = meal.reminderTotal;
 	meal.IsRegurgitated = false;
 	meal.takenTime = date->GetText();
 	meal.fullDate = fullDate;

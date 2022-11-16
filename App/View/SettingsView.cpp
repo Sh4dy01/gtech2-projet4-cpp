@@ -1,9 +1,12 @@
 #include "App/App.h"
+#include "App/bib.h"
 #include "SettingsView.h"
 
+#include "View/InputText.h"
 #include "View/Button.h"
 #include "View/Text.h"
 #include "View/Shapes.h"
+
 #include <SDL_ttf.h>
 
 
@@ -12,6 +15,8 @@ SettingsView::SettingsView()
 {
 	this->setBackgroundColor(82, 89, 92);
 	this->setFont(App::getSDLDefaultFont());
+
+	Bib* bib = App::GetBibi();
 
 	//title part
 	{ 
@@ -49,23 +54,32 @@ SettingsView::SettingsView()
 			Text* textVolume = new Text();
 			{
 				textVolume->setPosition(0, 250);
-				textVolume->setText("Feeder volume (ml):");
+				textVolume->setText("Total feeder capacity");
+				textVolume->setIsUnderline();
 				textVolume->setColor(0, 0, 0);
 				textVolume->setFont(App::getSmallFont());
 				this->addWidget(textVolume);
 				textVolume->setHorizontallyCentered();
 			}
 
-			Button* dataBtn0 = new Button("Insert data");
+			InputText* maxBibInput = new InputText(3);
 			{
-				dataBtn0->setPosition(0, 290);
-				dataBtn0->setSize(300, 30);
-				dataBtn0->setColor(245, 240, 187);
-				dataBtn0->setFont(App::getSmallFont());
-				dataBtn0->setOnClickCallback([]() {
-					});
-				this->addWidget(dataBtn0);
-				dataBtn0->setHorizontallyCentered();
+				maxBibInput->setSize(40, 25);
+				maxBibInput->setPosition(0, textVolume->getPositionY()+maxBibInput->getHeight()+10);
+				maxBibInput->setColor(245, 240, 187);
+				maxBibInput->setPlaceholder(std::to_string(bib->GetMaxBib()).c_str());
+				maxBibInput->setFont(App::getSmallFont());
+				this->addWidget(maxBibInput);
+				maxBibInput->setHorizontallyCentered();
+			}
+
+			Text* clText = new Text();
+			{
+				clText->setPosition(maxBibInput->getPositionX() + maxBibInput->getWidth() + 5, maxBibInput->getPositionY() + maxBibInput->getHeight() / 4);
+				clText->setText("in cl");
+				clText->setColor(0, 0, 0);
+				clText->setFont(App::getSmallLightFont());
+				this->addWidget(clText);
 			}
 		}
 
@@ -82,23 +96,32 @@ SettingsView::SettingsView()
 			Text* textQtyMin = new Text();
 			{
 				textQtyMin->setPosition(0, 380);
-				textQtyMin->setText("Minimum amount to eat (ml):");
+				textQtyMin->setText("Actual feeder volume");
+				textQtyMin->setIsUnderline();
 				textQtyMin->setColor(0, 0, 0);
 				textQtyMin->setFont(App::getSmallFont());
 				this->addWidget(textQtyMin);
 				textQtyMin->setHorizontallyCentered();
 			}
 
-			Button* dataBtn1 = new Button("Insert data");
+			InputText* actualQtyInput = new InputText(3);
 			{
-				dataBtn1->setPosition(0, 420);
-				dataBtn1->setSize(300, 30);
-				dataBtn1->setColor(245, 240, 187);
-				dataBtn1->setFont(App::getSmallFont());
-				dataBtn1->setOnClickCallback([]() {
-					});
-				this->addWidget(dataBtn1);
-				dataBtn1->setHorizontallyCentered();
+				actualQtyInput->setSize(40, 25);
+				actualQtyInput->setPosition(0, textQtyMin->getPositionY() + textQtyMin->getHeight() + 10);
+				actualQtyInput->setColor(245, 240, 187);
+				actualQtyInput->setPlaceholder(std::to_string(bib->GetBibQty()).c_str());
+				actualQtyInput->setFont(App::getSmallFont());
+				this->addWidget(actualQtyInput);
+				actualQtyInput->setHorizontallyCentered();
+			}
+
+			Text* clText = new Text();
+			{
+				clText->setPosition(actualQtyInput->getPositionX() + actualQtyInput->getWidth() + 5, actualQtyInput->getPositionY() + actualQtyInput->getHeight() / 4);
+				clText->setText("in cl");
+				clText->setColor(0, 0, 0);
+				clText->setFont(App::getSmallLightFont());
+				this->addWidget(clText);
 			}
 		}
 
@@ -112,26 +135,35 @@ SettingsView::SettingsView()
 				this->addWidget(rect2);
 			}
 
-			Text* textQtyMax = new Text();
+			Text* textMinMeal = new Text();
 			{
-				textQtyMax->setPosition(0, 510);
-				textQtyMax->setText("Maximum amount to eat (ml):");
-				textQtyMax->setColor(0, 0, 0);
-				textQtyMax->setFont(App::getSmallFont());
-				this->addWidget(textQtyMax);
-				textQtyMax->setHorizontallyCentered();
+				textMinMeal->setPosition(0, 510);
+				textMinMeal->setText("Minimum volume for meal");
+				textMinMeal->setIsUnderline();
+				textMinMeal->setColor(0, 0, 0);
+				textMinMeal->setFont(App::getSmallFont());
+				this->addWidget(textMinMeal);
+				textMinMeal->setHorizontallyCentered();
 			}
 
-			Button* dataBtn2 = new Button("Insert data");
+			InputText* minFeedVolInput = new InputText(3);
 			{
-				dataBtn2->setPosition(0, 550);
-				dataBtn2->setSize(300, 30);
-				dataBtn2->setColor(245, 240, 187);
-				dataBtn2->setFont(App::getSmallFont());
-				dataBtn2->setOnClickCallback([]() {
-					});
-				this->addWidget(dataBtn2);
-				dataBtn2->setHorizontallyCentered();
+				minFeedVolInput->setSize(40, 25);
+				minFeedVolInput->setPosition(0, textMinMeal->getPositionY() + textMinMeal->getHeight() + 10);
+				minFeedVolInput->setColor(245, 240, 187);
+				minFeedVolInput->setPlaceholder(std::to_string(bib->GetMinFeed()).c_str());
+				minFeedVolInput->setFont(App::getSmallFont());
+				this->addWidget(minFeedVolInput);
+				minFeedVolInput->setHorizontallyCentered();
+			}
+
+			Text* clText = new Text();
+			{
+				clText->setPosition(minFeedVolInput->getPositionX() + minFeedVolInput->getWidth() + 5, minFeedVolInput->getPositionY() + minFeedVolInput->getHeight() / 4);
+				clText->setText("in cl");
+				clText->setColor(0, 0, 0);
+				clText->setFont(App::getSmallLightFont());
+				this->addWidget(clText);
 			}
 		}
 	}
@@ -147,4 +179,52 @@ SettingsView::SettingsView()
 		this->addWidget(returnBtn);
 		returnBtn->setHorizontallyCentered();
 	}
+}
+
+bool SettingsView::IsInputsNumeric() {
+	/*const char* qtyInput = quantityInput->getText();
+	const char* remInput = reminderInput->getText();
+
+	if (strlen(qtyInput) > 0) {
+		for (int i = 0; i < strlen(qtyInput); i++)
+		{
+			if (!isdigit(qtyInput[i])) {
+				quantityInput->setText("");
+				std::cout << "Non numerical char: " << qtyInput[i] << std::endl;
+
+				return false;
+			}
+		}
+	}
+	else {
+		return false;
+	}
+
+	if (strlen(remInput) > 0) {
+		for (int i = 0; i < strlen(remInput); i++)
+		{
+			if (!isdigit(remInput[i])) {
+				reminderInput->setText("");
+				std::cout << "Non numerical char: " << remInput[i] << std::endl;
+
+				return false;
+			}
+		}
+	}
+	else {
+		return false;
+	}
+
+	if (std::stoi(remInput) > 0)
+	{
+		return true;
+	}
+	else {
+		reminderInput->setText("");
+		std::cout << "Isn't superior to 0: " << remInput << std::endl;
+
+		return false;
+	}*/
+
+	return true;
 }

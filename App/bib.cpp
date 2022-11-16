@@ -1,18 +1,11 @@
 #include "bib.h";
+#include "App.h";
+#include <iostream>
 
 Bib::Bib() {
 	maxBib = 330;
 	actualQty = maxBib;
 	minFeed = 55;
-
-	Meal startFeed{};
-	startFeed.feedQty = 20;
-	startFeed.IsRegurgitated = false;
-	startFeed.takenTime = "";
-	startFeed.reminder = 10;
-	startFeed.reminderReducted = startFeed.reminder;
-
-	mealArray.push_back(startFeed);
 }
 
 void Bib::Refill() {
@@ -24,13 +17,15 @@ void Bib::BibReduction(int qtyToReduce) {
 }
 
 void Bib::ReminderReduction() {
-	int reminder = mealArray.back().reminder;
-	int fullTimeInSeconds = mealArray.back().fullDate;
-	int reminderReducted = reminder + fullTimeInSeconds;
+	const int currentTime = int(App::GetCurrentTime());
+	const int reminderTotal = lastMeal.reminderTotal;
+	const int reminderStartTime = lastMeal.fullDate;
 
-	if (reminderReducted > fullTimeInSeconds) {
-		reminderReducted--;
-		mealArray.back().reminderReducted = reminderReducted;
+	int actualReminder = reminderStartTime + reminderTotal - currentTime;
+
+	if (actualReminder > 0) {
+		actualReminder--;
+		lastMeal.actualReminder = actualReminder;
 	}
 }
 
@@ -41,4 +36,5 @@ void Bib::ApplySettings(int maxBib, int minFeed) {
 
 void Bib::AddMeal(Meal meal) {
 	mealArray.push_back(meal);
+	lastMeal = meal;
 }

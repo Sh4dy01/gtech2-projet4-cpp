@@ -9,8 +9,8 @@ struct Meal {
     time_t fullDate;
     std::string takenTime;
     bool IsRegurgitated;
-    int reminder;
-    int reminderReducted;
+    int reminderTotal;
+    int actualReminder;
 };
 
 class Bib {
@@ -36,10 +36,11 @@ public:
     inline int GetBibQty() { return actualQty; }
     inline int GetMaxBib() { return maxBib; }
     inline int GetMinFeed() { return minFeed; }
-    inline int GetReminder() { return mealArray.back().reminderReducted; }
+    inline int GetReminder() { if (mealArray.size() > 0) return lastMeal.actualReminder;
+    }
 
 private:
     int actualQty, maxBib, minFeed;
-
+    Meal lastMeal;
     std::vector<Meal> mealArray;
 };

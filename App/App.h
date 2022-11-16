@@ -37,6 +37,7 @@ public:
 	static void HandleTimers();
 	static void quit();
 
+	static time_t GetCurrentTime();
 	static time_t GetCurrentTime(char* out);
 	static inline View* getCurrentView() { return currentView; }
 	static inline void setCurrentView(View* v) { currentView = v; }

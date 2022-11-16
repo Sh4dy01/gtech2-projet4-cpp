@@ -38,7 +38,6 @@ void View::render()
 
 void View::update()
 {
-
 }
 
 void View::addWidget( Widget* w )

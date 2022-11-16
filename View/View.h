@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Color.h"
+#include "InputText.h"
 
 #include <vector>
 

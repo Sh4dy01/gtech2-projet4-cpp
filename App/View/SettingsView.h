@@ -9,4 +9,5 @@ class SettingsView : public View
 public:
 
 	SettingsView();
+	bool IsInputsNumeric();
 };
