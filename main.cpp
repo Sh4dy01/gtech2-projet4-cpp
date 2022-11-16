@@ -19,8 +19,6 @@ int main(int argc, char* args[])
 
 	App::initialize();
 
-	
-
 	SDL_Event e;
 	while (App::isRunning()) {
 

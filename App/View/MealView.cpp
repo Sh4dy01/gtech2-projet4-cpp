@@ -4,6 +4,7 @@
 #include "View/Button.h"
 #include "View/Text.h"
 #include "View/Forms.h"
+#include <iostream>
 
 
 MealView::MealView()
@@ -31,6 +32,19 @@ MealView::MealView()
 			title->setIsUnderline();
 			this->addWidget(title);
 			title->setHorizontallyCentered();
+		}
+
+		date = new Text();
+		{
+			char buffer[30];
+			App::GetCurrentTime(buffer);
+
+			date->setPosition(0, rectTitle->getPositionY() + 50);
+			date->setColor(0, 0, 0);
+			date->setText(buffer);
+			date->setFont(App::getBoldFont());
+			this->addWidget(date);
+			date->setHorizontallyCentered();
 		}
 	}
 
@@ -178,3 +192,8 @@ MealView::MealView()
 		}
 	}
 }
+
+void MealView::update() {
+	//date->setText(dateText);
+}
+

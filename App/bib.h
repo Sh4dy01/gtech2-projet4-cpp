@@ -16,6 +16,7 @@ public:
 
     void Refill();
     void BibReduction(int);
+    void ReminderReduction();
     void ApplySettings(int, int);
     void AddFeed(Feed);
 
@@ -26,7 +27,6 @@ public:
 
 private:
     int actualQty, maxBib, minFeed;
-    int reminder, takeTime;
 
     std::vector<Feed> feedArray;
 };

@@ -1,5 +1,6 @@
 #include "App/App.h"
 #include "MainMenuView.h"
+#include "MealView.h"
 #include "../bib.h"
 
 #include "View/Button.h"
@@ -22,6 +23,8 @@ static int LIMIT_INDICATOR_FULL = 352;
 static float LIMIT_INDICATOR_Y_STEP = (LIMIT_INDICATOR_FULL - (float)BIBI_INDICATOR_START) / 100;
 static float LIMIT_INDICATOR_WIDTH_RATIO = 0.866;
 
+static char buffer[30];
+
 MainMenuView::MainMenuView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
 {
@@ -41,7 +44,6 @@ MainMenuView::MainMenuView()
 
 	date = new Text();
 	{
-		char buffer[30];
 		App::GetCurrentTime(buffer);
 
 		date->setPosition(10, rectTitle->getPositionY()+60);
@@ -129,6 +131,7 @@ MainMenuView::MainMenuView()
 			button3->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			button3->setColor(245, 240, 187);
 			button3->setOnClickCallback([]() {
+				((MealView*) App::getViewMeal())->getDateWidget()->setText(buffer);
 				App::setCurrentView(App::getViewMeal());
 				});
 			this->addWidget(button3);
@@ -162,14 +165,16 @@ MainMenuView::MainMenuView()
 }
 
 void MainMenuView::update() {
-	char buffer[30];
 	App::GetCurrentTime(buffer);
-
 	date->setText(buffer);
 
+	App::GetBibi()->ReminderReduction();
 	int seconds = App::GetBibi()->GetReminder();
 	int minutes = seconds / 60;
 	int hours = minutes / 60;
-	std::string timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes % 60)) + ":" + std::to_string(int(seconds % 60));
+	std::string timerText = 
+		std::to_string(int(hours)) + ":" + 
+		std::to_string(int(minutes % 60)) + ":" + 
+		std::to_string(int(seconds % 60));
 	timer->setText(timerText.c_str());
 }
