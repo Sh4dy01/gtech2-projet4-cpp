@@ -28,6 +28,11 @@ void InputText::setText(const char* text)
 	this->regenerateTexture();
 }
 
+void InputText::setPlaceholder(const char* text)
+{
+	this->placeholder = text;
+}
+
 void InputText::setFont(TTF_Font* f)
 {
 	this->font = f;
@@ -42,18 +47,27 @@ void InputText::regenerateTexture()
 		this->texture = 0;
 	}
 
+	// Determine used font.
+	TTF_Font* usedFont = this->font;
+	if (!usedFont) {
+		usedFont = this->view->getFont();
+	}
+
 	// If there is text and widget belongs to a view.
-	if (!this->text.empty() && this->view) {
+	if (this->view) {
 
-		// Determine used font.
-		TTF_Font* usedFont = this->font;
-		if (!usedFont) {
-			usedFont = this->view->getFont();
+		if (!this->text.empty()) {
+
+			SDL_Surface* s = TTF_RenderText_Blended(usedFont, this->text.c_str(), { 0, 0, 0, 255 });
+			this->texture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), s);
+			SDL_FreeSurface(s);
 		}
+		else {
 
-		SDL_Surface* s = TTF_RenderText_Blended(usedFont, this->text.c_str(), { 0, 0, 0, 255 });
-		this->texture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), s);
-		SDL_FreeSurface(s);
+			SDL_Surface* s = TTF_RenderText_Blended(usedFont, this->placeholder.c_str(), { 127, 127, 127, 255 });
+			this->texture = SDL_CreateTextureFromSurface(this->view->getSDLRenderer(), s);
+			SDL_FreeSurface(s);
+		}
 	}
 }
 
@@ -81,7 +95,8 @@ void InputText::render(SDL_Renderer* r)
 		auto now = std::chrono::high_resolution_clock::now();
 		unsigned long long millis = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
 		if ((millis % 1000) >= 500) {
-			int x = dest.x + dest.w + 2;
+
+			int x = this->text.empty() ? 2 : dest.x + dest.w + 2;
 
 			SDL_SetRenderDrawColor(this->view->getSDLRenderer(), 0, 0, 0, 255);
 			SDL_RenderDrawLine(this->view->getSDLRenderer(), x, dest.y + 2, x, dest.y + this->height - 3);
