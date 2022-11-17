@@ -2,6 +2,9 @@
 
 #include "View/View.h"
 #include "View/Widget.h"
+#include "View/Text.h"
+
+class Rect;
 
 
 
@@ -11,14 +14,24 @@ public:
 
 	ShoppingListView();
 	void setList(const char* tab);
-	void activeModify();
 	void initWidgetLists();
+	
 	void addWigdetList(Widget* w);
-	void addUpdateWidgetList(Widget* w, int i);
-	void pop(int i, int* tab);
+	void addUpdateTextList(Text* t);
+	void addUpdateRectList(Rect* r);
+
+	void activeModify();
+	void activeUpdateTextList(int index);
+	void activeUpdateRectList(int index);
+
+	void popInt(int i, int* tab);
 
 	int getCountListElement(int i);
 	void setCountList(int i, int value);
+
+	void initCountList();
+	void destroyElement(int index);
+
 
 private:
 
@@ -35,7 +48,13 @@ private:
 	int lengthWidgetVisibleList;
 
 	/// manage count of element
+	Text* updateTextList[5];
+	int lengthUpdateTextList;
 
-	Widget* updateWidgetList[5][5];
-	int lengthUpdateWidgetList;
+	Rect* updateRectList[5];
+	int lengthUpdateRectList;
+
+
+
+
 };
