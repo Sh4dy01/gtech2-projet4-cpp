@@ -10,6 +10,7 @@ static const char* const SETTINGS_FILENAME = "settings.txt";
 
 
 Bib::Bib() {
+	// Set default values in case settings file does not exist.
 	maxBib = 330;
 	actualQty = 120;
 	minFeed = 55;
@@ -51,7 +52,14 @@ void Bib::loadSettings()
 {
 	ifstream f(SETTINGS_FILENAME);
 
+	// If settings file does not exist yet, save default values.
+	if (!f) {
+		this->saveSettings();
+		return;
+	}
+
 	string line, id;
+	int data;
 	while (!f.eof())
 	{
 		// Get line.
@@ -62,8 +70,13 @@ void Bib::loadSettings()
 			continue;
 		}
 
+		// Formatted reading.
 		stringstream ss(line);
-		ss >> id;
+		ss >> id >> data;
+		
+		if      (id == "feedCapacity") this->maxBib = data;
+		else if (id == "remainingVol") this->actualQty = data;
+		else if (id == "minimumFeed")  this->minFeed = data;
 	}
 
 	f.close();
