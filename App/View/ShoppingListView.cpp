@@ -27,7 +27,6 @@ void ShoppingListView::setList(const char* tab)
 	list[lengthList] = tab;
 }
 
-
 void ShoppingListView::initWidgetLists()
 {
 	for (int i = 0; i < 15; i++) {
@@ -39,16 +38,41 @@ void ShoppingListView::initWidgetLists()
 	}
 }
 
+void ShoppingListView::initCountList()
+{
+	for (int i = 0; i < 5; i++) {
+		countList[i] = 0;
+	}
+}
+
 void ShoppingListView::addWigdetList(Widget* w)
 {
 	widgetVisibleList[lengthWidgetVisibleList] = w;
 	lengthWidgetVisibleList += 1;
 }
 
-void ShoppingListView::addUpdateWidgetList(Widget* w, int i)
+void ShoppingListView::addUpdateTextList(Text* t)
 {
-	updateWidgetList[i][lengthUpdateWidgetList] = w;
-	lengthUpdateWidgetList += 1;
+	updateTextList[lengthUpdateTextList] = t;
+	lengthUpdateTextList += 1;
+}
+
+void ShoppingListView::addUpdateRectList(Rect* r)
+{
+	updateRectList[lengthUpdateRectList] = r;
+	lengthUpdateRectList += 1;
+}
+
+void ShoppingListView::activeUpdateTextList(int index)
+{
+	updateTextList[index]->setText(std::to_string(countList[index]).c_str());
+}
+
+void ShoppingListView::activeUpdateRectList(int index)
+{
+	if (countList[index] >= 5)		 updateRectList[index]->setColor(167, 233, 175);
+	else if (countList[index] <= 2)	 updateRectList[index]->setColor(245, 195, 194);
+	else                             updateRectList[index]->setColor(252, 251, 181);
 }
 
 ShoppingListView::ShoppingListView()
@@ -56,6 +80,7 @@ ShoppingListView::ShoppingListView()
 {
 	/// temp var
 	this->initWidgetLists();
+	this->initCountList();
 
 	this->list[0] = "lait";
 	this->list[1] = "poudre";
@@ -63,9 +88,12 @@ ShoppingListView::ShoppingListView()
 	this->countList[0] = 5;
 	this->countList[1] = 3;
 	this->countList[2] = 1;
+	this->countList[3] = 0;
+	this->countList[4] = 0;
 	this->lengthList = 3;
 	this->lenghtCountList = 3;
-	this->lengthUpdateWidgetList = 0;
+	this->lengthUpdateTextList = 0;
+	this->lengthUpdateRectList = 0;
 	this->lengthWidgetVisibleList = 0;
 
 
@@ -133,7 +161,7 @@ ShoppingListView::ShoppingListView()
 				else if (countList[i] <= 2)	 tempBanner->setColor(245, 195, 194);
 				else                         tempBanner->setColor(252, 251, 181);
 
-				this->addUpdateWidgetList(tempBanner,1);
+				this->addUpdateRectList(tempBanner);
 				this->addWidget(tempBanner);
 			}
 
@@ -148,7 +176,7 @@ ShoppingListView::ShoppingListView()
 				tempQty->setFont(App::getSmallFont());
 				tempQty->setText(test.c_str());
 				tempQty->setColor(0, 0, 0);
-				this->addUpdateWidgetList(tempQty, 0);
+				this->addUpdateTextList(tempQty);
 				this->addWidget(tempQty);
 			}
 
@@ -168,8 +196,11 @@ ShoppingListView::ShoppingListView()
 				tempPlus->setSize(28, 28);
 				tempPlus->setColor(240, 240, 240);
 				tempPlus->setVisible();
-				tempPlus->setOnClickCallback([]() {
-					});
+				tempPlus->setOnClickCallback([](int index) {
+					((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) + 1);
+					((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
+					((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
+					}, i);
 				this->addWigdetList(tempPlus);
 				this->addWidget(tempPlus);
 			}
@@ -179,8 +210,15 @@ ShoppingListView::ShoppingListView()
 				tempMinus->setSize(28, 28);
 				tempMinus->setColor(240, 240, 240);
 				tempMinus->setVisible();
-				tempPlus->setOnClickCallback([]() {
-					});
+				tempMinus->setOnClickCallback([](int index) {
+					if (((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) > 0) {
+						((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) - 1);
+						((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
+						((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
+					}
+					
+					}, i);
+					
 				this->addWigdetList(tempMinus);
 				this->addWidget(tempMinus);
 			}
@@ -190,6 +228,9 @@ ShoppingListView::ShoppingListView()
 				tempPNG->setPosition(400, contentOutset + 10);
 				tempPNG->setSize(30, 30);
 				tempPNG->setVisible();
+				tempMinus->setOnClickCallback([]() {
+
+					});
 				this->addWigdetList(tempPNG);
 				this->addWidget(tempPNG);
 			}
@@ -247,7 +288,7 @@ void ShoppingListView::activeModify() {
 	}
 }
 
-void ShoppingListView::pop(int i, int* tab)
+void ShoppingListView::popInt(int i, int* tab)
 {
 	int tempTab[5];
 	for (int y = 0; y < 5; y++) tempTab[y] = tab[y];
@@ -260,5 +301,6 @@ void ShoppingListView::pop(int i, int* tab)
 
 	}
 }
+
 
 
