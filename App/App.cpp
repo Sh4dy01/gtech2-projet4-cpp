@@ -33,7 +33,6 @@ TTF_Font* App::titleFont = 0;
 TTF_Font* App::smallFont = 0;
 TTF_Font* App::smallLightFont = 0;
 
-Mix_Music* App::gMusic = 0;
 Mix_Chunk* App::ahhhhh = 0;
 
 View* App::currentView = 0;

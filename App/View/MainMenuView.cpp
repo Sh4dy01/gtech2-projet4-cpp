@@ -75,7 +75,7 @@ MainMenuView::MainMenuView()
 		this->addWidget(timer);
 		timer->setText(timerText.c_str());
 		timer->setFont(App::getBoldFont());
-		timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 53, rectTitle->getPositionY() + 50);
+		timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 40, rectTitle->getPositionY() + 50);
 	}
 
 	Text* nextMealText = new Text();
@@ -84,7 +84,7 @@ MainMenuView::MainMenuView()
 		this->addWidget(nextMealText);
 		nextMealText->setText("before next meal");
 		nextMealText->setFont(App::getSmallLightFont());
-		nextMealText->setPosition(WINDOW_WIDTH - nextMealText->getWidth() - 20, timer->getPositionY() + timer->getHeight());
+		nextMealText->setPosition(WINDOW_WIDTH - nextMealText->getWidth() - timer->getWidth()/4, timer->getPositionY() + timer->getHeight());
 	}
 
 	bibiActualIndicator = new Rect();
@@ -294,6 +294,8 @@ void MainMenuView::UpdateBibVisual() {
 	else {
 		errorFeedFirst->setVisible(true);
 	}
+
+	timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 50, 125);
 }
 
 void MainMenuView::update()  {

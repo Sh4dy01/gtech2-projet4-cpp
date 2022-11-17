@@ -81,7 +81,6 @@ private:
 		/// SDL stuff.
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
-	static Mix_Music* gMusic;
 	static Mix_Chunk* ahhhhh;
 
 	static TTF_Font* regFont;
