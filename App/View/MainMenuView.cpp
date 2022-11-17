@@ -165,7 +165,7 @@ MainMenuView::MainMenuView()
 		title->setPosition(10, 75);
 		title->setColor(0, 0, 0);
 		this->addWidget(title);
-		title->setText("Bib.io");
+		title->setText("Bib.i");
 		title->setHorizontallyCentered();
 	}
 

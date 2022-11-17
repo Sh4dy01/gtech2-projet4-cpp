@@ -1,4 +1,4 @@
 feedCapacity 330
-remainingVol 50
+remainingVol 10
 minimumFeed 55
-meal 280 0 1800 1800 1668708074 "11/17/22
+meal 320 0 600 571 1668721185 11/17/22_-_22:39:45
