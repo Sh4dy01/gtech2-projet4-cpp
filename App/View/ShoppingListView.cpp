@@ -163,12 +163,12 @@ void ShoppingListView::destroyElement(int index,Button* btn) {
 void ShoppingListView::buttonPlusUpdate(Button* btn)
 {
 	if (lengthElementList < 5) {
-		if (!btn->isVisible()) btn->setVisible();
+		if (!btn->isVisible()) btn->toggleVisibility();
 		btn->setPosition(btn->getPositionX(), contentOutset + lengthElementList * outsetBetweenElement);
 	}
 	else
 	{
-		btn->setVisible();
+		btn->toggleVisibility();
 	}
 }
 
