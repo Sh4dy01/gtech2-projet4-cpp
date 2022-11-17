@@ -6,6 +6,8 @@ struct SDL_Texture;
 struct SDL_Surface;
 
 
+
+	/// Image widget.
 class Image : public Widget
 {
 	friend class View;

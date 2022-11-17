@@ -9,6 +9,9 @@ typedef struct _TTF_Font TTF_Font;
 
 
 
+	/// Text widget.
+	/// This can be used to display any type of text inside a view,
+	/// like a title, or time & date.
 class Text : public Widget
 {
 public:
@@ -17,6 +20,8 @@ public:
 	~Text();
 
 	std::string inline GetText() { return text; };
+
+		/// Set this text to be underlined.
 	void setIsUnderline();
 
 		/// Set the text to be displayed by this widget.

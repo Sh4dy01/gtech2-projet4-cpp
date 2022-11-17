@@ -48,6 +48,8 @@ void Text::render(SDL_Renderer* renderer)
 
 		SDL_RenderCopy(renderer, texture, 0, &dest);
 	}
+
+	// Render a line below the text's rectangle.
 	if (isUnderline) {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderDrawLine(renderer, posX,posY+height,posX+width,posY+height);
