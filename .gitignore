@@ -424,3 +424,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 settings.txt
+/SDL2.dll
+/SDL2_image.dll
+/SDL2_ttf.dll
