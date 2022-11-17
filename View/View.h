@@ -17,6 +17,7 @@ typedef _TTF_Font TTF_Font;
 
 
 
+	/// A view describes a global top-level container for widgets.
 class View
 {
 public:
@@ -63,15 +64,18 @@ public:
 
 private:
 
+		/// List of all widgets.
 	std::vector<Widget*> widgets;
+	
+		/// Widget currently having keyboard focus.
 	Widget* focusedWidget;
-	Widget* hoveredWidget;
 
 	Color backgroundColor;
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 
-
+		/// The default font to use for text rendering in this view.
+		/// Individual widgets capable of rendering text can override this default font.
 	TTF_Font* font;
 };

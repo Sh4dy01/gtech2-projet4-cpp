@@ -27,6 +27,9 @@ typedef struct _TTF_Font TTF_Font;
 
 
 
+	/// Global application structure.
+	/// This static class is responsible for initializing the required libraries,
+	/// creating the views, and model (application's local data).
 class App
 {
 public:

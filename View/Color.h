@@ -2,6 +2,8 @@
 
 
 
+	/// Color utility.
+	/// This class stores an RGB color in a 32-bits integer.
 class Color
 {
 public:
@@ -21,6 +23,8 @@ public:
 
 private:
 
+		/// Color data.
+		/// RGBA must be inverted for little-endian memory.
 	union {
 		unsigned int rgba;
 		struct {
