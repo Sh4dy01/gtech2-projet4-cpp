@@ -28,6 +28,8 @@ public:
 		/// Renders all the widgets in this view.
 	void render();
 	virtual void update();
+
+	virtual void ResetInputs(InputText**, int, Color*);
 	bool IsInputsNumeric(InputText**, int);
 	bool IsInputsMoreThanZero(InputText**, int);
 

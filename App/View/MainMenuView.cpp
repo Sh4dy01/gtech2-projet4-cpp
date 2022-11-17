@@ -1,5 +1,6 @@
 #include "App/App.h"
 #include "MainMenuView.h"
+#include "SettingsView.h"
 #include "MealView.h"
 #include "../bib.h"
 
@@ -117,7 +118,7 @@ MainMenuView::MainMenuView()
 		bibiPNG->setVerticallyCentered(-50);
 	}
 
-	Text* bibiMaxText = new Text();
+	bibiMaxText = new Text();
 	{
 		bibiMaxText->setColor(181, 222, 255);
 		bibiMaxText->setText(std::to_string(bib->GetMaxBib()).c_str());
@@ -219,6 +220,7 @@ MainMenuView::MainMenuView()
 			button1->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			button1->setColor(220, 220, 220);
 			button1->setOnClickCallback([]() {
+				((SettingsView*)App::getViewSettings())->SetActQtyInput(App::GetBibi()->GetBibQty());
 				App::setCurrentView(App::getViewSettings());
 			});
 			this->addWidget(button1);
@@ -228,20 +230,22 @@ MainMenuView::MainMenuView()
 }
 
 void MainMenuView::UpdateBibVisual() {
-	int bibiActualQty = App::GetBibi()->GetBibQty();
+	Bib* bib = App::GetBibi();
 
-	currentQty = ((float)bibiActualQty / App::GetBibi()->GetMaxBib()) * 100;
+	currentQty = ((float)bib->GetBibQty() /bib->GetMaxBib()) * 100;
 
 	bibiActualIndicator->setSize(
 		BIBI_WIDTH - INDICATOR_OFFSET_X * 2,
 		-LIMIT_INDICATOR_Y_STEP * currentQty
 	);
 
-	bibiActText->setText(std::to_string(bibiActualQty).c_str());
+	bibiActText->setText(std::to_string(bib->GetBibQty()).c_str());
 	bibiActText->setPosition(
 		bibiActualIndicator->getPositionX() - bibiActText->getWidth() - 20,
 		bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
 	);
+
+	bibiMaxText->setText(std::to_string(bib->GetMaxBib()).c_str());
 
 	bibiMinText->setPosition(
 		bibiActText->getPositionX(),

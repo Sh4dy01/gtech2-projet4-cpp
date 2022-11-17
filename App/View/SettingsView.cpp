@@ -11,6 +11,8 @@
 #include <SDL_ttf.h>
 #include <iostream>
 
+Color* inputDefaultColor = new Color(245, 240, 187);
+
 SettingsView::SettingsView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
 {
@@ -67,9 +69,10 @@ SettingsView::SettingsView()
 			{
 				maxBibInput->setSize(40, 25);
 				maxBibInput->setPosition(0, textVolume->getPositionY()+maxBibInput->getHeight()+10);
-				maxBibInput->setColor(245, 240, 187);
-				maxBibInput->setPlaceholder(std::to_string(bib->GetMaxBib()).c_str());
+				maxBibInput->setColor(inputDefaultColor->getR(), inputDefaultColor->getG(), inputDefaultColor->getB());
 				maxBibInput->setFont(App::getSmallFont());
+				maxBibInput->setText(std::to_string(bib->GetMaxBib()).c_str());
+				maxBibInput->setPlaceholder(std::to_string(bib->GetMaxBib()).c_str());
 				this->addWidget(maxBibInput);
 				maxBibInput->setHorizontallyCentered();
 			}
@@ -109,9 +112,10 @@ SettingsView::SettingsView()
 			{
 				actualQtyInput->setSize(40, 25);
 				actualQtyInput->setPosition(0, textQtyMin->getPositionY() + textQtyMin->getHeight() + 10);
-				actualQtyInput->setColor(245, 240, 187);
-				actualQtyInput->setPlaceholder(std::to_string(bib->GetBibQty()).c_str());
+				actualQtyInput->setColor(inputDefaultColor->getR(), inputDefaultColor->getG(), inputDefaultColor->getB());
 				actualQtyInput->setFont(App::getSmallFont());
+				actualQtyInput->setText(std::to_string(bib->GetBibQty()).c_str());
+				actualQtyInput->setPlaceholder(std::to_string(bib->GetBibQty()).c_str());
 				this->addWidget(actualQtyInput);
 				actualQtyInput->setHorizontallyCentered();
 			}
@@ -151,9 +155,10 @@ SettingsView::SettingsView()
 			{
 				minFeedVolInput->setSize(40, 25);
 				minFeedVolInput->setPosition(0, textMinMeal->getPositionY() + textMinMeal->getHeight() + 10);
-				minFeedVolInput->setColor(245, 240, 187);
-				minFeedVolInput->setPlaceholder(std::to_string(bib->GetMinFeed()).c_str());
+				minFeedVolInput->setColor(inputDefaultColor->getR(), inputDefaultColor->getG(), inputDefaultColor->getB());
 				minFeedVolInput->setFont(App::getSmallFont());
+				minFeedVolInput->setText(std::to_string(bib->GetMinFeed()).c_str());
+				minFeedVolInput->setPlaceholder(std::to_string(bib->GetMinFeed()).c_str());
 				this->addWidget(minFeedVolInput);
 				minFeedVolInput->setHorizontallyCentered();
 			}
@@ -199,7 +204,7 @@ SettingsView::SettingsView()
 		returnBtn->setColor(220, 220, 220);
 		returnBtn->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewMainMenu());
-			((SettingsView*)App::getViewSettings())->ResetInputsText();
+			App::getViewSettings()->ResetInputs(((SettingsView*)App::getViewSettings())->getInputsNumWidget(), 3, inputDefaultColor);
 			});
 		this->addWidget(returnBtn);
 		returnBtn->setHorizontallyCentered();
@@ -207,18 +212,13 @@ SettingsView::SettingsView()
 }
 
 void SettingsView::ApplySettingsToBib() {
-	App::GetBibi()->ApplySettings(std::stoi(maxBibInput->getText()), std::stoi(actualQtyInput->getText()), std::stoi(minFeedVolInput->getText()));
-	maxBibInput->setPlaceholder(maxBibInput->getText());
-	actualQtyInput->setPlaceholder(actualQtyInput->getText());
-	minFeedVolInput->setPlaceholder(minFeedVolInput->getText());
+	App::GetBibi()->ApplySettings(
+		std::stoi(maxBibInput->getText()), 
+		std::stoi(actualQtyInput->getText()), 
+		std::stoi(minFeedVolInput->getText())
+	);
 
-	ResetInputsText();
-}
-
-void SettingsView::ResetInputsText() {
-	maxBibInput->setText("");
-	actualQtyInput->setText("");
-	minFeedVolInput->setText("");
+	ResetInputs(inputsNumCheck, 3, inputDefaultColor);
 }
 
 bool SettingsView::IsInputsLogical() {
@@ -226,8 +226,16 @@ bool SettingsView::IsInputsLogical() {
 	int actQty = std::stoi(actualQtyInput->getText());
 	int minFeed = std::stoi(minFeedVolInput->getText());
 
-	if (actQty > maxBib) { return false; }
-	if (minFeed > maxBib) { return false; }
+	if (actQty > maxBib) { 
+		actualQtyInput->setColor(255, 0, 0);
+
+		return false; 
+	}
+	if (minFeed > maxBib) { 
+		minFeedVolInput->setColor(255, 0, 0);
+		
+		return false; 
+	}
 
 	return true;
 }
