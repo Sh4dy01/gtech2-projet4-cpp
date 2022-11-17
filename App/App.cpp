@@ -71,32 +71,32 @@ bool App::initialize()
 
 	//Create fonts
 	{
-		regFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Regular.ttf", 32);
+		regFont = TTF_OpenFont("Assets/Fonts/Comfortaa-Regular.ttf", 32);
 		if (regFont == NULL)
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		}
-		boldFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 32);
+		boldFont = TTF_OpenFont("Assets/Fonts/Comfortaa-Bold.ttf", 32);
 		if (boldFont == NULL)
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		}
-		lightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 24);
+		lightFont = TTF_OpenFont("Assets/Fonts/Comfortaa-Light.ttf", 24);
 		if (lightFont == NULL)
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		}
-		titleFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 24);
+		titleFont = TTF_OpenFont("Assets/Fonts/Comfortaa-Bold.ttf", 24);
 		if (titleFont == NULL)
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		}
-		smallFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Bold.ttf", 22);
+		smallFont = TTF_OpenFont("Assets/Fonts/Comfortaa-Bold.ttf", 22);
 		if (smallFont == NULL)
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		}
-		smallLightFont = TTF_OpenFont("Libs/Fonts/Comfortaa-Light.ttf", 16);
+		smallLightFont = TTF_OpenFont("Assets/Fonts/Comfortaa-Light.ttf", 16);
 		if (smallLightFont == NULL)
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
