@@ -1,0 +1,3 @@
+feedCapacity 330
+remainingVol 120
+minimumFeed 55

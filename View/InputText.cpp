@@ -96,7 +96,7 @@ void InputText::render(SDL_Renderer* r)
 		unsigned long long millis = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
 		if ((millis % 1000) >= 500) {
 
-			int x = this->text.empty() ? 2 : dest.x + dest.w + 2;
+			int x = this->text.empty() ? dest.x + 2 : dest.x + dest.w + 2;
 
 			SDL_SetRenderDrawColor(this->view->getSDLRenderer(), 0, 0, 0, 255);
 			SDL_RenderDrawLine(this->view->getSDLRenderer(), x, dest.y + 2, x, dest.y + this->height - 3);
@@ -129,7 +129,7 @@ void InputText::onTextInput(char c)
 	}
 
 	// Any other printable character.
-	else if ( isprint(c) ) {
+	else if ( c >= 0 && isprint(c) ) {
 
 		if (this->text.size() < this->maxNumChars) {
 			this->text += c;

@@ -1,6 +1,13 @@
-#include "bib.h";
-#include "App.h";
+#include "bib.h"
+#include "App.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
+using namespace std;
+
+
+static const char* const SETTINGS_FILENAME = "settings.txt";
+
 
 Bib::Bib() {
 	maxBib = 330;
@@ -37,4 +44,37 @@ void Bib::ApplySettings(int maxBib, int minFeed) {
 void Bib::AddMeal(Meal meal) {
 	mealArray.push_back(meal);
 	lastMeal = meal;
+}
+
+void Bib::loadSettings()
+{
+	ifstream f(SETTINGS_FILENAME);
+
+	string line, id;
+	while (!f.eof())
+	{
+		// Get line.
+		getline(f, line);
+
+		// Ignore empty line.
+		if (line.empty()) {
+			continue;
+		}
+
+		stringstream ss(line);
+		ss >> id;
+	}
+
+	f.close();
+}
+
+void Bib::saveSettings()
+{
+	ofstream f(SETTINGS_FILENAME);
+
+	f << "feedCapacity " << this->maxBib << endl;
+	f << "remainingVol " << this->actualQty << endl;
+	f << "minimumFeed "  << this->minFeed << endl;
+
+	f.close();
 }
