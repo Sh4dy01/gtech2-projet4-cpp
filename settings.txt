@@ -1,4 +1,0 @@
-feedCapacity 330
-remainingVol 10
-minimumFeed 55
-meal 320 0 600 571 1668721185 11/17/22_-_22:39:45
