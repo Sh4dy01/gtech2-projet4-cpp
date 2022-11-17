@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+Color* selectedButtonColor = new Color(150, 255, 150);
+Color* defaultButtonColor = new Color(255, 255, 255);
 
 MealView::MealView()
 	: View(App::getSDLWindow(), App::getSDLRenderer())
@@ -143,15 +145,31 @@ MealView::MealView()
 				textRegu->setHorizontallyCentered();
 			}
 
-			InputText* dataBtn2 = new InputText();
+			yesButton = new Button("YES");
 			{
-				dataBtn2->setPosition(0, 430);
-				dataBtn2->setPlaceholder("Insert data");
-				dataBtn2->setSize(300, 30);
-				dataBtn2->setColor(255, 255, 255);
-				dataBtn2->setFont(App::getSmallFont());
-				this->addWidget(dataBtn2);
-				dataBtn2->setHorizontallyCentered();
+				yesButton->setSize(50, 30);
+				yesButton->setPosition(textRegu->getPositionX() + yesButton->getWidth()/2 - 20, 200);
+				yesButton->setColor(255, 255, 255);
+				yesButton->setFont(App::getSmallFont());
+				yesButton->setOnClickCallback([]() {
+					((MealView*)App::getViewMeal())->SetIsRegurgitated(true);
+					((MealView*)App::getViewMeal())->SwitchButtonColor();
+				});
+				this->addWidget(yesButton);
+				yesButton->setVerticallyCentered();
+			}
+
+			noButton = new Button("NO");
+			{
+				noButton->setPosition(yesButton->getPositionX() + yesButton->getWidth()*2, yesButton->getPositionY());
+				noButton->setSize(50, 30);
+				noButton->setColor(150, 255, 150);
+				noButton->setFont(App::getSmallFont());
+				noButton->setOnClickCallback([]() {
+					((MealView*)App::getViewMeal())->SetIsRegurgitated(false);
+					((MealView*)App::getViewMeal())->SwitchButtonColor();
+				});
+				this->addWidget(noButton);
 			}
 		}
 
@@ -243,5 +261,16 @@ void MealView::CreateMeal() {
 void MealView::ResetInputs() {
 	quantityInput->setText("");
 	reminderInput->setText("");
+	isRegurgitated = false;
 }
 
+void MealView::SwitchButtonColor() {
+	if (isRegurgitated) {
+		yesButton->setColor(selectedButtonColor->getR(), selectedButtonColor->getG(), selectedButtonColor->getB());
+		noButton->setColor(defaultButtonColor->getR(), defaultButtonColor->getG(), defaultButtonColor->getB());
+	}
+	else {
+		yesButton->setColor(defaultButtonColor->getR(), defaultButtonColor->getG(), defaultButtonColor->getB());
+		noButton->setColor(selectedButtonColor->getR(), selectedButtonColor->getG(), selectedButtonColor->getB());
+	}
+}

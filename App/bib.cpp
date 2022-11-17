@@ -31,10 +31,17 @@ void Bib::ReminderReduction() {
 
 	int actualReminder = reminderStartTime + reminderTotal - currentTime;
 
+	std::cout << actualReminder << std::endl;
+
 	if (actualReminder > 0) {
 		actualReminder--;
-		lastMeal.actualReminder = actualReminder;
 	}
+	else {
+		actualReminder = 0;
+	}
+
+	lastMeal.actualReminder = actualReminder;
+	mealArray.back().actualReminder = actualReminder;
 }
 
 void Bib::ApplySettings(int maxBib, int actBib, int minFeed) {
@@ -72,20 +79,26 @@ void Bib::loadSettings()
 		// Formatted reading.
 		stringstream ss(line);
 		ss >> id;
-		
+
 		if      (id == "feedCapacity") ss >> this->maxBib;
 		else if (id == "remainingVol") ss >> this->actualQty;
 		else if (id == "minimumFeed")  ss >> this->minFeed;
 
 		else if (id == "meal") {
+
 			Meal m;
 			ss
 				>> m.feedQty >> m.IsRegurgitated
 				>> m.reminderTotal >> m.actualReminder
 				>> m.fullDate;
+
+			std::cout << "loaded : " << m.reminderTotal << ", " << m.actualReminder << std::endl;
+
 			mealArray.push_back(m);
 		}
 	}
+
+	if (mealArray.size() > 0) { lastMeal = mealArray.back(); }
 
 	f.close();
 }
@@ -99,6 +112,8 @@ void Bib::saveSettings()
 	f << "minimumFeed "  << this->minFeed << endl;
 
 	for (Meal& m : mealArray) {
+		std::cout << "saved : " << m.reminderTotal << ", " << m.actualReminder << std::endl;
+
 		f << "meal "
 			<< m.feedQty << ' ' << (m.IsRegurgitated ? 1 : 0) << ' '
 			<< m.reminderTotal << ' ' << m.actualReminder << ' '

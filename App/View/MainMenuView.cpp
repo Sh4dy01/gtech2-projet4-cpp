@@ -184,7 +184,7 @@ MainMenuView::MainMenuView()
 		errorFeedFirst->setPosition(10, RENDER_HEIGHT - 24 - 10);
 		errorFeedFirst->setVisible(false);
 		errorFeedFirst->setFont(App::getSmallFont());
-		errorFeedFirst->setText("You must fill the bottle first!");
+		errorFeedFirst->setText("Not enough milk!");
 		this->addWidget(errorFeedFirst);
 	}
 
