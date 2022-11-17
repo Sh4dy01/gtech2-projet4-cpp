@@ -29,8 +29,9 @@ void Bib::ReminderReduction() {
 	}
 }
 
-void Bib::ApplySettings(int maxBib, int minFeed) {
+void Bib::ApplySettings(int maxBib, int actBib, int minFeed) {
 	this->maxBib = maxBib;
+	this->actualQty = actBib;
 	this->minFeed = minFeed;
 }
 

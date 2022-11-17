@@ -41,9 +41,9 @@ void View::update()
 {
 }
 
-bool View::IsInputsNumeric(InputText* inputs[])
+bool View::IsInputsNumeric(InputText** inputs, int size)
 {
-	for (int i = 0; i < sizeof(inputs); i++)
+	for (int i = 0; i < size; i++)
 	{
 		const char* text = inputs[i]->getText();
 
@@ -68,12 +68,12 @@ bool View::IsInputsNumeric(InputText* inputs[])
 	return true;
 }
 
-bool View::IsInputsMoreThanZero(InputText* inputs[])
+bool View::IsInputsMoreThanZero(InputText** inputs, int size)
 {
-	for (int i = 0; i < sizeof(inputs); i++) {
+	for (int i = 0; i < size; i++) {
 		const char* text = inputs[i]->getText();
-
-		if (std::stoi(text) < 0)
+		std::cout << text << std::endl;
+		if (std::stoi(text) <= 0)
 		{
 			inputs[i]->setText("");
 			std::cout << "Isn't superior to 0: " << text << std::endl;

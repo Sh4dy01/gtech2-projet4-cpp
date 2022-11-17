@@ -28,9 +28,7 @@ public:
     /// <summary>
     /// Apply all the settings to the bib
     /// </summary>
-    /// <param name=""></param>
-    /// <param name=""></param>
-    void ApplySettings(int, int);
+    void ApplySettings(int maxBib, int actBib, int minFeed);
     void AddMeal(Meal);
 
     inline int GetBibQty() { return actualQty; }

@@ -27,8 +27,8 @@ public:
 		/// Renders all the widgets in this view.
 	void render();
 	virtual void update();
-	bool IsInputsNumeric(InputText*[]);
-	bool IsInputsMoreThanZero(InputText*[]);
+	bool IsInputsNumeric(InputText**, int);
+	bool IsInputsMoreThanZero(InputText**, int);
 
 		/// Add a widget to this view.
 		/// Once added to a view, a widget's ownership is transfered to it, and the view
@@ -71,6 +71,7 @@ private:
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+
 
 	TTF_Font* font;
 };
