@@ -23,6 +23,8 @@ struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
 
+typedef struct _Mix_Music Mix_Music;
+typedef struct Mix_Chunk;
 typedef struct _TTF_Font TTF_Font;
 
 
@@ -60,6 +62,8 @@ public:
 	static inline TTF_Font*     getLightFont() { return lightFont; }
 	static inline TTF_Font*     getBoldFont() { return boldFont; }
 
+	static inline Mix_Chunk*     GetAhhhhh() { return ahhhhh; }
+
 	static inline View* getViewMainMenu() { return viewMainMenu; }
 	static inline View* getViewMeal() { return viewMeal; }
 	static inline View* getViewShoppingList() { return viewShoppingList; }
@@ -77,6 +81,8 @@ private:
 		/// SDL stuff.
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
+	static Mix_Music* gMusic;
+	static Mix_Chunk* ahhhhh;
 
 	static TTF_Font* regFont;
 	static TTF_Font* boldFont;

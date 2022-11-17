@@ -119,6 +119,9 @@ MainMenuView::MainMenuView()
 		this->addWidget(bibiPNG);
 		bibiPNG->setHorizontallyCentered();
 		bibiPNG->setVerticallyCentered(-50);
+		bibiPNG->setOnClickCallback([]() {
+			App::GetBibi()->IncrementEasterEgg();
+			});
 	}
 
 	bibiMaxText = new Text();

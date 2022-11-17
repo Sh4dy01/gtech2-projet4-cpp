@@ -1,5 +1,7 @@
 #include "bib.h"
 #include "App.h"
+#include <SDL_mixer.h>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -55,6 +57,16 @@ void Bib::ApplySettings(int maxBib, int actBib, int minFeed) {
 void Bib::AddMeal(Meal meal) {
 	mealArray.push_back(meal);
 	lastMeal = meal;
+}
+
+void Bib::IncrementEasterEgg() {
+	easterEgg++;
+
+	if (easterEgg >= 10)
+	{
+		easterEgg = 0;
+		Mix_PlayChannel(-1, App::GetAhhhhh(), 0);
+	}
 }
 
 void Bib::loadSettings()
