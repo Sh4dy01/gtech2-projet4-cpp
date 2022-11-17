@@ -110,6 +110,15 @@ void View::addWidget( Widget* w )
 	w->onAddToView(this);
 }
 
+void View::removeWidget(Widget* w)
+{
+	// Remove all occurrences of w.
+	widgets.erase(std::remove(widgets.begin(), widgets.end(), w), widgets.end());
+
+	// Delete widget and its resources.
+	delete w;
+}
+
 void View::setBackgroundColor(unsigned char r, unsigned char g, unsigned char b)
 {
 	backgroundColor = Color(r, g, b);

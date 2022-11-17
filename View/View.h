@@ -38,6 +38,10 @@ public:
 		///	takes the responsibility of destroying the widget when being deleted.
 	void addWidget( Widget* w );
 
+		/// Remove a specific widget from this view.
+		/// Note that the view will destroy the widget automatically.
+	void removeWidget( Widget* w );
+
 	void setBackgroundColor(unsigned char r, unsigned char g, unsigned char b);
 
 	void handleEvent( const SDL_Event& e );
