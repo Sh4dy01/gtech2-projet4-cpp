@@ -248,7 +248,7 @@ void MainMenuView::UpdateBibVisual() {
 	bibiMaxText->setText(std::to_string(bib->GetMaxBib()).c_str());
 
 	bibiMinText->setPosition(
-		bibiActText->getPositionX(),
+		bibiMinLimitIndicator->getPositionX() - bibiMinText->getWidth(),
 		bibiMinLimitIndicator->getPositionY() - bibiMinText->getHeight() / (float)2
 	);
 
@@ -258,7 +258,7 @@ void MainMenuView::UpdateBibVisual() {
 	);
 
 	bibiActText->setPosition(
-		bibiActualIndicator->getPositionX() - bibiActText->getWidth()*2.7,
+		bibiActualIndicator->getPositionX() - 100,
 		bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
 	);
 }
