@@ -111,6 +111,9 @@ bool App::initialize()
 
 	bib = new Bib();
 
+	// Load saved settings.
+	bib->loadSettings();
+
 	// Create views.
 	viewMainMenu     = new MainMenuView();
 	viewMeal         = new MealView();
@@ -182,6 +185,10 @@ time_t App::GetCurrentTime(char* out) {
 void App::quit()
 {
 	running = false;
+
+	// Save settings!
+	bib->saveSettings();
+	delete bib;
 
 	// Free views.
 	delete viewMainMenu;

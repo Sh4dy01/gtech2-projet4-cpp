@@ -10,6 +10,7 @@ static const char* const SETTINGS_FILENAME = "settings.txt";
 
 
 Bib::Bib() {
+	// Set default values in case settings file does not exist.
 	maxBib = 330;
 	actualQty = 120;
 	minFeed = 55;
@@ -51,6 +52,12 @@ void Bib::loadSettings()
 {
 	ifstream f(SETTINGS_FILENAME);
 
+	// If settings file does not exist yet, save default values.
+	if (!f) {
+		this->saveSettings();
+		return;
+	}
+
 	string line, id;
 	while (!f.eof())
 	{
@@ -62,8 +69,22 @@ void Bib::loadSettings()
 			continue;
 		}
 
+		// Formatted reading.
 		stringstream ss(line);
 		ss >> id;
+		
+		if      (id == "feedCapacity") ss >> this->maxBib;
+		else if (id == "remainingVol") ss >> this->actualQty;
+		else if (id == "minimumFeed")  ss >> this->minFeed;
+
+		else if (id == "meal") {
+			Meal m;
+			ss
+				>> m.feedQty >> m.IsRegurgitated
+				>> m.reminderTotal >> m.actualReminder
+				>> m.fullDate;
+			mealArray.push_back(m);
+		}
 	}
 
 	f.close();
@@ -76,6 +97,14 @@ void Bib::saveSettings()
 	f << "feedCapacity " << this->maxBib << endl;
 	f << "remainingVol " << this->actualQty << endl;
 	f << "minimumFeed "  << this->minFeed << endl;
+
+	for (Meal& m : mealArray) {
+		f << "meal "
+			<< m.feedQty << ' ' << (m.IsRegurgitated ? 1 : 0) << ' '
+			<< m.reminderTotal << ' ' << m.actualReminder << ' '
+			<< m.fullDate
+			<< endl;
+	}
 
 	f.close();
 }

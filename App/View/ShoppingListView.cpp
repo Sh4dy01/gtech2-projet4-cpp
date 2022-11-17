@@ -298,7 +298,7 @@ ShoppingListView::ShoppingListView()
 				tempPlus->setPosition(42, contentOutset + outsetBetweenElement * i);
 				tempPlus->setSize(28, 28);
 				tempPlus->setColor(240, 240, 240);
-				tempPlus->setVisible();
+				tempPlus->toggleVisibility();
 				tempPlus->setOnClickCallback([](int index) {
 					((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) + 1);
 					((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
@@ -313,7 +313,7 @@ ShoppingListView::ShoppingListView()
 				tempMinus->setPosition(42, contentOutset + outsetBetweenElement * i + 32);
 				tempMinus->setSize(28, 28);
 				tempMinus->setColor(240, 240, 240);
-				tempMinus->setVisible();
+				tempMinus->toggleVisibility();
 				tempMinus->setOnClickCallback([](int index) {
 					if (((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) > 0) {
 						((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) - 1);
@@ -331,7 +331,7 @@ ShoppingListView::ShoppingListView()
 			{
 				tempPNG->setPosition(400, contentOutset + outsetBetweenElement * i + 10);
 				tempPNG->setSize(30, 30);
-				tempPNG->setVisible();
+				tempPNG->toggleVisibility();
 				tempPNG->setOnClickCallback([](int index) {
 
 					((ShoppingListView*)App::getViewShoppingList())->destroyElement(index,((ShoppingListView*)App::getViewShoppingList())->getButtonPlus());
@@ -387,7 +387,7 @@ ShoppingListView::ShoppingListView()
 
 void ShoppingListView::activeModify() {
 	for (int i = 0; i < lengthWidgetVisibleList; i++) {
-		widgetVisibleList[i]->setVisible();
+		widgetVisibleList[i]->toggleVisibility();
 	}
 }
 

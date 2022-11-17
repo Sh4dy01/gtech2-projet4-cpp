@@ -19,8 +19,6 @@ int main(int argc, char* args[])
 
 	App::initialize();
 
-	App::GetBibi()->loadSettings();
-
 	SDL_Event e;
 	while (App::isRunning()) {
 
@@ -38,8 +36,6 @@ int main(int argc, char* args[])
 
 		App::HandleTimers();
 	}
-
-	App::GetBibi()->saveSettings();
 
 	App::quit();
 

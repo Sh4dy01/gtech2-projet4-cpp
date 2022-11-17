@@ -17,7 +17,12 @@ bool Widget::isVisible()
 	return visible;
 }
 
-void Widget::setVisible()
+void Widget::setVisible(bool b)
+{
+	visible = b;
+}
+
+void Widget::toggleVisibility()
 {
 	visible = !visible;
 }

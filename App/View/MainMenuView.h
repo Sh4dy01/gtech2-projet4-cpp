@@ -2,8 +2,10 @@
 
 #include "View/View.h"
 #include "View/Shapes.h"
+#include "View/Image.h"
 
 class Text;
+class Image;
 
 
 class MainMenuView : public View
@@ -25,6 +27,10 @@ private:
 	Text* bibiMinText;
 	Text* bibiMaxText;
 
+	Image* bibiPNG;
+
 	Text* date;
 	Text* timer;
+
+	Text* errorFeedFirst;
 };
