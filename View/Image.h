@@ -29,6 +29,9 @@ public:
 	void setOnClickCallback(void (*c)()) { onClickCallback = (void (*)(int)) c; callbackUserData = 0; }
 	void setOnClickCallback(void (*c)(int), int userdata) { onClickCallback = c; callbackUserData = userdata; }
 
+	int getCallbackUserData() const { return callbackUserData; }
+	void setCallbackUserData(int userdata) { callbackUserData = userdata; }
+
 
 
 private:

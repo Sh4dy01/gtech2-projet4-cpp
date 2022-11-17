@@ -4,6 +4,7 @@
 #include "View/Widget.h"
 #include "View/Text.h"
 #include "View/Button.h"
+#include "View/InputText.h"
 
 class Rect;
 
@@ -14,7 +15,8 @@ class ShoppingListView : public View
 public:
 
 	ShoppingListView();
-	void setList(const char* tab);
+	int getLengthElementList();
+	void setList(std::string tab);
 	void initWidgetLists();
 
 	
@@ -26,7 +28,7 @@ public:
 	void activeModify();
 	void activeUpdateTextList(int index);
 	void activeUpdateRectList(int index);
-	void buttonPlusUpdate(Button* btn);
+	void inputTextPlusUpdate(InputText* btn);
 
 	void popInt(int i, int* tab);
 
@@ -34,16 +36,21 @@ public:
 	void setCountList(int i, int value);
 
 	void initCountList();
-	void destroyElement(int index, Button* btn);
+	void destroyElement(int index, InputText* btn);
+	void addElement(InputText* ipt);
 
-	void setButtonPlus(Button* btn);
-	Button* getButtonPlus();
+	void setInputTextPlus(InputText* btn);
+	InputText* getInputTextPlus();
+
+	virtual void update() override;
 
 
 private:
 
+	InputText* ElementInput;
+
 	/// temp list of elements to shop
-	const char* elementList[5];
+	std::string elementList[5];
 	int lengthElementList;
 
 	/// temp list of count
@@ -65,6 +72,5 @@ private:
 	Widget* widgetsElementList[7][5];
 	int numberWidgetsElementList[5];
 
-
-	Button* buttonPlus;
+	Button* applyBtn;
 };

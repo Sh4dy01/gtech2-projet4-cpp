@@ -1,4 +1,4 @@
 feedCapacity 330
 remainingVol 50
 minimumFeed 55
-meal 280 0 1800 1800 1668708074 "11/17/22
+meal 280 0 1800 1800 1668708074

@@ -112,6 +112,9 @@ void View::addWidget( Widget* w )
 
 void View::removeWidget(Widget* w)
 {
+	if (this->hoveredWidget == w) this->hoveredWidget = 0;
+	if (this->focusedWidget == w) this->focusedWidget = 0;
+
 	// Remove all occurrences of w.
 	widgets.erase(std::remove(widgets.begin(), widgets.end(), w), widgets.end());
 

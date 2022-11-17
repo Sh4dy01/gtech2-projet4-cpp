@@ -14,6 +14,11 @@ using namespace std;
 int contentOutset = 280;
 int outsetBetweenElement = 75;
 
+int ShoppingListView::getLengthElementList()
+{
+	return lengthElementList;
+}
+
 int ShoppingListView::getCountListElement(int i)
 {
 	return countList[i];
@@ -24,17 +29,17 @@ void ShoppingListView::setCountList(int i, int value)
 	countList[i] = value;
 }
 
-void ShoppingListView::setButtonPlus(Button* btn)
+void ShoppingListView::setInputTextPlus(InputText* ipt)
 {
-	buttonPlus = btn;
+	ElementInput = ipt;
 }
 
-Button* ShoppingListView::getButtonPlus()
+InputText* ShoppingListView::getInputTextPlus()
 {
-	return buttonPlus;
+	return ElementInput;
 }
 
-void ShoppingListView::setList(const char* tab)
+void ShoppingListView::setList(std::string tab)
 {
 	lengthElementList += 1;
 	elementList[lengthElementList] = tab;
@@ -58,6 +63,14 @@ void ShoppingListView::initWidgetLists()
 
 	for (int i = 0; i < 5; i++) {
 		numberWidgetsElementList[i] = 0;
+	}
+
+	for (int i = 0; i < 5; i++) {
+		updateRectList[i] = 0;
+	}
+
+	for (int i = 0; i < 5; i++) {
+		updateTextList[i] = 0;
 	}
 
 }
@@ -105,62 +118,240 @@ void ShoppingListView::activeUpdateRectList(int index)
 	else                             updateRectList[index]->setColor(252, 251, 181);
 }
 
-void ShoppingListView::destroyElement(int index,Button* btn) {
+void ShoppingListView::destroyElement(int index, InputText* ipt) {
 
-	for (int i = 0; i < lenghtCountList - index - 1; i++) {
-		countList[i + index] = countList[i + index + 1];
-	}
-	countList[lenghtCountList] = 0;
-	lenghtCountList -= 1;
+	// std::string elementList[5]; ex [gui,hug,dav,..,..]
+	// int lengthElementList; ex: 3
 
-	for (int i = 0; i < lengthElementList - index - 1; i++) {
-		elementList[i + index] = elementList[i + index + 1];
-	}
-	elementList[lengthElementList] = 0;
+	// int countList[5];
+	// lenghtCountList;
 
-	for (int i = 0; i < lengthUpdateTextList - index - 1; i++) {
-		updateTextList[i + index] = updateTextList[i + index + 1];
-	}
-	updateTextList[lengthUpdateTextList] = 0;
-	lengthUpdateTextList -= 1;
+	// Text* updateTextList[5];
+	// int lengthUpdateTextList;
 
-	for (int i = 0; i < lengthUpdateRectList - index - 1; i++) {
-		updateRectList[i + index] = updateRectList[i + index + 1];
-	}
-	updateRectList[lengthUpdateRectList] = 0;
-	lengthUpdateRectList -= 1;
+	// Rect* updateRectList[5];
+	// int lengthUpdateRectList;
 
-	for (int i = 0; i < lengthWidgetVisibleList - index - 1; i++) {
-		for (int y = 0; y < 3; y++) {
-			widgetVisibleList[y + index] = widgetVisibleList[y + index + 3];
+	// Widget* widgetVisibleList[15];
+	// int lengthWidgetVisibleList;
+
+	// Widget* widgetsElementList[7][5];
+	// int numberWidgetsElementList[5];
+
+	// remove element of elementList at the index
+	{
+		for (int i = 0; i < (lengthElementList-index-1); i++)
+
+		{
+			elementList[index + i] = elementList[index + i + 1];
 		}
-	}
-	widgetVisibleList[lengthWidgetVisibleList] = 0;
-	widgetVisibleList[lengthWidgetVisibleList+1] = 0;
-	widgetVisibleList[lengthWidgetVisibleList+2] = 0;
-	lengthWidgetVisibleList -= 3;
 
-	for (int i = 0; i < 7; i++) {
-		delete widgetsElementList[i][index];
-		widgetsElementList[i][index] = 0;
+		elementList[lengthElementList - 1] = "";
 	}
 
-	for (int i = 0; i < lengthElementList - index - 1; i++) {
-		for (int y = 0; y < 7; y++) {
-			widgetsElementList[y][i + index + 1]->setPosition(widgetsElementList[y][i + index + 1]->getPositionX(), widgetsElementList[y][i + index + 1]->getPositionY() - outsetBetweenElement);
-			widgetsElementList[y][i + index] = widgetsElementList[y][i + index + 1];
+	// remove element of countList at the index
+	{
+		for (int i = 0; i < (lenghtCountList - index - 1); i++)
+
+		{
+			countList[index + i] = countList[index + i + 1];
 		}
+
+		countList[lenghtCountList - 1] = 0;
+		lenghtCountList -= 1;
 	}
 
-	for (int i = 0; i < 7; i++) {
-		widgetsElementList[i][lengthElementList] = 0;
-	}
-	lengthElementList -= 1;
+	// remove element of updateTextList at the index
+	{
+		for (int i = 0; i < (lengthUpdateTextList - index - 1); i++)
 
-	this->buttonPlusUpdate(btn);
+		{
+			updateTextList[index + i] = updateTextList[index + i + 1];
+		}
+
+		updateTextList[lengthUpdateTextList - 1] = 0;
+		lengthUpdateTextList -= 1;
+	}
+
+	// remove element of updateRectList at the index
+	{
+		for (int i = 0; i < (lengthUpdateRectList - index - 1); i++)
+
+		{
+			updateRectList[index + i] = updateRectList[index + i + 1];
+		}
+
+		updateRectList[lengthUpdateRectList - 1] = 0;
+		lengthUpdateRectList -= 1;
+	}
+
+	// remove element of widgetVisibleList at the index
+	{
+		for (int i = 0; i < (lengthWidgetVisibleList - index*3 - 3); i++)
+
+		{
+			widgetVisibleList[index*3 + i] = widgetVisibleList[index*3 + i + 3];
+		}
+
+		widgetVisibleList[lengthWidgetVisibleList - 3] = 0;
+		widgetVisibleList[lengthWidgetVisibleList - 2] = 0;
+		widgetVisibleList[lengthWidgetVisibleList - 1] = 0;
+		lengthWidgetVisibleList -= 3;
+	}
+
+	// destroy and remove all the widget link to a element
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			this->removeWidget(widgetsElementList[i][index]);
+			widgetsElementList[i][index] = 0;
+		}
+
+		for (int i = 0; i < (lengthElementList - index - 1); i++)
+		{
+			for (int y = 0; y < 7; y++)
+			{
+				//change image onClick index to the good one
+				if (y == 6)
+				{
+					((Image*)widgetsElementList[y][index + i + 1])->setCallbackUserData(
+						((Image*)widgetsElementList[y][index + i + 1])->getCallbackUserData() - 1
+					);
+				}
+				
+				//move all widget to the next emplacement 
+				widgetsElementList[y][index + i + 1]->setPosition(
+					widgetsElementList[y][index + i + 1]->getPositionX(),
+					widgetsElementList[y][index + i + 1]->getPositionY() - outsetBetweenElement
+				);
+
+				//remplace actual widget with the one of the next column
+				widgetsElementList[y][index + i] = widgetsElementList[y][index + i + 1];
+			}
+		}
+
+		for (int i = 0; i < 7; i++)
+		{
+			widgetsElementList[i][lengthElementList-1] = 0;
+		}
+
+		lengthElementList -= 1;
+		numberWidgetsElementList[lengthElementList] = 0;
+	}
+
+	this->inputTextPlusUpdate(ipt);
 }
 
-void ShoppingListView::buttonPlusUpdate(Button* btn)
+void ShoppingListView::addElement(InputText* ipt)
+{
+	if (lengthElementList < 5) {
+		elementList[lengthElementList] = ElementInput->getText();
+		ElementInput->setText("");
+
+		Rect* temp = new Rect();
+		{
+			temp->setPosition(0, contentOutset + outsetBetweenElement * lengthElementList);
+			temp->setSize(320, 60);
+			temp->setColor(181, 222, 255);
+			this->addWidget(temp);
+			this->addWidgetsElementList(temp, lengthElementList);
+			temp->setHorizontallyCentered();
+		}
+
+		Rect* tempBanner = new Rect();
+		{
+			tempBanner->setPosition(350, contentOutset + outsetBetweenElement * lengthElementList);
+			tempBanner->setSize(40, 60);
+
+			if (countList[lengthElementList] >= 5)	     tempBanner->setColor(167, 233, 175);
+			else if (countList[lengthElementList] <= 2)	 tempBanner->setColor(245, 195, 194);
+			else                                         tempBanner->setColor(252, 251, 181);
+
+			this->addUpdateRectList(tempBanner);
+			this->addWidgetsElementList(tempBanner, lengthElementList);
+			this->addWidget(tempBanner);
+		}
+
+		Text* tempQty = new Text();
+		{
+			stringstream ss;
+			ss << countList[lengthElementList];
+			string test;
+			ss >> test;
+
+			tempQty->setPosition(363, contentOutset + outsetBetweenElement * lengthElementList + 15);
+			tempQty->setFont(App::getSmallFont());
+			tempQty->setText(test.c_str());
+			tempQty->setColor(0, 0, 0);
+			this->addUpdateTextList(tempQty);
+			this->addWidgetsElementList(tempQty, lengthElementList);
+			this->addWidget(tempQty);
+
+			lenghtCountList += 1;
+		}
+
+
+		Text* tempText = new Text();
+		{
+			tempText->setPosition(95, contentOutset + outsetBetweenElement * lengthElementList + 15);
+			tempText->setFont(App::getSmallFont());
+			tempText->setText(elementList[lengthElementList].c_str());
+			tempText->setColor(0, 0, 0);
+			this->addWidgetsElementList(tempText, lengthElementList);
+			this->addWidget(tempText);
+		}
+
+		Button* tempPlus = new Button("+");
+		{
+			tempPlus->setPosition(42, contentOutset + outsetBetweenElement * lengthElementList);
+			tempPlus->setSize(28, 28);
+			tempPlus->setColor(240, 240, 240);
+			tempPlus->setOnClickCallback([](int index) {
+				((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) + 1);
+			((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
+			((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
+				}, lengthElementList);
+			this->addWigdetVisibleList(tempPlus);
+			this->addWidgetsElementList(tempPlus, lengthElementList);
+			this->addWidget(tempPlus);
+		}
+		Button* tempMinus = new Button("-");
+		{
+			tempMinus->setPosition(42, contentOutset + outsetBetweenElement * lengthElementList + 32);
+			tempMinus->setSize(28, 28);
+			tempMinus->setColor(240, 240, 240);
+			tempMinus->setOnClickCallback([](int index) {
+				if (((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) > 0) {
+					((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) - 1);
+					((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
+					((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
+				}
+				}, lengthElementList);
+
+			this->addWigdetVisibleList(tempMinus);
+			this->addWidgetsElementList(tempMinus, lengthElementList);
+			this->addWidget(tempMinus);
+		}
+
+		Image* tempPNG = new Image("Assets/Trash.png");
+		{
+			tempPNG->setPosition(400, contentOutset + outsetBetweenElement * lengthElementList + 10);
+			tempPNG->setSize(30, 30);
+			tempPNG->setOnClickCallback([](int index) {
+
+				((ShoppingListView*)App::getViewShoppingList())->destroyElement(index, ((ShoppingListView*)App::getViewShoppingList())->getInputTextPlus());
+				}, lengthElementList);
+			this->addWigdetVisibleList(tempPNG);
+			this->addWidgetsElementList(tempPNG, lengthElementList);
+			this->addWidget(tempPNG);
+		}
+
+		lengthElementList += 1;
+		this->inputTextPlusUpdate(ipt);
+	}
+}
+
+void ShoppingListView::inputTextPlusUpdate(InputText* btn)
 {
 	if (lengthElementList < 5) {
 		if (!btn->isVisible()) btn->toggleVisibility();
@@ -195,7 +386,8 @@ ShoppingListView::ShoppingListView()
 	this->lengthUpdateTextList = 0;
 	this->lengthUpdateRectList = 0;
 	this->lengthWidgetVisibleList = 0;
-	this->buttonPlus = 0;
+	this->ElementInput = 0;
+	this->applyBtn = 0;
 
 
 	this->setBackgroundColor(82, 89, 92);
@@ -240,6 +432,25 @@ ShoppingListView::ShoppingListView()
 			this->addWidget(titleBody);
 			titleBody->setHorizontallyCentered();
 		}
+
+		
+		
+		ElementInput = new InputText(15);
+		{
+			ElementInput->setPosition(0, contentOutset + lengthElementList * outsetBetweenElement);
+			ElementInput->setSize(320, 60);
+			ElementInput->setColor(240, 240, 240);
+			ElementInput->setVisible(false);
+			ElementInput->setFont(App::getSmallFont());
+			ElementInput->setPlaceholder("Add a new element");
+			this->addWidget(ElementInput);
+			if (lengthElementList >= 5) ElementInput->setVisible(false);
+			this->setInputTextPlus(ElementInput);
+			ElementInput->setHorizontallyCentered();
+		}
+
+
+		
 
 		for (int i = 0; i < lengthElementList; i++) {
 			Rect* temp = new Rect();
@@ -287,7 +498,7 @@ ShoppingListView::ShoppingListView()
 			{
 				tempText->setPosition(95, contentOutset + outsetBetweenElement * i + 15);
 				tempText->setFont(App::getSmallFont());
-				tempText->setText(elementList[i]);
+				tempText->setText(elementList[i].c_str());
 				tempText->setColor(0, 0, 0);
 				this->addWidgetsElementList(tempText, i);
 				this->addWidget(tempText);
@@ -334,7 +545,7 @@ ShoppingListView::ShoppingListView()
 				tempPNG->toggleVisibility();
 				tempPNG->setOnClickCallback([](int index) {
 
-					((ShoppingListView*)App::getViewShoppingList())->destroyElement(index,((ShoppingListView*)App::getViewShoppingList())->getButtonPlus());
+					((ShoppingListView*)App::getViewShoppingList())->destroyElement(index,((ShoppingListView*)App::getViewShoppingList())->getInputTextPlus());
 					}, i);
 				this->addWigdetVisibleList(tempPNG);
 				this->addWidgetsElementList(tempPNG, i);
@@ -343,17 +554,7 @@ ShoppingListView::ShoppingListView()
 			
 		}
 
-		if (lengthElementList < 5)
-		{
-			Button* buttonPlus = new Button("+");
-			{
-				buttonPlus->setPosition(0, contentOutset + lengthElementList * outsetBetweenElement);
-				buttonPlus->setSize(320, 60);
-				buttonPlus->setColor(240, 240, 240);
-				this->addWidget(buttonPlus);
-				buttonPlus->setHorizontallyCentered();
-			}
-		}
+		
 	}
 
 	//button part
@@ -366,6 +567,9 @@ ShoppingListView::ShoppingListView()
 			modifyBtn->setColor(181, 222, 255);
 			modifyBtn->setOnClickCallback([]() {
 				((ShoppingListView*)App::getViewShoppingList())->activeModify();
+				if (((ShoppingListView*)App::getViewShoppingList())->getLengthElementList() < 5) {
+					((ShoppingListView*)App::getViewShoppingList())->getInputTextPlus()->toggleVisibility();
+				}
 				});
 			this->addWidget(modifyBtn);
 			modifyBtn->setHorizontallyCentered();
@@ -373,7 +577,7 @@ ShoppingListView::ShoppingListView()
 
 		Button* returnBtn = new Button("Return");
 		{
-			returnBtn->setPosition(40, 760);
+			returnBtn->setPosition(0, 760);
 			returnBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			returnBtn->setColor(220, 220, 220);
 			returnBtn->setOnClickCallback([]() {
@@ -381,6 +585,19 @@ ShoppingListView::ShoppingListView()
 				});
 			this->addWidget(returnBtn);
 			returnBtn->setHorizontallyCentered();
+		}
+		Button* applyBtn = new Button("Apply");
+		{
+			applyBtn->setPosition(0, 820);
+			applyBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+			applyBtn->setColor(181, 222, 255);
+			applyBtn->setVisible(false);
+			applyBtn->setOnClickCallback([]() {
+				((ShoppingListView*)App::getViewShoppingList())->addElement(((ShoppingListView*)App::getViewShoppingList())->getInputTextPlus());
+				});
+			this->addWidget(applyBtn);
+			applyBtn->setHorizontallyCentered();
+			this->applyBtn = applyBtn;
 		}
 	}
 };
@@ -405,5 +622,11 @@ void ShoppingListView::popInt(int i, int* tab)
 	}
 }
 
+void ShoppingListView::update()
+{
+	const char* text = ElementInput->getText();
+	if (text[0] != 0) applyBtn->setVisible(true);
+	else applyBtn->setVisible(false);
+}
 
 
