@@ -34,7 +34,8 @@ public:
 	void setColor( unsigned char r, unsigned char g, unsigned char b );
 
 	bool isVisible();
-	void setVisible();
+	void setVisible(bool b);
+	void toggleVisibility();
 
 		/// Moves the calling widget to be horizontally centered relative to its parent view.
 		/// The final position will depend on the size of the view and the size of this widget.

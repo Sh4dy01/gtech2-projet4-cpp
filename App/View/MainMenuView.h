@@ -27,4 +27,6 @@ private:
 
 	Text* date;
 	Text* timer;
+
+	Text* errorFeedFirst;
 };

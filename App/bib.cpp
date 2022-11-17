@@ -59,7 +59,6 @@ void Bib::loadSettings()
 	}
 
 	string line, id;
-	int data;
 	while (!f.eof())
 	{
 		// Get line.
@@ -72,11 +71,17 @@ void Bib::loadSettings()
 
 		// Formatted reading.
 		stringstream ss(line);
-		ss >> id >> data;
+		ss >> id;
 		
-		if      (id == "feedCapacity") this->maxBib = data;
-		else if (id == "remainingVol") this->actualQty = data;
-		else if (id == "minimumFeed")  this->minFeed = data;
+		if      (id == "feedCapacity") ss >> this->maxBib;
+		else if (id == "remainingVol") ss >> this->actualQty;
+		else if (id == "minimumFeed")  ss >> this->minFeed;
+
+		else if (id == "meal") {
+			Meal m;
+			ss >> m.feedQty >> m.IsRegurgitated;
+			mealArray.push_back(m);
+		}
 	}
 
 	f.close();
@@ -89,6 +94,10 @@ void Bib::saveSettings()
 	f << "feedCapacity " << this->maxBib << endl;
 	f << "remainingVol " << this->actualQty << endl;
 	f << "minimumFeed "  << this->minFeed << endl;
+
+	for (Meal& m : mealArray) {
+		f << "meal " << m.feedQty << ' ' << (m.IsRegurgitated ? 1 : 0) << endl;
+	}
 
 	f.close();
 }

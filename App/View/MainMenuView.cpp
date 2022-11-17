@@ -182,6 +182,16 @@ MainMenuView::MainMenuView()
 		title->setHorizontallyCentered();
 	}
 
+	errorFeedFirst = new Text();
+	{
+		errorFeedFirst->setColor(255, 140, 140);
+		errorFeedFirst->setPosition(10, RENDER_HEIGHT - 24 - 10);
+		errorFeedFirst->setVisible(false);
+		errorFeedFirst->setFont(App::getSmallFont());
+		errorFeedFirst->setText("You must fill the bottle first!");
+		this->addWidget(errorFeedFirst);
+	}
+
 	//button part
 	{
 		Button* button3 = new Button("New meal");
@@ -192,10 +202,18 @@ MainMenuView::MainMenuView()
 			button3->setOnClickCallback([]() {
 				if (App::GetBibi()->GetBibQty() > App::GetBibi()->GetMinFeed())
 				{
+					// Clear error.
+					((MainMenuView*) App::getViewMainMenu())->errorFeedFirst->setVisible(false);
+
 					((MealView*)App::getViewMeal())->SetFullDate(App::GetCurrentTime(buffer));
 					((MealView*)App::getViewMeal())->getDateWidget()->setText(buffer);
 					((MealView*)App::getViewMeal())->ResetInputs();
 					App::setCurrentView(App::getViewMeal());
+				}
+				else
+				{
+					// Set error.
+					((MainMenuView*)App::getViewMainMenu())->errorFeedFirst->setVisible(true);
 				}
 			});
 			this->addWidget(button3);
