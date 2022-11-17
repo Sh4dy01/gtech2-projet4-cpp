@@ -23,6 +23,7 @@ private:
 	Rect* bibActLine;
 	Text* bibiActText;
 	Text* bibiMinText;
+	Text* bibiMaxText;
 
 	Text* date;
 	Text* timer;

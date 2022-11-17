@@ -10,11 +10,12 @@ public:
 
 	SettingsView();
 	void ApplySettingsToBib();
-	void ResetInputsText();
 	bool IsInputsLogical();
 
 	InputText** getInputsNumWidget() { return inputsNumCheck; }
 	InputText** getInputsMoreThanZeroWidget() { return inputsMoreThanZeroCheck; }
+
+	void inline SetActQtyInput(int value) { actualQtyInput->setText(std::to_string(value).c_str()); };
 
 private:
  
