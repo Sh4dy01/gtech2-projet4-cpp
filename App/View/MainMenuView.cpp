@@ -110,7 +110,7 @@ MainMenuView::MainMenuView()
 		this->addWidget(bibiMinText);
 	}
 
-	Image* bibiPNG = new Image("Assets/Biberon.png");
+	bibiPNG = new Image("Assets/Biberon.png");
 	{
 		bibiPNG->setPosition(0, 0);
 		this->addWidget(bibiPNG);
@@ -137,7 +137,7 @@ MainMenuView::MainMenuView()
 	Button* fillButton = new Button("Fill");
 	{
 		fillButton->setPosition(bibiPNG->getPositionX() + bibiPNG->getWidth() + 4, bibiPNG->getPositionY() + 80);
-		fillButton->setSize(28, 28);
+		fillButton->setSize(30, 28);
 		fillButton->setFont(App::getSmallLightFont());
 		fillButton->setColor(181, 222, 255);
 		this->addWidget(fillButton);
@@ -155,10 +155,6 @@ MainMenuView::MainMenuView()
 		);
 
 		bibiMinLimitIndicator->setSize(bibiPNG->getWidth(), 3);
-		bibiMinLimitIndicator->setPosition(
-			bibiPNG->getPositionX() - LIMIT_INDICATOR_OFFSET_X,
-			bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL - (bibiMinLimitIndicator->getHeight() / (float)2) - LIMIT_INDICATOR_Y_STEP * (((float)bib->GetMinFeed() / bib->GetMaxBib()) * 100)
-		);
 
 		bibiMaxText->setPosition(
 			bibiPNG->getPositionX() + bibiPNG->getWidth(),
@@ -247,6 +243,12 @@ void MainMenuView::UpdateBibVisual() {
 
 	bibiMaxText->setText(std::to_string(bib->GetMaxBib()).c_str());
 
+	bibiMinLimitIndicator->setPosition(
+		bibiPNG->getPositionX() - LIMIT_INDICATOR_OFFSET_X,
+		bibiPNG->getPositionY() + LIMIT_INDICATOR_FULL - (bibiMinLimitIndicator->getHeight() / (float)2) - LIMIT_INDICATOR_Y_STEP * (((float)bib->GetMinFeed() / bib->GetMaxBib()) * 100)
+	);
+
+	bibiMinText->setText(std::to_string(bib->GetMinFeed()).c_str());
 	bibiMinText->setPosition(
 		bibiMinLimitIndicator->getPositionX() - bibiMinText->getWidth(),
 		bibiMinLimitIndicator->getPositionY() - bibiMinText->getHeight() / (float)2
