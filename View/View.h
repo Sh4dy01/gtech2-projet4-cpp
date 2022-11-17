@@ -70,6 +70,9 @@ private:
 		/// Widget currently having keyboard focus.
 	Widget* focusedWidget;
 
+		/// Hovered widget, required to call onMouseHover() and onMouseUnhover() properly.
+	Widget* hoveredWidget;
+
 	Color backgroundColor;
 
 	SDL_Window* window;
