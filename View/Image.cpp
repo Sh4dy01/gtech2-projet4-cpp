@@ -46,6 +46,13 @@ void Image::onAddToView(View* v)
 	SDL_FreeSurface(temp);
 }
 
+void Image::onMouseClick()
+{
+	if (this->onClickCallback)
+		this->onClickCallback(this->callbackUserData);
+}
+
+
 SDL_Surface* Image::loadSurface(const char* path) {
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
