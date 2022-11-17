@@ -18,7 +18,8 @@ public:
 	const char* GetQuantityFromInput() const { return quantityInput->getText(); }
 	const char* GetReminderFromInput() const { return reminderInput->getText(); }
 	Text* getDateWidget() const { return date; }
-	//InputText* getInputsWidget() { return inputs; }
+	InputText** getInputsNumWidget() { return inputsNumCheck; }
+	InputText** getInputsMoreThanZeroWidget() { return inputsMoreThanZeroCheck; }
 
 	void SetFullDate(time_t fullDate) { this->fullDate = fullDate; };
 
@@ -27,8 +28,11 @@ private:
 
 	Text* date;
 	time_t fullDate;
+
 	InputText* quantityInput;
 	InputText* reminderInput;
-	//InputText inputs[2];
+
+	InputText* inputsNumCheck[2];
+	InputText* inputsMoreThanZeroCheck[1];
 
 };

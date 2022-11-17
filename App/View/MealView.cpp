@@ -192,20 +192,21 @@ MealView::MealView()
 	{
 		Button* applyBtn = new Button("Apply");
 		{
-			/*inputs[0] = quantityInput;
-			inputs[1] = quantityInput;*/
+			inputsNumCheck[0] = quantityInput;
+			inputsNumCheck[1] = reminderInput;
+			inputsMoreThanZeroCheck[0] = reminderInput;
 
 			applyBtn->setPosition(0, 640);
 			applyBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			applyBtn->setColor(245, 240, 187);
-			/*applyBtn->setOnClickCallback([]() {
-				if (((MealView*)App::getViewMeal())->IsInputsNumeric(inputs))
+			applyBtn->setOnClickCallback([]() {
+				if (((MealView*)App::getViewMeal())->IsInputsNumeric(((MealView*)App::getViewMeal())->getInputsNumWidget(), 2) && ((MealView*)App::getViewMeal())->IsInputsMoreThanZero(((MealView*)App::getViewMeal())->getInputsMoreThanZeroWidget(), 1))
 				{
 					((MealView*)App::getViewMeal())->CreateMeal();
 					((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
 					App::setCurrentView(App::getViewMainMenu());
 				}
-				});*/
+				});
 			this->addWidget(applyBtn);
 			applyBtn->setHorizontallyCentered();
 		}

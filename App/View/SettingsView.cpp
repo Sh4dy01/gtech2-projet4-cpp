@@ -1,6 +1,7 @@
 #include "App/App.h"
 #include "App/bib.h"
 #include "SettingsView.h"
+#include "MainMenuView.h"
 
 #include "View/InputText.h"
 #include "View/Button.h"
@@ -168,6 +169,29 @@ SettingsView::SettingsView()
 		}
 	}
 
+	Button* applyBtn = new Button("Apply");
+	{
+		inputsNumCheck[0] = maxBibInput;
+		inputsNumCheck[1] = actualQtyInput;
+		inputsNumCheck[2] = minFeedVolInput;
+		inputsMoreThanZeroCheck[0] = minFeedVolInput;
+		inputsMoreThanZeroCheck[1] = maxBibInput;
+
+		applyBtn->setPosition(0, 640);
+		applyBtn->setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		applyBtn->setColor(245, 240, 187);
+		applyBtn->setOnClickCallback([]() {
+			if (((SettingsView*)App::getViewSettings())->IsInputsNumeric(((SettingsView*)App::getViewSettings())->getInputsNumWidget(), 3) && ((SettingsView*)App::getViewSettings())->IsInputsMoreThanZero(((SettingsView*)App::getViewSettings())->getInputsMoreThanZeroWidget(), 2) && ((SettingsView*)App::getViewSettings())->IsInputsLogical())
+			{
+				((SettingsView*)App::getViewSettings())->ApplySettingsToBib();
+				((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
+				App::setCurrentView(App::getViewMainMenu());
+			}
+			});
+		this->addWidget(applyBtn);
+		applyBtn->setHorizontallyCentered();
+	}
+
 	Button* returnBtn = new Button("Return");
 	{
 		returnBtn->setPosition(50, 700);
@@ -175,8 +199,35 @@ SettingsView::SettingsView()
 		returnBtn->setColor(220, 220, 220);
 		returnBtn->setOnClickCallback([]() {
 			App::setCurrentView(App::getViewMainMenu());
+			((SettingsView*)App::getViewSettings())->ResetInputsText();
 			});
 		this->addWidget(returnBtn);
 		returnBtn->setHorizontallyCentered();
 	}
+}
+
+void SettingsView::ApplySettingsToBib() {
+	App::GetBibi()->ApplySettings(std::stoi(maxBibInput->getText()), std::stoi(actualQtyInput->getText()), std::stoi(minFeedVolInput->getText()));
+	maxBibInput->setPlaceholder(maxBibInput->getText());
+	actualQtyInput->setPlaceholder(actualQtyInput->getText());
+	minFeedVolInput->setPlaceholder(minFeedVolInput->getText());
+
+	ResetInputsText();
+}
+
+void SettingsView::ResetInputsText() {
+	maxBibInput->setText("");
+	actualQtyInput->setText("");
+	minFeedVolInput->setText("");
+}
+
+bool SettingsView::IsInputsLogical() {
+	int maxBib = std::stoi(maxBibInput->getText());
+	int actQty = std::stoi(actualQtyInput->getText());
+	int minFeed = std::stoi(minFeedVolInput->getText());
+
+	if (actQty > maxBib) { return false; }
+	if (minFeed > maxBib) { return false; }
+
+	return true;
 }
