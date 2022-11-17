@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+
 using namespace std;
 
 
@@ -90,9 +92,11 @@ void Bib::loadSettings()
 			ss
 				>> m.feedQty >> m.IsRegurgitated
 				>> m.reminderTotal >> m.actualReminder
-				>> m.fullDate;
+				>> m.fullDate >> m.takenTime;
 
-			std::cout << "loaded : " << m.reminderTotal << ", " << m.actualReminder << std::endl;
+
+			std::replace(m.takenTime.begin(), m.takenTime.end(), '_', ' ');
+			std::cout << "loaded : " << m.reminderTotal << ", " << m.actualReminder << ", " << m.takenTime << std::endl;
 
 			mealArray.push_back(m);
 		}
@@ -112,12 +116,16 @@ void Bib::saveSettings()
 	f << "minimumFeed "  << this->minFeed << endl;
 
 	for (Meal& m : mealArray) {
-		std::cout << "saved : " << m.reminderTotal << ", " << m.actualReminder << std::endl;
+
+		std::string time = m.takenTime;
+		std::replace(time.begin(), time.end(), ' ', '_');
+
+		std::cout << "saved : " << m.reminderTotal << ", " << m.actualReminder << ", " << time << std::endl;
 
 		f << "meal "
 			<< m.feedQty << ' ' << (m.IsRegurgitated ? 1 : 0) << ' '
 			<< m.reminderTotal << ' ' << m.actualReminder << ' '
-			<< m.fullDate
+			<< m.fullDate << ' ' << time
 			<< endl;
 	}
 

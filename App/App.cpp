@@ -200,7 +200,9 @@ void App::quit()
 	TTF_CloseFont(regFont);
 	TTF_CloseFont(boldFont);
 	TTF_CloseFont(lightFont);
+	TTF_CloseFont(titleFont);
 	TTF_CloseFont(smallFont);
+	TTF_CloseFont(smallLightFont);
 
 	TTF_Quit();
 
