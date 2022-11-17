@@ -9,6 +9,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 
 #include <iostream>
 #include <iomanip>
@@ -32,6 +33,8 @@ TTF_Font* App::titleFont = 0;
 TTF_Font* App::smallFont = 0;
 TTF_Font* App::smallLightFont = 0;
 
+Mix_Chunk* App::ahhhhh = 0;
+
 View* App::currentView = 0;
 
 View* App::viewMainMenu = 0;
@@ -46,13 +49,13 @@ bool App::running = false;
 bool App::initialize()
 {
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		return false;
 	}
 
 	//Create window
-	window = SDL_CreateWindow("Bib.io", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Bib.i", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
 	if (window == NULL) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 		return false;
@@ -68,6 +71,17 @@ bool App::initialize()
 	if (TTF_Init() == -1) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", SDL_GetError());
 	};
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", Mix_GetError());
+	}
+
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", IMG_GetError());
+	}
 
 	//Create fonts
 	{
@@ -103,10 +117,10 @@ bool App::initialize()
 		}
 	}
 
-	int imgFlags = IMG_INIT_PNG;
-	if (!(IMG_Init(imgFlags) & imgFlags))
+	ahhhhh = Mix_LoadWAV("Assets/AUUGHHH.wav");
+	if (ahhhhh == NULL)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", IMG_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", Mix_GetError());
 	}
 
 	bib = new Bib();
@@ -200,13 +214,18 @@ void App::quit()
 	TTF_CloseFont(regFont);
 	TTF_CloseFont(boldFont);
 	TTF_CloseFont(lightFont);
+	TTF_CloseFont(titleFont);
 	TTF_CloseFont(smallFont);
+	TTF_CloseFont(smallLightFont);
 
-	TTF_Quit();
+	Mix_FreeChunk(ahhhhh);
 
 	// Quit SDL.
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 
+	TTF_Quit();
+	Mix_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }

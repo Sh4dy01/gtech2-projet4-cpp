@@ -37,12 +37,15 @@ public:
 	inline int GetMinFeed() { return minFeed; }
 	inline int GetReminder() { if (mealArray.size() > 0) return lastMeal.actualReminder; }
 
+	void IncrementEasterEgg();
+
 	void loadSettings();
 	void saveSettings();
 
 
 private:
 	int actualQty, maxBib, minFeed;
+	int easterEgg = 0;
 	Meal lastMeal;
 	std::vector<Meal> mealArray;
 };

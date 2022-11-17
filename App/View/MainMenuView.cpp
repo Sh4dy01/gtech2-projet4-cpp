@@ -57,7 +57,7 @@ MainMenuView::MainMenuView()
 
 	timer = new Text();
 	{
-		std::string timerText = "No Timer";
+		std::string timerText;
 
 		if (bib->GetReminder())
 		{
@@ -66,13 +66,16 @@ MainMenuView::MainMenuView()
 			int hours = minutes / 60;
 			timerText = std::to_string(int(hours)) + ":" + std::to_string(int(minutes % 60)) + ":" + std::to_string(int(seconds % 60));
 		}
+		else {
+			timerText = "No Timer";
+		}
 		
 
 		timer->setColor(0, 0, 0);
 		this->addWidget(timer);
 		timer->setText(timerText.c_str());
 		timer->setFont(App::getBoldFont());
-		timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 53, rectTitle->getPositionY() + 50);
+		timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 40, rectTitle->getPositionY() + 50);
 	}
 
 	Text* nextMealText = new Text();
@@ -81,7 +84,7 @@ MainMenuView::MainMenuView()
 		this->addWidget(nextMealText);
 		nextMealText->setText("before next meal");
 		nextMealText->setFont(App::getSmallLightFont());
-		nextMealText->setPosition(WINDOW_WIDTH - nextMealText->getWidth() - 20, timer->getPositionY() + timer->getHeight());
+		nextMealText->setPosition(WINDOW_WIDTH - nextMealText->getWidth() - timer->getWidth()/4, timer->getPositionY() + timer->getHeight());
 	}
 
 	bibiActualIndicator = new Rect();
@@ -116,6 +119,9 @@ MainMenuView::MainMenuView()
 		this->addWidget(bibiPNG);
 		bibiPNG->setHorizontallyCentered();
 		bibiPNG->setVerticallyCentered(-50);
+		bibiPNG->setOnClickCallback([]() {
+			App::GetBibi()->IncrementEasterEgg();
+			});
 	}
 
 	bibiMaxText = new Text();
@@ -132,19 +138,6 @@ MainMenuView::MainMenuView()
 		bibiActText->setText(std::to_string(bib->GetBibQty()).c_str());
 		bibiActText->setFont(App::getLightFont());
 		this->addWidget(bibiActText);
-	}
-
-	Button* fillButton = new Button("Fill");
-	{
-		fillButton->setPosition(bibiPNG->getPositionX() + bibiPNG->getWidth() + 4, bibiPNG->getPositionY() + 80);
-		fillButton->setSize(30, 28);
-		fillButton->setFont(App::getSmallLightFont());
-		fillButton->setColor(181, 222, 255);
-		this->addWidget(fillButton);
-		fillButton->setOnClickCallback([]() {
-			((Bib*)App::GetBibi())->Refill();
-			((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
-		});
 	}
 
 	// OFFSETs
@@ -165,8 +158,6 @@ MainMenuView::MainMenuView()
 			bibiMinLimitIndicator->getWidth() + bibiMinText->getWidth(),
 			3
 		);
-
-		UpdateBibVisual();
 	}
 
 	Text* title = new Text();
@@ -174,7 +165,7 @@ MainMenuView::MainMenuView()
 		title->setPosition(10, 75);
 		title->setColor(0, 0, 0);
 		this->addWidget(title);
-		title->setText("Bib.io");
+		title->setText("Bib.i");
 		title->setHorizontallyCentered();
 	}
 
@@ -184,8 +175,21 @@ MainMenuView::MainMenuView()
 		errorFeedFirst->setPosition(10, RENDER_HEIGHT - 24 - 10);
 		errorFeedFirst->setVisible(false);
 		errorFeedFirst->setFont(App::getSmallFont());
-		errorFeedFirst->setText("You must fill the bottle first!");
+		errorFeedFirst->setText("Not enough milk!");
 		this->addWidget(errorFeedFirst);
+	}
+
+	Button* fillButton = new Button("Fill");
+	{
+		fillButton->setPosition(bibiPNG->getPositionX() + bibiPNG->getWidth() + 4, bibiPNG->getPositionY() + 80);
+		fillButton->setSize(30, 28);
+		fillButton->setFont(App::getSmallLightFont());
+		fillButton->setColor(181, 222, 255);
+		this->addWidget(fillButton);
+		fillButton->setOnClickCallback([]() {
+			((Bib*)App::GetBibi())->Refill();
+			((MainMenuView*)App::getViewMainMenu())->UpdateBibVisual();
+			});
 	}
 
 	//button part
@@ -241,12 +245,14 @@ MainMenuView::MainMenuView()
 			button1->setHorizontallyCentered();
 		}
 	}
+
+	UpdateBibVisual();
 }
 
 void MainMenuView::UpdateBibVisual() {
 	Bib* bib = App::GetBibi();
 
-	currentQty = ((float)bib->GetBibQty() /bib->GetMaxBib()) * 100;
+	currentQty = ((float)bib->GetBibQty() / bib->GetMaxBib()) * 100;
 
 	bibiActualIndicator->setSize(
 		BIBI_WIDTH - INDICATOR_OFFSET_X * 2,
@@ -281,6 +287,15 @@ void MainMenuView::UpdateBibVisual() {
 		bibiActualIndicator->getPositionX() - 100,
 		bibiActualIndicator->getPositionY() - LIMIT_INDICATOR_Y_STEP * currentQty - bibiActText->getHeight() / (float)(2)
 	);
+
+	if (bib->GetBibQty() >= bib->GetMinFeed()) {
+		errorFeedFirst->setVisible(false);
+	}
+	else {
+		errorFeedFirst->setVisible(true);
+	}
+
+	timer->setPosition(WINDOW_WIDTH - timer->getWidth() - 50, 125);
 }
 
 void MainMenuView::update()  {
