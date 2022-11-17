@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libs\SDL2_image-2.6.2\include;$(SolutionDir)Libs\SDL2-2.24.2\include;$(SolutionDir)Libs\SDL2_ttf-2.20.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libs\SDL2-2.24.2\lib\x64;$(SolutionDir)Libs\SDL2_image-2.6.2\lib\x64;$(SolutionDir)Libs\SDL2_ttf-2.20.1\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libs\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,13 +108,13 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Libs\SDL2-2.24.2\include;$(SolutionDir)Libs\SDL2_image-2.6.2\include;$(SolutionDir)Libs\SDL2_ttf-2.20.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Libs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libs\SDL2_image-2.6.2\lib\x64;$(SolutionDir)Libs\SDL2-2.24.2\lib\x64;$(SolutionDir)Libs\SDL2_ttf-2.20.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

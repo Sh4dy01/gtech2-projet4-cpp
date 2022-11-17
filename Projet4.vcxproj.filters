@@ -62,10 +62,10 @@
     <ClCompile Include="View\Image.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="View\Forms.cpp">
+    <ClCompile Include="View\InputText.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="View\InputText.cpp">
+    <ClCompile Include="View\Shapes.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -109,10 +109,10 @@
     <ClInclude Include="View\Image.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="View\Forms.h">
+    <ClInclude Include="View\InputText.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="View\InputText.h">
+    <ClInclude Include="View\Shapes.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
