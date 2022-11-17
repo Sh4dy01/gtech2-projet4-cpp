@@ -79,7 +79,10 @@ void Bib::loadSettings()
 
 		else if (id == "meal") {
 			Meal m;
-			ss >> m.feedQty >> m.IsRegurgitated;
+			ss
+				>> m.feedQty >> m.IsRegurgitated
+				>> m.reminderTotal >> m.actualReminder
+				>> m.fullDate;
 			mealArray.push_back(m);
 		}
 	}
@@ -96,7 +99,11 @@ void Bib::saveSettings()
 	f << "minimumFeed "  << this->minFeed << endl;
 
 	for (Meal& m : mealArray) {
-		f << "meal " << m.feedQty << ' ' << (m.IsRegurgitated ? 1 : 0) << endl;
+		f << "meal "
+			<< m.feedQty << ' ' << (m.IsRegurgitated ? 1 : 0) << ' '
+			<< m.reminderTotal << ' ' << m.actualReminder << ' '
+			<< m.fullDate
+			<< endl;
 	}
 
 	f.close();
