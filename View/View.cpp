@@ -1,4 +1,6 @@
 #include "View.h"
+#include "App/App.h"
+#include "App/bib.h"
 
 #include "Widget.h"
 
@@ -83,6 +85,22 @@ bool View::IsInputsMoreThanZero(InputText** inputs, int size)
 	}
 		
 	return true;
+}
+
+void View::ResetInputs(InputText** inputs, int size, Color* color)
+{
+	Bib* bib = App::GetBibi();
+	const std::string bibInfos[3] = { 
+		std::to_string(App::GetBibi()->GetMaxBib()),
+		std::to_string(bib->GetBibQty()), 
+		std::to_string(bib->GetMinFeed()) 
+	};
+
+	for (int i = 0; i < size; i++) {
+		inputs[i]->setColor(color->getR(), color->getG(), color->getB());
+		inputs[i]->setText(bibInfos[i].c_str());
+		inputs[i]->setPlaceholder(bibInfos[i].c_str());
+	}
 }
 
 void View::addWidget( Widget* w )
