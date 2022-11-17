@@ -141,7 +141,7 @@ void View::handleEvent( const SDL_Event& e )
 		// Text input.
 	case SDL_KEYDOWN:
 		{
-			if (e.key.keysym.sym == SDLK_BACKSPACE) {
+			if (this->focusedWidget && e.key.keysym.sym == SDLK_BACKSPACE) {
 				this->focusedWidget->onTextInput('\b');
 			}
 		}
