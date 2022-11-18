@@ -423,7 +423,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+.\settings.txt
+./settings.txt
+settings.txt
 /settings.txt
+./settings.txt
 /SDL2.dll
 /SDL2_image.dll
 /SDL2_ttf.dll
