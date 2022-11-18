@@ -1,5 +1,6 @@
 #include "bib.h"
 #include "App.h"
+#include "View/ShoppingListView.h"
 #include <SDL_mixer.h>
 
 #include <iostream>
@@ -112,8 +113,18 @@ void Bib::loadSettings()
 
 			mealArray.push_back(m);
 		}
-	}
 
+		else if (id == "product") {
+
+			std::string name;
+			int count;
+
+			ss >> name >> count;
+			std::replace(name.begin(), name.end(), '_', ' ');
+			((ShoppingListView*)App::getViewShoppingList())->setProduct(name, count);
+		}
+	}
+	((ShoppingListView*)App::getViewShoppingList())->loadProducts();
 	if (mealArray.size() > 0) { lastMeal = mealArray.back(); }
 
 	f.close();
@@ -139,6 +150,23 @@ void Bib::saveSettings()
 			<< m.reminderTotal << ' ' << m.actualReminder << ' '
 			<< m.fullDate << ' ' << time
 			<< endl;
+	}
+
+	std::string* shoppingElementName = ((ShoppingListView*)App::getViewShoppingList())->getElementList();
+	int* shoppingElementCount = ((ShoppingListView*)App::getViewShoppingList())->getCountList();
+
+	for (int i = 0; i < 5; i++) {
+
+		if (shoppingElementName[i] == "") break;
+		std::string name = shoppingElementName[i];
+		std::replace(name.begin(), name.end(), ' ', '_');
+
+		int count = shoppingElementCount[i];
+		
+		std::cout << "saved : " << name << ", " << count << std::endl;
+
+		f << "product "
+			<< name << ' ' << count << endl;
 	}
 
 	f.close();

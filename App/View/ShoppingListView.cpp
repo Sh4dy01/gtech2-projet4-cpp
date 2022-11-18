@@ -14,6 +14,25 @@ using namespace std;
 int contentOutset = 280;
 int outsetBetweenElement = 75;
 
+void ShoppingListView::setProduct(std::string str, int num)
+{
+	elementList[lengthElementList] = str;
+	lengthElementList += 1;
+
+	countList[lenghtCountList] = num;
+	lenghtCountList += 1;
+}
+
+std::string* ShoppingListView::getElementList()
+{
+	return elementList;
+}
+
+int* ShoppingListView::getCountList()
+{
+	return countList;
+}
+
 int ShoppingListView::getLengthElementList()
 {
 	return lengthElementList;
@@ -370,17 +389,8 @@ ShoppingListView::ShoppingListView()
 	this->initWidgetLists();
 	this->initCountList();
 
-	/// temp var
-	this->elementList[0] = "lait";
-	this->elementList[1] = "poudre";
-	this->elementList[2] = "couches";
-	this->countList[0] = 5;
-	this->countList[1] = 3;
-	this->countList[2] = 1;
-	this->countList[3] = 0;
-	this->countList[4] = 0;
-	this->lengthElementList = 3;
-	this->lenghtCountList = 3;
+	this->lengthElementList = 0;
+	this->lenghtCountList = 0;
 
 
 	this->lengthUpdateTextList = 0;
@@ -452,107 +462,7 @@ ShoppingListView::ShoppingListView()
 
 		
 
-		for (int i = 0; i < lengthElementList; i++) {
-			Rect* temp = new Rect();
-			{
-				temp->setPosition(0, contentOutset + outsetBetweenElement * i);
-				temp->setSize(320, 60);
-				temp->setColor(181, 222, 255);
-				this->addWidget(temp);
-				this->addWidgetsElementList(temp,i);
-				temp->setHorizontallyCentered();
-			}
-
-			Rect* tempBanner = new Rect();
-			{
-				tempBanner->setPosition(350, contentOutset + outsetBetweenElement*i);
-				tempBanner->setSize(40, 60);
-
-				if      (countList[i] >= 5)	 tempBanner->setColor(167, 233, 175);
-				else if (countList[i] <= 2)	 tempBanner->setColor(245, 195, 194);
-				else                         tempBanner->setColor(252, 251, 181);
-
-				this->addUpdateRectList(tempBanner);
-				this->addWidgetsElementList(tempBanner, i);
-				this->addWidget(tempBanner);
-			}
-
-			Text* tempQty = new Text();
-			{
-				stringstream ss;
-				ss << countList[i];
-				string test;
-				ss >> test;
-
-				tempQty->setPosition(363, contentOutset + outsetBetweenElement * i +15);
-				tempQty->setFont(App::getSmallFont());
-				tempQty->setText(test.c_str());
-				tempQty->setColor(0, 0, 0);
-				this->addUpdateTextList(tempQty);
-				this->addWidgetsElementList(tempQty, i);
-				this->addWidget(tempQty);
-			}
-
-
-			Text* tempText = new Text();
-			{
-				tempText->setPosition(95, contentOutset + outsetBetweenElement * i + 15);
-				tempText->setFont(App::getSmallFont());
-				tempText->setText(elementList[i].c_str());
-				tempText->setColor(0, 0, 0);
-				this->addWidgetsElementList(tempText, i);
-				this->addWidget(tempText);
-			}
-
-			Button* tempPlus = new Button("+");
-			{
-				tempPlus->setPosition(42, contentOutset + outsetBetweenElement * i);
-				tempPlus->setSize(28, 28);
-				tempPlus->setColor(240, 240, 240);
-				tempPlus->toggleVisibility();
-				tempPlus->setOnClickCallback([](int index) {
-					((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) + 1);
-					((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
-					((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
-					}, i);
-				this->addWigdetVisibleList(tempPlus);
-				this->addWidgetsElementList(tempPlus, i);
-				this->addWidget(tempPlus);
-			}
-			Button* tempMinus = new Button("-");
-			{
-				tempMinus->setPosition(42, contentOutset + outsetBetweenElement * i + 32);
-				tempMinus->setSize(28, 28);
-				tempMinus->setColor(240, 240, 240);
-				tempMinus->toggleVisibility();
-				tempMinus->setOnClickCallback([](int index) {
-					if (((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) > 0) {
-						((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) - 1);
-						((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
-						((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
-					}
-					}, i);
-					
-				this->addWigdetVisibleList(tempMinus);
-				this->addWidgetsElementList(tempMinus, i);
-				this->addWidget(tempMinus);
-			}
-
-			Image* tempPNG = new Image("Assets/Trash.png");
-			{
-				tempPNG->setPosition(400, contentOutset + outsetBetweenElement * i + 10);
-				tempPNG->setSize(30, 30);
-				tempPNG->toggleVisibility();
-				tempPNG->setOnClickCallback([](int index) {
-
-					((ShoppingListView*)App::getViewShoppingList())->destroyElement(index,((ShoppingListView*)App::getViewShoppingList())->getInputTextPlus());
-					}, i);
-				this->addWigdetVisibleList(tempPNG);
-				this->addWidgetsElementList(tempPNG, i);
-				this->addWidget(tempPNG);
-			}
-			
-		}
+		this->loadProducts();
 
 		
 	}
@@ -629,4 +539,107 @@ void ShoppingListView::update()
 	else applyBtn->setVisible(false);
 }
 
+void ShoppingListView::loadProducts()
+{
+	for (int i = 0; i < lengthElementList; i++) {
+		Rect* temp = new Rect();
+		{
+			temp->setPosition(0, contentOutset + outsetBetweenElement * i);
+			temp->setSize(320, 60);
+			temp->setColor(181, 222, 255);
+			this->addWidget(temp);
+			this->addWidgetsElementList(temp, i);
+			temp->setHorizontallyCentered();
+		}
 
+		Rect* tempBanner = new Rect();
+		{
+			tempBanner->setPosition(350, contentOutset + outsetBetweenElement * i);
+			tempBanner->setSize(40, 60);
+
+			if (countList[i] >= 5)	 tempBanner->setColor(167, 233, 175);
+			else if (countList[i] <= 2)	 tempBanner->setColor(245, 195, 194);
+			else                         tempBanner->setColor(252, 251, 181);
+
+			this->addUpdateRectList(tempBanner);
+			this->addWidgetsElementList(tempBanner, i);
+			this->addWidget(tempBanner);
+		}
+
+		Text* tempQty = new Text();
+		{
+			stringstream ss;
+			ss << countList[i];
+			string test;
+			ss >> test;
+
+			tempQty->setPosition(363, contentOutset + outsetBetweenElement * i + 15);
+			tempQty->setFont(App::getSmallFont());
+			tempQty->setText(test.c_str());
+			tempQty->setColor(0, 0, 0);
+			this->addUpdateTextList(tempQty);
+			this->addWidgetsElementList(tempQty, i);
+			this->addWidget(tempQty);
+		}
+
+
+		Text* tempText = new Text();
+		{
+			tempText->setPosition(95, contentOutset + outsetBetweenElement * i + 15);
+			tempText->setFont(App::getSmallFont());
+			tempText->setText(elementList[i].c_str());
+			tempText->setColor(0, 0, 0);
+			this->addWidgetsElementList(tempText, i);
+			this->addWidget(tempText);
+		}
+
+		Button* tempPlus = new Button("+");
+		{
+			tempPlus->setPosition(42, contentOutset + outsetBetweenElement * i);
+			tempPlus->setSize(28, 28);
+			tempPlus->setColor(240, 240, 240);
+			tempPlus->toggleVisibility();
+			tempPlus->setOnClickCallback([](int index) {
+				((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) + 1);
+			((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
+			((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
+				}, i);
+			this->addWigdetVisibleList(tempPlus);
+			this->addWidgetsElementList(tempPlus, i);
+			this->addWidget(tempPlus);
+		}
+		Button* tempMinus = new Button("-");
+		{
+			tempMinus->setPosition(42, contentOutset + outsetBetweenElement * i + 32);
+			tempMinus->setSize(28, 28);
+			tempMinus->setColor(240, 240, 240);
+			tempMinus->toggleVisibility();
+			tempMinus->setOnClickCallback([](int index) {
+				if (((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) > 0) {
+					((ShoppingListView*)App::getViewShoppingList())->setCountList(index, ((ShoppingListView*)App::getViewShoppingList())->getCountListElement(index) - 1);
+					((ShoppingListView*)App::getViewShoppingList())->activeUpdateTextList(index);
+					((ShoppingListView*)App::getViewShoppingList())->activeUpdateRectList(index);
+				}
+				}, i);
+
+			this->addWigdetVisibleList(tempMinus);
+			this->addWidgetsElementList(tempMinus, i);
+			this->addWidget(tempMinus);
+		}
+
+		Image* tempPNG = new Image("Assets/Trash.png");
+		{
+			tempPNG->setPosition(400, contentOutset + outsetBetweenElement * i + 10);
+			tempPNG->setSize(30, 30);
+			tempPNG->toggleVisibility();
+			tempPNG->setOnClickCallback([](int index) {
+
+				((ShoppingListView*)App::getViewShoppingList())->destroyElement(index, ((ShoppingListView*)App::getViewShoppingList())->getInputTextPlus());
+				}, i);
+			this->addWigdetVisibleList(tempPNG);
+			this->addWidgetsElementList(tempPNG, i);
+			this->addWidget(tempPNG);
+		}
+
+	}
+}

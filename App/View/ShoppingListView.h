@@ -42,7 +42,13 @@ public:
 	void setInputTextPlus(InputText* btn);
 	InputText* getInputTextPlus();
 
+	std::string* getElementList();
+	int* getCountList();
+
 	virtual void update() override;
+
+	void setProduct(std::string str, int num);
+	void loadProducts();
 
 
 private:

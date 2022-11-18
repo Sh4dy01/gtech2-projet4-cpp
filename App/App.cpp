@@ -125,9 +125,6 @@ bool App::initialize()
 
 	bib = new Bib();
 
-	// Load saved settings.
-	bib->loadSettings();
-
 	// Create views.
 	viewMainMenu     = new MainMenuView();
 	viewMeal         = new MealView();
@@ -137,6 +134,9 @@ bool App::initialize()
 	currentView = viewMainMenu;
 
 	running = true;
+
+	// Load saved settings.
+	bib->loadSettings();
 
 	return true;
 }
