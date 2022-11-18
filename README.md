@@ -2,6 +2,7 @@
 
 *4th project of our 2nd year in GTECH 2.*
 Made in collaboration with [Guilian PIPART](https://github.com/Lum0o) and [Noah WIART](https://github.com/nwiart)
+[DIAPO](https://docs.google.com/presentation/d/1nqnWrATYoPwu3ZxxI8SHNYyPmS74f1MHcB90rjBoOjs/edit?usp=sharing)
 
 ## PROBLEM :  
 > After a little analysis, we realized that there was no application for parents to record their babies' bottle feeds.
