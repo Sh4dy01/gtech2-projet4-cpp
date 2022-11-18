@@ -642,4 +642,7 @@ void ShoppingListView::loadProducts()
 		}
 
 	}
+
+	this->activeModify();
+	this->inputTextPlusUpdate(this->getInputTextPlus());
 }

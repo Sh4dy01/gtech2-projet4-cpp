@@ -1,5 +1,0 @@
-feedCapacity 330
-remainingVol 120
-minimumFeed 55
-product caca 6
-product prout 5
